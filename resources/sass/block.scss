@@ -1,0 +1,45 @@
+$block-background-color: rgba(0, 30, 100, 0.5);
+$block-border-color: rgba(255, 255, 255, 0.7);
+$block-border-radius: 7px;
+
+.block-card {
+    width: 220px;
+    border-radius: $block-border-radius;
+    border: 1px solid $block-border-color;
+    background-color: $block-background-color;
+    color: white;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+    transition: box-shadow 0.3s ease-in-out 0s;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+
+    &.active {
+        box-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+}
+.block-header {
+    border-top-left-radius: $block-border-radius;
+    border-top-right-radius: $block-border-radius;
+}
+
+.block-body {
+    border-top: 1px solid $block-border-color;
+    border-bottom: 1px solid $block-border-color;
+}
+
+
+.block-body .param {
+    text-shadow: none;
+    -webkit-transition: all 0.3s ease;;
+    -moz-transition: all 0.3s ease;;
+    -o-transition: all 0.3s ease;;
+    transition: all 0.3s ease;
+    &:hover {
+        text-shadow: 0 0 4px;
+    }
+}
