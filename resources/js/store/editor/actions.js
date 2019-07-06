@@ -98,7 +98,7 @@ export default {
     },
 
     removeBlock: ({commit}, block) => {
-        block.delete()
+        return block.delete()
     },
 
     renderConnections: throttle(({state}) => {

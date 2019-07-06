@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Social\SocialChannel;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -41,5 +42,10 @@ class User extends Authenticatable
     public function scripts()
     {
         return $this->hasMany(Script::class);
+    }
+
+    public function socialChannels()
+    {
+        return $this->hasMany(SocialChannel::class);
     }
 }

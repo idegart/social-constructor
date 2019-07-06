@@ -5,10 +5,16 @@ Route::namespace('Api')->name('api.')->group(function () {
     Route::apiResources([
         'scripts' => 'ScriptController',
         'schemas' => 'SchemaController',
+        'socialChannels' => 'SocialChannelController',
     ]);
 
     Route::get('scripts/{script}/schemas', 'ScriptController@schemas');
     Route::get('schemas/{schema}/blocks', 'SchemaController@blocks');
+
+    Route::prefix('socialChannels/{socialChannel}')->group(function () {
+        Route::post('scripts/{script}', 'SocialChannelController@attachScript');
+        Route::delete('scripts/{script}', 'SocialChannelController@detachScript');
+    });
 
 
     Route::prefix('blocks')->group(function () {

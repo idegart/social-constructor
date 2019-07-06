@@ -28,7 +28,7 @@
                             <div class="form-group row">
                                 <label for="message" class="col-sm-2 col-form-label">Message</label>
                                 <div class="col-sm-10">
-                                    <input v-model="message" class="form-control" id="message" placeholder="Enter nessage">
+                                    <input v-model="message" class="form-control" id="message" placeholder="Enter message">
                                 </div>
                             </div>
                         </form>

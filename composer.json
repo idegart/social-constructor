@@ -13,7 +13,8 @@
         "laravel/framework": "5.8.*",
         "laravel/passport": "^7.3",
         "laravel/tinker": "^1.0",
-        "socialiteproviders/vkontakte": "dev-master"
+        "socialiteproviders/vkontakte": "dev-master",
+        "vkcom/vk-php-sdk": "^5.100"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

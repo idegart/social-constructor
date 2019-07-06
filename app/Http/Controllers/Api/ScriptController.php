@@ -11,6 +11,15 @@ use Illuminate\Http\Response;
 
 class ScriptController extends Controller
 {
+    public function index()
+    {
+        $scripts = Script::all();
+
+        return $this->successResponse([
+            'scripts' => ScriptResource::collection($scripts)
+        ]);
+    }
+
     public function store(StoreRequest $request)
     {
         $script = Script::create(collect($request->validated())->except('accept')->toArray());

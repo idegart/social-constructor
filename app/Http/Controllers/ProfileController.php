@@ -17,4 +17,14 @@ class ProfileController extends Controller
 
         return view('pages.profile.scripts', compact('scripts'));
     }
+
+    public function socialChannels()
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        $socialChannels = $user->socialChannels;
+
+        return view('pages.profile.socialChannels', compact('socialChannels'));
+    }
 }

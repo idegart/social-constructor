@@ -25,7 +25,7 @@
                             <i class="fas fa-cog"></i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <button @click.prevent="removeBlock(block)"
+                            <button @click.prevent="remove(block)"
                                     class="dropdown-item">
                                 Удалить
                             </button>
@@ -137,6 +137,13 @@
             deactivated () {
                 this.isActive = false;
             },
+
+            remove(block) {
+                this.removeBlock(block)
+                    .then(() => {
+                        this.renderConnections()
+                    })
+            }
         },
     }
 </script>

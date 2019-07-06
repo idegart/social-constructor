@@ -5,6 +5,7 @@
             <li v-if="!checkValidationRule('maxLength')">Max length is invalid</li>
             <li v-if="!checkValidationRule('minLength')">Min length is invalid</li>
             <li v-if="!checkValidationRule('accepted')">Field should be accepted</li>
+            <li v-if="!checkValidationRule('numeric')">Field should be numeric</li>
         </ul>
     </div>
 </template>

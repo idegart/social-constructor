@@ -19,6 +19,9 @@
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Scripts</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Socials</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Changelog</a>
             </li>
         </ul>
@@ -32,6 +35,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">Profile</a>
                         <a href="{{ route('profiles.scripts') }}" class="dropdown-item">My scripts</a>
+                        <a href="{{ route('profiles.socialChannels') }}" class="dropdown-item">My channels</a>
                         <div class="dropdown-divider"></div>
                         <a href="{{ route('logout') }}" class="dropdown-item">Exit</a>
                     </div>

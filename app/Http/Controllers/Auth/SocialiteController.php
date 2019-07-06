@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Requests\Auth\Socialite\RedirectRequest;
+use App\Models\Social\Vkontakte\VkontakteChannel;
 use App\Models\User;
 use Auth;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
+use VK\OAuth\VKOAuth;
 
 class SocialiteController extends Controller
 {
@@ -42,5 +44,16 @@ class SocialiteController extends Controller
         Auth::login($user);
 
         return redirect()->route('dashboard');
+    }
+
+    public function handleSocialChannelCallback(Request $request, $driver)
+    {
+        switch ($driver) {
+            case 'vkontakte':
+                VkontakteChannel::handleAccessCallback($request);
+                break;
+        }
+
+        return redirect()->route('profiles.socialChannels');
     }
 }

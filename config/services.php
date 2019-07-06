@@ -47,9 +47,9 @@ return [
     'vkontakte' => [
         'client_id' => env('VKONTAKTE_KEY'),
         'client_secret' => env('VKONTAKTE_SECRET'),
+        'client_service_key' => env('VKONTAKTE_SERVICE_KEY'),
         'redirect' => env('VKONTAKTE_REDIRECT_URI'),
         'redirect_group' => env('VKONTAKTE_REDIRECT_URI_GROUP'),
-        'callback_url' => env('VKONTAKTE_CALLBACK'),
         'scopes' => ['offline']
     ],
 
