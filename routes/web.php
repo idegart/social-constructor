@@ -1,8 +1,6 @@
 <?php
 
-Route::any('callback/{channel_type}/{channel_id}', 'CallbackController');
-
-Route::get('connectChannel/{driver}', 'Auth\SocialiteController@handleSocialChannelCallback');
+Route::get('connectChannel/{driver}', 'Auth\SocialiteController@handleSocialChannelAccessCallback');
 
 Route::middleware('guest')->group(function () {
     Route::get('', 'SiteController@welcome')->name('welcome');

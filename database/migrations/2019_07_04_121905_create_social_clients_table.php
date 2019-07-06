@@ -18,12 +18,7 @@ class CreateSocialClientsTable extends Migration
 
             $table->morphs('client');
 
-            $table->integer('social_channel_id');
-
             $table->timestamps();
-
-            $table->foreign('social_channel_id')
-                ->references('id')->on('social_channels');
         });
     }
 

@@ -5,18 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Api\Social\StoreRequest;
 use App\Models\Script;
 use App\Models\Social\SocialChannel;
-use App\Models\Social\Vkontakte\VkontakteChannel;
-use App\Models\User;
+use App\Models\Social\Vkontakte\Channel as VkontakteChannel;
 use App\Http\Controllers\Controller;
-use Auth;
 
 class SocialChannelController extends Controller
 {
     public function store(StoreRequest $request)
     {
-        /** @var User $user */
-        $user = Auth::user();
-
         $channelType = $request->get('type');
 
         $channelClassName = config('channels')[$channelType];
@@ -24,22 +19,13 @@ class SocialChannelController extends Controller
         switch ($channelType) {
             case 'vkontakte':
                 /** @var VkontakteChannel $socialChannel */
-                $socialChannel = $channelClassName::firstOrCreate([
+                $channelClassName::firstOrCreate([
                     'id' => $request->get('vk_group_id')
                 ]);
                 break;
             default:
                 return $this->errorResponse();
         }
-
-
-
-        $user->socialChannels()->updateOrCreate([
-            'channel_id' => $socialChannel->getKey(),
-            'channel_type' => $socialChannel->getMorphClass(),
-        ], [
-            'user_id' => $user->id,
-        ]);
 
         return $this->successResponse();
     }

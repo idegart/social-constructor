@@ -2,6 +2,8 @@
 
 Route::namespace('Api')->name('api.')->group(function () {
 
+    Route::any('callback/{channel_type}/{channel_id}', 'CallbackController');
+
     Route::apiResources([
         'scripts' => 'ScriptController',
         'schemas' => 'SchemaController',

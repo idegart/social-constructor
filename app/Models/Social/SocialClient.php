@@ -6,18 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class SocialClient extends Model
 {
+    protected $guarded = [];
+
     public function client()
     {
         return $this->morphTo();
     }
 
-    public function channel()
+    public function socialChannels()
     {
-        return $this->belongsTo(SocialChannel::class);
-    }
-
-    public function chats()
-    {
-        return $this->hasMany(SocialChat::class);
+        return $this->belongsToMany(SocialChannel::class, 'social_channel_clients');
     }
 }

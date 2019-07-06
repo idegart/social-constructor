@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVkontakteChannelsTable extends Migration
+class CreateVkontakteClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,12 @@ class CreateVkontakteChannelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vkontakte_channels', function (Blueprint $table) {
+        Schema::create('vkontakte_clients', function (Blueprint $table) {
             $table->integer('id')->primary();
 
-            $table->string('name');
-            $table->string('screen_name');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->boolean('is_closed');
-            $table->string('photo_200');
-
-            $table->string('_access_token')->nullable();
-            $table->string('_confirmation_code')->nullable();
-            $table->string('_server_id')->nullable();
 
             $table->timestamps();
         });
@@ -36,6 +31,6 @@ class CreateVkontakteChannelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vkontakte_channels');
+        Schema::dropIfExists('vkontakte_clients');
     }
 }

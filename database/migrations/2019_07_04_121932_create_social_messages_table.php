@@ -18,16 +18,14 @@ class CreateSocialMessagesTable extends Migration
 
             $table->morphs('message');
 
-            $table->integer('social_channel_id');
             $table->integer('social_chat_id');
             $table->integer('social_client_id')->nullable();
 
             $table->timestamps();
 
-            $table->foreign('social_channel_id')
-                ->references('id')->on('social_channels');
             $table->foreign('social_chat_id')
                 ->references('id')->on('social_chats');
+
             $table->foreign('social_client_id')
                 ->references('id')->on('social_clients');
         });

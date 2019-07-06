@@ -18,12 +18,12 @@ class SocialChannel extends Model
         return $this->morphTo();
     }
 
-    public function clients()
+    public function socialClients()
     {
-        return $this->hasMany(SocialClient::class);
+        return $this->belongsToMany(SocialClient::class, 'social_channel_clients');
     }
 
-    public function chats()
+    public function socialChats()
     {
         return $this->hasMany(SocialChat::class);
     }

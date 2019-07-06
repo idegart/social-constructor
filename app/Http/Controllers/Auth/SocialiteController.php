@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Factories\Social\SocialCallbackFactory;
 use App\Http\Requests\Auth\Socialite\RedirectRequest;
-use App\Models\Social\Vkontakte\VkontakteChannel;
 use App\Models\User;
 use Auth;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
-use VK\OAuth\VKOAuth;
+use SocialiteProviders\Manager\OAuth2\User as SocialiteUser;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SocialiteController extends Controller
 {
@@ -23,12 +25,12 @@ class SocialiteController extends Controller
 
     /**
      * @param $driver
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      * @throws AuthenticationException
      */
     public function handleProviderCallback($driver)
     {
-        /** @var \SocialiteProviders\Manager\OAuth2\User $socialUser */
+        /** @var SocialiteUser $socialUser */
         $socialUser = Socialite::driver($driver)->user();
 
         if (!$socialUser->getEmail()) {
@@ -46,13 +48,15 @@ class SocialiteController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function handleSocialChannelCallback(Request $request, $driver)
+    public function handleSocialChannelAccessCallback(Request $request, $channelType)
     {
-        switch ($driver) {
-            case 'vkontakte':
-                VkontakteChannel::handleAccessCallback($request);
-                break;
+        $socialChannelCallbackService = SocialCallbackFactory::factory($channelType);
+
+        if (!isset($socialChannelCallbackService)) {
+            throw new NotFoundHttpException();
         }
+
+        $socialChannelCallbackService->handleAccessCallback(collect($request->all()));
 
         return redirect()->route('profiles.socialChannels');
     }

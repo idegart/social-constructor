@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'vkontakte' => \App\Models\Social\Vkontakte\VkontakteChannel::class,
+    'vkontakte' => \App\Models\Social\Vkontakte\Channel::class,
     'telegram' => '',
 ];

@@ -6,18 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class SocialMessage extends Model
 {
+    protected $guarded = [];
+
     public function message()
     {
         return $this->morphTo();
-    }
-
-    public function chat()
-    {
-        return $this->belongsTo(SocialChat::class);
-    }
-
-    public function client()
-    {
-        return $this->belongsTo(SocialClient::class);
     }
 }

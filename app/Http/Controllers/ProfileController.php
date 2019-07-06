@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Social\SocialChannel;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class ProfileController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        $socialChannels = $user->socialChannels;
+        $socialChannels = $user->socialChannels->loadCount('scripts');
 
         return view('pages.profile.socialChannels', compact('socialChannels'));
     }
