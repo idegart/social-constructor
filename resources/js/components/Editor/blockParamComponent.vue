@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex" :class="[{'justify-content-end': isOut}]">
+    <div class="d-flex" :class="[{'justify-content-end': isOut}, param.extraClass]">
         <div class="d-flex" :class="[{'order-1': isOut}]">
             <div class="param">
                 <slot name="param" :param="param"></slot>
@@ -7,6 +7,7 @@
         </div>
         <div class="mx-1">
             <slot name="label" :param="param"></slot>
+            <slot name="removable" :param="param"></slot>
         </div>
     </div>
 </template>

@@ -38,6 +38,7 @@ class MorphServiceProvider extends ServiceProvider
     {
         Relation::morphMap([
             'social_channel_vk' => \App\Models\Social\Vkontakte\Channel::class,
+            'social_channel_tg' => \App\Models\Social\Telegram\Channel::class,
         ]);
     }
 }

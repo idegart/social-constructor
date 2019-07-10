@@ -3,6 +3,7 @@
 namespace App\Models\Block;
 
 use App\Models\Block;
+use App\Services\Social\SocialChatService;
 use Illuminate\Validation\Rule;
 
 class ReceiveMessage extends BaseBlock
@@ -22,5 +23,15 @@ class ReceiveMessage extends BaseBlock
                 Rule::exists((new Block)->getTable(), 'id'),
             ],
         ];
+    }
+
+    public function nextBlock()
+    {
+        return $this->belongsTo(Block::class, 'next_block');
+    }
+
+    public function playBlock(SocialChatService $socialChatService)
+    {
+        return $this->nextBlock;
     }
 }

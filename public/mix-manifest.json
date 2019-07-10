@@ -3,6 +3,7 @@
     "/dist/css/app.css": "/dist/css/app.css",
     "/dist/js/chunks/Editor-Blocks-receiveMessageBlockComponent.js": "/dist/js/chunks/Editor-Blocks-receiveMessageBlockComponent.js",
     "/dist/js/chunks/Editor-Blocks-sendMessageBlockComponent.js": "/dist/js/chunks/Editor-Blocks-sendMessageBlockComponent.js",
+    "/dist/js/chunks/Editor-Blocks-sendMessageWithKeyboardBlockComponent.js": "/dist/js/chunks/Editor-Blocks-sendMessageWithKeyboardBlockComponent.js",
     "/dist/js/chunks/Editor-baseBlockComponent.js": "/dist/js/chunks/Editor-baseBlockComponent.js",
     "/dist/js/chunks/Editor-blockComponent.js": "/dist/js/chunks/Editor-blockComponent.js",
     "/dist/js/chunks/Editor-blockParamComponent.js": "/dist/js/chunks/Editor-blockParamComponent.js",
@@ -14,8 +15,8 @@
     "/dist/js/chunks/removeScriptFromSocialChannel.js": "/dist/js/chunks/removeScriptFromSocialChannel.js",
     "/dist/js/chunks/storeScriptComponent.js": "/dist/js/chunks/storeScriptComponent.js",
     "/dist/js/chunks/storeSocialComponent.js": "/dist/js/chunks/storeSocialComponent.js",
-    "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-ba~086672cd.js": "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-ba~086672cd.js",
-    "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-ba~9f574707.js": "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-ba~9f574707.js",
+    "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-Bl~1ec67b6c.js": "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-Bl~1ec67b6c.js",
+    "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-Bl~d1b15e89.js": "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-Bl~d1b15e89.js",
     "/dist/js/chunks/vendors~Editor-fieldComponent~editorScriptComponent.js": "/dist/js/chunks/vendors~Editor-fieldComponent~editorScriptComponent.js",
     "/dist/js/chunks/vendors~addScriptToSocialChannelComponent~storeScriptComponent~storeSocialComponent.js": "/dist/js/chunks/vendors~addScriptToSocialChannelComponent~storeScriptComponent~storeSocialComponent.js",
     "/dist/js/chunks/vendors~editorScriptComponent.js": "/dist/js/chunks/vendors~editorScriptComponent.js"

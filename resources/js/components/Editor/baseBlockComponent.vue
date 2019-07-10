@@ -75,6 +75,10 @@
                                 <span>{{ param.label }}</span>
                             </template>
 
+                            <template v-if="isRemovable(param)" v-slot:removable="{param}">
+                                <i @click="param.cbRemove()" class="fas fa-trash text-danger unhandle" style="cursor: pointer"></i>
+                            </template>
+
                         </block-param-component>
                     </slot>
                 </div>
@@ -143,6 +147,10 @@
                     .then(() => {
                         this.renderConnections()
                     })
+            },
+
+            isRemovable (param) {
+                return typeof param.cbRemove === 'function'
             }
         },
     }

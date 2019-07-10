@@ -12,4 +12,14 @@ class SocialMessage extends Model
     {
         return $this->morphTo();
     }
+
+    public function socialClient()
+    {
+        return $this->belongsTo(SocialClient::class);
+    }
+
+    public function socialChat()
+    {
+        return $this->belongsTo(SocialChat::class);
+    }
 }

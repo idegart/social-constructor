@@ -21,6 +21,9 @@ class CreateReceiveMessageBlocksTable extends Migration
             $table->integer('next_block')->nullable();
 
             $table->timestamps();
+
+            $table->foreign('next_block')
+                ->references('id')->on('blocks');
         });
     }
 

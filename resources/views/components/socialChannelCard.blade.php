@@ -5,6 +5,8 @@
             <span class="badge badge-primary align-top">
                 @if($socialChannel->channel_type === 'social_channel_vk')
                     <i class="fab fa-vk"></i>
+                @elseif($socialChannel->channel_type === 'social_channel_tg')
+                    <i class="fab fa-telegram-plane"></i>
                 @endif
             </span>
             <a href="{{ route('socialChannels.show', ['social' => $socialChannel->id]) }}">

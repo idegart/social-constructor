@@ -2,6 +2,7 @@
     <div class="invalid-feedback">
         <ul class="list-unstyled">
             <li v-if="!checkValidationRule('required')">Required field</li>
+            <li v-if="!checkValidationRule('requiredIf')">Required field</li>
             <li v-if="!checkValidationRule('maxLength')">Max length is invalid</li>
             <li v-if="!checkValidationRule('minLength')">Min length is invalid</li>
             <li v-if="!checkValidationRule('accepted')">Field should be accepted</li>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSendMessageBlocksTable extends Migration
+class CreateTelegramClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateSendMessageBlocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('send_message_blocks', function (Blueprint $table) {
+        Schema::create('telegram_clients', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('message')->nullable();
+            $table->string('first_name');
+            $table->string('username');
 
-            $table->integer('next_block')->nullable();
+            $table->boolean('is_bot');
+
+            $table->timestamp('date');
 
             $table->timestamps();
-
-            $table->foreign('next_block')
-                ->references('id')->on('blocks');
         });
     }
 
@@ -34,6 +34,6 @@ class CreateSendMessageBlocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('send_message_blocks');
+        Schema::dropIfExists('telegram_clients');
     }
 }

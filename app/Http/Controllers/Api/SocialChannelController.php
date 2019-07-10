@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Api\Social\StoreRequest;
 use App\Models\Script;
 use App\Models\Social\SocialChannel;
+use App\Models\Social\Telegram\Channel as TelegramChannel;
 use App\Models\Social\Vkontakte\Channel as VkontakteChannel;
 use App\Http\Controllers\Controller;
+use App\Services\Social\Telegram\TelegramChannelService;
 
 class SocialChannelController extends Controller
 {
@@ -18,10 +20,25 @@ class SocialChannelController extends Controller
 
         switch ($channelType) {
             case 'vkontakte':
-                /** @var VkontakteChannel $socialChannel */
                 $channelClassName::firstOrCreate([
                     'id' => $request->get('vk_group_id')
                 ]);
+                break;
+            case 'telegram':
+                list($id) = explode(':', $token = $request->get('telegram_token'));
+
+                /** @var TelegramChannel $channel */
+                $channel = $channelClassName::find($id);
+
+                if (!$channel) {
+                    $channel = new $channelClassName();
+                    $channel->_access_token = $token;
+                    $channel->id = $id;
+                } else {
+                    $channel->_access_token = $token;
+                }
+
+                $channel->save();
                 break;
             default:
                 return $this->errorResponse();

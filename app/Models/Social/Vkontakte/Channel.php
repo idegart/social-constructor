@@ -3,9 +3,13 @@
 namespace App\Models\Social\Vkontakte;
 
 use App\Models\Social\SocialBase\BaseChannel;
+use App\Models\Social\SocialBase\BaseClient;
+use App\Models\Social\SocialChat;
+use App\Models\Social\SocialClient;
 use App\Services\Social\Vkontakte\VkontakteChannelService;
 use Auth;
 use Exception;
+use Illuminate\Support\Collection;
 use VK\OAuth\Scopes\VKOAuthGroupScope;
 use VK\OAuth\VKOAuth;
 use VK\OAuth\VKOAuthDisplay;
@@ -90,5 +94,11 @@ class Channel extends BaseChannel
         return $service->setChannelInfo();
     }
 
+    public function sendMessage(SocialClient $socialClient, SocialChat $socialChat, string $message, Collection $keyboard = null)
+    {
+        $service = new VkontakteChannelService($this);
+
+        $service->sendMessage($socialClient, $socialChat, $message, $keyboard);
+    }
 
 }

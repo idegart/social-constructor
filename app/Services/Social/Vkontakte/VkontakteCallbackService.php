@@ -5,6 +5,7 @@ namespace App\Services\Social\Vkontakte;
 use App\Jobs\Social\Callback\HandleNewMessage;
 use App\Models\Social\Vkontakte\Channel;
 use App\Services\Social\Interfaces\SocialChannelCallbackServiceInterface;
+use App\Services\Social\SocialChatService;
 use Exception;
 use Illuminate\Support\Collection;
 use VK\Client\VKApiClient;
@@ -85,7 +86,9 @@ class VkontakteCallbackService implements SocialChannelCallbackServiceInterface
 
         $socialMessage = $service->storeMessage($requestData);
 
-        dd($socialMessage);
+        $socialChatService = new SocialChatService($this->channel->socialChannel, $socialMessage->socialClient);
+
+        $socialChatService->handleNewMessage($socialMessage);
     }
 
 

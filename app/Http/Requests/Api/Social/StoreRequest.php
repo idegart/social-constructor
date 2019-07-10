@@ -24,7 +24,12 @@ class StoreRequest extends FormRequest
                 Rule::requiredIf(function () {
                     return $this->request->get('type') === 'vkontakte';
                 })
-            ]
+            ],
+            'telegram_token' => [
+                Rule::requiredIf(function () {
+                    return $this->request->get('type') === 'telegram';
+                })
+            ],
         ];
     }
 }

@@ -21,9 +21,12 @@ export default class BlockParam {
             },
         };
 
+        this.extraClass = get(props, 'extraClass');
+
         this.payload = get(props, 'payload');
         this.cb = get(props, 'cb');
         this.cbClick = get(props, 'cbClick');
+        this.cbRemove = get(props, 'cbRemove');
     }
 
     getIcon () {

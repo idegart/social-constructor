@@ -2,6 +2,7 @@
 
 namespace App\Services\Social\Vkontakte;
 
+use App\Models\Social\SocialBase\BaseClient;
 use App\Models\Social\SocialChat;
 use App\Models\Social\SocialClient;
 use App\Models\Social\SocialMessage;
@@ -58,16 +59,6 @@ class VkontakteChannelService implements SocialChannelServiceInterface
         /** @var Client $vkClient */
         $vkClient = Client::firstOrCreate(['id' => $userId]);
 
-        $vkMessage = Message::create([
-            'id' => $messageData->get('id'),
-            'from_id' => $messageData->get('from_id'),
-            'peer_id' => $messageData->get('peer_id'),
-            'text' => $messageData->get('text'),
-            'date' => Carbon::parse($messageData->get('date'))->toDateTimeString(),
-            'attachments' => json_encode($messageData->get('attachments')),
-            'important' => $messageData->get('important'),
-        ]);
-
         /** @var SocialClient $socialClient */
         $socialClient = $vkClient->socialClient()->firstOrCreate([]);
 
@@ -81,6 +72,64 @@ class VkontakteChannelService implements SocialChannelServiceInterface
             'social_channel_id' => $socialChannel->id,
         ]);
 
+        return $this->storeMessageData($socialClient, $socialChat, $messageData);
+    }
+
+    public function sendMessage(SocialClient $socialClient, SocialChat $socialChat, string $message, Collection $keyboard = null)
+    {
+        $messageDataSend = collect([
+            'user_id' => $socialClient->client->getKey(),
+            'random_id' => 0,
+            'peer_id' => $socialClient->client->getKey(),
+            'message' => $message
+        ]);
+
+        if ($keyboard) {
+            $messageDataSend->put('keyboard', json_encode([
+                'one_time' => true,
+                'buttons' => $keyboard->map(function ($button) {
+                    return [
+                        [
+                            'action' => [
+                                'type' => 'text',
+                                'label' => $button['label']
+                            ]
+                        ]
+                    ];
+                }),
+            ]));
+        }
+
+        $messageId = $this->vkApi->messages()->send($this->vkontakteChannel->_access_token, $messageDataSend->toArray());
+
+        $messageData = collect($this->getMessageById($messageId));
+
+        $this->storeMessageData($socialClient, $socialChat, $messageData);
+    }
+
+    public function getMessageById($messageId)
+    {
+        $response = $this->vkApi->messages()->getById($this->vkontakteChannel->_access_token, [
+            'message_ids' => [$messageId],
+            'group_id' => $this->vkontakteChannel->id,
+        ]);
+
+        return $response['items'][0];
+    }
+
+    private function storeMessageData(SocialClient $socialClient, SocialChat $socialChat, Collection $messageData)
+    {
+        $vkMessage = Message::create([
+            'id' => $messageData->get('id'),
+            'from_id' => $messageData->get('from_id'),
+            'peer_id' => $messageData->get('peer_id'),
+            'text' => $messageData->get('text'),
+            'date' => Carbon::parse($messageData->get('date'))->toDateTimeString(),
+            'attachments' => json_encode($messageData->get('attachments')),
+            'important' => $messageData->get('important'),
+            'out' => $messageData->get('out'),
+        ]);
+
         /** @var SocialMessage $socialMessage */
         $socialMessage = $vkMessage->socialMessage()->create([
             'social_client_id' => $socialClient->id,
@@ -89,7 +138,6 @@ class VkontakteChannelService implements SocialChannelServiceInterface
 
         return $socialMessage;
     }
-
 
 
 

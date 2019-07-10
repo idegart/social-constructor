@@ -38,13 +38,24 @@
                             </div>
                             <div v-if="form.type === 'vkontakte'">
                                 <div class="form-group">
-                                    <label for="title">Group ID</label>
+                                    <label for="vk_group_id">Group ID</label>
                                     <input v-model="form.vk_group_id"
                                            class="form-control"
                                            :class="getValidationClass('form.vk_group_id')"
-                                           id="title"
-                                           placeholder="Enter title">
+                                           id="vk_group_id"
+                                           placeholder="Enter group ID">
                                     <validation-errors :$v="$v" attribute="form.vk_group_id" />
+                                </div>
+                            </div>
+                            <div v-if="form.type === 'telegram'">
+                                <div class="form-group">
+                                    <label for="telegram_token">Token</label>
+                                    <input v-model="form.telegram_token"
+                                           class="form-control"
+                                           :class="getValidationClass('form.telegram_token')"
+                                           id="telegram_token"
+                                           placeholder="Enter access token">
+                                    <validation-errors :$v="$v" attribute="form.telegram_token" />
                                 </div>
                             </div>
                             <div class="form-group form-check">
@@ -91,10 +102,15 @@
                     required,
                 },
                 vk_group_id: {
-                    required: requiredIf(function () {
-                        return this.type !== 'vkontakte'
+                    requiredIf: requiredIf(function (form) {
+                        return form.type === 'vkontakte'
                     }),
                     numeric,
+                },
+                telegram_token: {
+                    requiredIf: requiredIf(function (form) {
+                        return form.type === 'telegram'
+                    }),
                 },
                 accept: {
                     required,
@@ -109,6 +125,7 @@
             form: {
                 type: 'vkontakte',
                 vk_group_id: '',
+                telegram_token: '',
                 accept: false
             }
         }),
@@ -118,6 +135,7 @@
                 this.$v.$touch()
 
                 if (this.$v.$invalid) {
+                    console.log('invalid')
                     return
                 }
 

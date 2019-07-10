@@ -25,6 +25,7 @@ class CreateVkontakteMessagesTable extends Migration
             $table->json('attachments')->nullable();
 
             $table->boolean('important')->nullable();
+            $table->boolean('out')->nullable();
 
             $table->timestamps();
         });

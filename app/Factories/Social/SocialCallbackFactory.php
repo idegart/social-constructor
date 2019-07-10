@@ -3,6 +3,7 @@
 namespace App\Factories\Social;
 
 use App\Services\Social\Interfaces\SocialChannelCallbackServiceInterface;
+use App\Services\Social\Telegram\TelegramCallbackService;
 use App\Services\Social\Vkontakte\VkontakteCallbackService;
 
 final class SocialCallbackFactory
@@ -12,6 +13,8 @@ final class SocialCallbackFactory
         switch ($socialChannel) {
             case 'vkontakte':
                 return new VkontakteCallbackService();
+            case 'telegram':
+                return new TelegramCallbackService();
         }
 
         return null;

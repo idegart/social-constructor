@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSendMessageBlocksTable extends Migration
+class CreateSendMessageWithKeyboardBlockButtonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,19 @@ class CreateSendMessageBlocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('send_message_blocks', function (Blueprint $table) {
+        Schema::create('send_message_with_keyboard_block_buttons', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('message')->nullable();
+            $table->integer('send_message_with_keyboard_block_id');
+
+            $table->string('label');
 
             $table->integer('next_block')->nullable();
 
             $table->timestamps();
+
+            $table->foreign('send_message_with_keyboard_block_id')
+                ->references('id')->on('send_message_with_keyboard_blocks');
 
             $table->foreign('next_block')
                 ->references('id')->on('blocks');
@@ -34,6 +39,6 @@ class CreateSendMessageBlocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('send_message_blocks');
+        Schema::dropIfExists('send_message_with_keyboard_block_buttons');
     }
 }
