@@ -4,8 +4,10 @@ namespace App\Models\Block;
 
 use App\Models\Block;
 use App\Models\Block\SendMessageWithKeyboard\MessageKeyboardButton;
-use App\Models\Social\SocialBase\BaseMessage;
-use App\Services\Social\SocialChatService;
+use App\Models\Social\Socialable\BaseMessage;
+use App\Services\PlayService;
+use App\Services\Social\SocialKeyboard;
+use App\Services\Social\SocialKeyboardButton;
 use Illuminate\Validation\Rule;
 
 class SendMessageWithKeyboard extends BaseBlock
@@ -49,36 +51,33 @@ class SendMessageWithKeyboard extends BaseBlock
         ];
     }
 
-    public function playBlock(SocialChatService $socialChatService)
+    public function playBlock(PlayService $playService)
     {
-        $keyboard = $this->buttons->map(function (MessageKeyboardButton $button) {
-            return [
-                'type' => 'text',
-                'label' => $button->label
-            ];
+        $keyboard = new SocialKeyboard();
+
+        $this->buttons->each(function (MessageKeyboardButton $button) use ($keyboard) {
+            $keyboard->addButton(new SocialKeyboardButton($button->label));
         });
 
-        $socialChatService->sendMessage($this->message, $keyboard);
+        $playService->sendMessage($this->message, $keyboard);
 
-        $socialChatService->setCurrentStep($this->block);
+        $playService->setCurrentStep($this->block);
 
         return false;
     }
 
-    public function playContinue(SocialChatService $socialChatService)
+    public function playContinue(PlayService $playService)
     {
-        $socialChatService->setCurrentStep(null);
+        $playService->setCurrentStep(null);
 
         /** @var BaseMessage $message */
-        $message = $socialChatService->socialMessage->message;
+        $message = $playService->socialMessage->message;
 
         /** @var MessageKeyboardButton $button */
         $button = $this->buttons()->where('label', '=', $message->getText())->first();
 
         if (!$button) {
-            $nextErrorBlock = $this->errorNextBlock;
-
-            return $nextErrorBlock ? $nextErrorBlock : false;
+            return $this->errorNextBlock ?: false;
         }
 
         return $button->nextBlock;

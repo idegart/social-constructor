@@ -3,7 +3,7 @@
 namespace App\Models\Block;
 
 use App\Models\Block;
-use App\Services\Social\SocialChatService;
+use App\Services\PlayService;
 use Illuminate\Validation\Rule;
 
 class ReceiveMessage extends BaseBlock
@@ -30,7 +30,7 @@ class ReceiveMessage extends BaseBlock
         return $this->belongsTo(Block::class, 'next_block');
     }
 
-    public function playBlock(SocialChatService $socialChatService)
+    public function playBlock(PlayService $playService)
     {
         return $this->nextBlock;
     }

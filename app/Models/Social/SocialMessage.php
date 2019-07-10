@@ -8,18 +8,17 @@ class SocialMessage extends Model
 {
     protected $guarded = [];
 
+    protected $with = [
+        'message',
+    ];
+
     public function message()
     {
         return $this->morphTo();
     }
 
-    public function socialClient()
-    {
-        return $this->belongsTo(SocialClient::class);
-    }
-
     public function socialChat()
     {
-        return $this->belongsTo(SocialChat::class);
+        return $this->belongsToMany(SocialChat::class, 'social_chat_messages');
     }
 }

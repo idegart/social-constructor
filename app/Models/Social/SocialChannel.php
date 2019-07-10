@@ -10,7 +10,7 @@ class SocialChannel extends Model
     protected $guarded = [];
 
     protected $with = [
-        'channel'
+        'channel',
     ];
 
     public function channel()

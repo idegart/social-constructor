@@ -3,32 +3,25 @@
 namespace App\Models\Social;
 
 use App\Models\Block;
-use App\Models\Schema;
-use App\Models\Script;
 use Illuminate\Database\Eloquent\Model;
 
 class SocialChat extends Model
 {
     protected $guarded = [];
 
-    public function socialMessages()
-    {
-        return $this->hasMany(SocialMessage::class);
-    }
-
     public function socialClient()
     {
-        return $this->hasMany(SocialClient::class);
+        return $this->belongsTo(SocialClient::class);
     }
 
-    public function currentScript()
+    public function socialChannel()
     {
-        return $this->belongsTo(Script::class, 'current_script_id');
+        return $this->belongsTo(SocialChannel::class);
     }
 
-    public function currentSchema()
+    public function socialMessages()
     {
-        return $this->belongsTo(Schema::class, 'current_schema_id');
+        return $this->belongsToMany(SocialMessage::class, 'social_chat_messages');
     }
 
     public function currentBlock()

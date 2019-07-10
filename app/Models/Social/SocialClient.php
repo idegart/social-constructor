@@ -8,6 +8,10 @@ class SocialClient extends Model
 {
     protected $guarded = [];
 
+    protected $with = [
+        'client',
+    ];
+
     public function client()
     {
         return $this->morphTo();
@@ -16,5 +20,10 @@ class SocialClient extends Model
     public function socialChannels()
     {
         return $this->belongsToMany(SocialChannel::class, 'social_channel_clients');
+    }
+
+    public function socialChats()
+    {
+        return $this->hasMany(SocialChat::class);
     }
 }

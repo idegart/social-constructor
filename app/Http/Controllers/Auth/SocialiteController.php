@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Factories\Social\SocialCallbackFactory;
+use App\Factories\SocialServiceFactory;
 use App\Http\Requests\Auth\Socialite\RedirectRequest;
 use App\Models\User;
 use Auth;
@@ -50,13 +50,13 @@ class SocialiteController extends Controller
 
     public function handleSocialChannelAccessCallback(Request $request, $channelType)
     {
-        $socialChannelCallbackService = SocialCallbackFactory::factory($channelType);
+        $socialChannelService = SocialServiceFactory::factory($channelType);
 
-        if (!isset($socialChannelCallbackService)) {
+        if (!isset($socialChannelService)) {
             throw new NotFoundHttpException();
         }
 
-        $socialChannelCallbackService->handleAccessCallback(collect($request->all()));
+        $socialChannelService->handleAccessCallback($request->all());
 
         return redirect()->route('profiles.socialChannels');
     }

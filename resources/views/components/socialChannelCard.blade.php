@@ -3,9 +3,9 @@
     <div class="card-body">
         <h5 class="card-title">
             <span class="badge badge-primary align-top">
-                @if($socialChannel->channel_type === 'social_channel_vk')
+                @if($socialChannel->channel instanceof \App\Models\Social\Socialable\Vkontakte\VkontakteGroup)
                     <i class="fab fa-vk"></i>
-                @elseif($socialChannel->channel_type === 'social_channel_tg')
+                @elseif($socialChannel->channel instanceof \App\Models\Social\Socialable\Telegram\TelegramChannel)
                     <i class="fab fa-telegram-plane"></i>
                 @endif
             </span>

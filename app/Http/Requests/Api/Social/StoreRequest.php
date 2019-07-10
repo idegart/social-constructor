@@ -18,7 +18,7 @@ class StoreRequest extends FormRequest
         return [
             'type' => [
                 'required',
-                Rule::in(array_keys(config('channels')))
+                Rule::in(['vkontakte', 'telegram'])
             ],
             'vk_group_id' => [
                 Rule::requiredIf(function () {

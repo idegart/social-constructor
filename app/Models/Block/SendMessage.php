@@ -3,6 +3,7 @@
 namespace App\Models\Block;
 
 use App\Models\Block;
+use App\Services\PlayService;
 use App\Services\Social\SocialChatService;
 use Illuminate\Validation\Rule;
 
@@ -30,9 +31,9 @@ class SendMessage extends BaseBlock
         return $this->belongsTo(Block::class, 'next_block');
     }
 
-    public function playBlock(SocialChatService $socialChatService)
+    public function playBlock(PlayService $playService)
     {
-        $socialChatService->sendMessage($this->message);
+        $playService->sendMessage($this->message);
 
         if (!$this->next_block) {
             return null;
@@ -40,6 +41,4 @@ class SendMessage extends BaseBlock
 
         return $this->nextBlock;
     }
-
-
 }
