@@ -13,7 +13,6 @@ export default class Block extends Model {
     }
 
     setBlockDataClass(props) {
-
         this.set('_blockClass', null);
 
         let blockDataClassName = upperFirst(camelCase(get(props, 'data_type')));

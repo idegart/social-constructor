@@ -1,7 +1,6 @@
 <template>
     <div>
-        <component v-if="block.get('_blockClass')"
-                   :is="blockComponent"
+        <component :is="blockComponent"
                    :block="block"
                    :blockClass="block.get('_blockClass')"
         />

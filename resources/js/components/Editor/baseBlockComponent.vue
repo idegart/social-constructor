@@ -8,15 +8,15 @@
                              @dragging="dragging"
                              dragCancel=".unhandle,.param">
         <div class="block-card" :class="{active: isActive}">
-            <div class="block-header d-flex p-1 align-items-center" :class="blockClass.color">
+            <div class="block-header d-flex p-1 align-items-center" :class="get(blockClass, 'color')">
                 <div class="px-1">
                     <slot name="icon">
-                        <i :class="blockClass.icon"></i>
+                        <i :class="get(blockClass, 'icon')"></i>
                     </slot>
                 </div>
                 <div class="flex-grow-1">
                     <slot name="title">
-                        {{ blockClass.title }}
+                        {{ get(blockClass, 'title') }}
                     </slot>
                 </div>
                 <div>
@@ -36,7 +36,7 @@
             <div class="block-body d-flex no-gutters p-1 justify-content-between">
                 <div class="w-auto">
                     <slot name="params-in">
-                        <block-param-component v-for="param in blockClass.paramsIn"
+                        <block-param-component v-for="param in get(blockClass,'paramsIn', [])"
                                                :key="param._id"
                                                :param="param">
                             <template v-slot:param="{param}">
@@ -57,7 +57,7 @@
                 </div>
                 <div class="w-auto">
                     <slot name="params-out">
-                        <block-param-component v-for="param in blockClass.paramsOut"
+                        <block-param-component v-for="param in get(blockClass,'paramsOut', [])"
                                                :key="param._id"
                                                :param="param"
                                                out>
@@ -92,6 +92,7 @@
 </template>
 
 <script>
+    import {get} from 'lodash'
     import { createNamespacedHelpers } from 'vuex'
     const { mapActions } = createNamespacedHelpers('editor');
 
@@ -119,6 +120,7 @@
         }),
 
         methods: {
+            get,
             ...mapActions([
                 'removeBlock',
                 'renderConnections',
@@ -132,6 +134,9 @@
                 this.block.set('left', left);
                 this.block.set('top', top);
                 this.block.save()
+                    .then(() => {
+                        this.renderConnections()
+                    })
             },
 
             activated () {
@@ -140,6 +145,8 @@
 
             deactivated () {
                 this.isActive = false;
+
+                this.renderConnections()
             },
 
             remove(block) {
