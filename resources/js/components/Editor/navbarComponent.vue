@@ -11,7 +11,10 @@
                                    :key="schema.id" />
                 </hsc-menu-item>
                 <hsc-menu-separator />
-                <hsc-menu-item label="Выйти" @click="toExit" />
+                <hsc-menu-item label="Exit" @click="toExit" />
+            </hsc-menu-bar-item>
+            <hsc-menu-bar-item label="Options">
+                <hsc-menu-item label="Open params" @click="openModal('modalParams')" />
             </hsc-menu-bar-item>
             <hsc-menu-bar-item label="Edit">
                 <hsc-menu-item label="Undo" keybind="meta+z" @click="alert('Undo')" />
@@ -44,6 +47,10 @@
             toExit () {
                 window.location.href = `/scripts/${this.script.id}`
             },
+
+            openModal (modalId) {
+                $(`#${modalId}`).modal('toggle')
+            }
         }
     }
 </script>

@@ -8,6 +8,8 @@
     "/dist/js/chunks/Editor-blockComponent.js": "/dist/js/chunks/Editor-blockComponent.js",
     "/dist/js/chunks/Editor-blockParamComponent.js": "/dist/js/chunks/Editor-blockParamComponent.js",
     "/dist/js/chunks/Editor-contextMenuComponent.js": "/dist/js/chunks/Editor-contextMenuComponent.js",
+    "/dist/js/chunks/Editor-field-modals-modalParamsComponent.js": "/dist/js/chunks/Editor-field-modals-modalParamsComponent.js",
+    "/dist/js/chunks/Editor-field-modals-modalParamsComponent~Editor-fieldComponent~editorScriptComponent.js": "/dist/js/chunks/Editor-field-modals-modalParamsComponent~Editor-fieldComponent~editorScriptComponent.js",
     "/dist/js/chunks/Editor-fieldComponent.js": "/dist/js/chunks/Editor-fieldComponent.js",
     "/dist/js/chunks/Editor-navbarComponent.js": "/dist/js/chunks/Editor-navbarComponent.js",
     "/dist/js/chunks/addScriptToSocialChannelComponent.js": "/dist/js/chunks/addScriptToSocialChannelComponent.js",
@@ -17,7 +19,7 @@
     "/dist/js/chunks/storeSocialComponent.js": "/dist/js/chunks/storeSocialComponent.js",
     "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-Bl~1ec67b6c.js": "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-Bl~1ec67b6c.js",
     "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-Bl~d1b15e89.js": "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-Bl~d1b15e89.js",
+    "/dist/js/chunks/vendors~Editor-field-modals-modalParamsComponent~Editor-fieldComponent~addScriptToSocialChannelCompo~910fbcac.js": "/dist/js/chunks/vendors~Editor-field-modals-modalParamsComponent~Editor-fieldComponent~addScriptToSocialChannelCompo~910fbcac.js",
     "/dist/js/chunks/vendors~Editor-fieldComponent~editorScriptComponent.js": "/dist/js/chunks/vendors~Editor-fieldComponent~editorScriptComponent.js",
-    "/dist/js/chunks/vendors~addScriptToSocialChannelComponent~storeScriptComponent~storeSocialComponent.js": "/dist/js/chunks/vendors~addScriptToSocialChannelComponent~storeScriptComponent~storeSocialComponent.js",
     "/dist/js/chunks/vendors~editorScriptComponent.js": "/dist/js/chunks/vendors~editorScriptComponent.js"
 }

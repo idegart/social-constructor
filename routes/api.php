@@ -4,13 +4,20 @@ Route::namespace('Api')->name('api.')->group(function () {
 
     Route::any('callback/{channel_type}/{channel_id}', 'CallbackController');
 
+    Route::any('test', 'TestController');
+
     Route::apiResources([
         'scripts' => 'ScriptController',
         'schemas' => 'SchemaController',
         'socialChannels' => 'SocialChannelController',
     ]);
 
-    Route::get('scripts/{script}/schemas', 'ScriptController@schemas');
+    Route::prefix('scripts/{script}')->group(function () {
+        Route::get('/schemas', 'ScriptController@schemas');
+        Route::get('/variables', 'ScriptController@variables');
+        Route::post('/variables', 'ScriptController@storeVariable');
+    });
+
     Route::get('schemas/{schema}/blocks', 'SchemaController@blocks');
 
     Route::prefix('socialChannels/{socialChannel}')->group(function () {

@@ -37,11 +37,11 @@ class SendMessageWithKeyboard extends BaseBlock
                 'sometimes', 'array',
             ],
             'button_update.id' => [
-                'required_with:',
+                'required_with:button_update',
                 Rule::exists((new MessageKeyboardButton)->getTable(), 'id')
             ],
             'button_update.next_block' => [
-                'required_with:',
+                'required_with:button_update',
                 Rule::exists((new Block)->getTable(), 'id'),
             ],
             'button_remove' => [

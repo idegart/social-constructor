@@ -3,7 +3,7 @@
     <a class="navbar-brand" href="/">
         {{ config('app.name') }}
         <span class="badge badge-pill badge-secondary small" style="font-size: 10px;vertical-align: top;">
-            v{{ config('app.version') }}</span>
+            {{ Version::compact() }}</span>
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

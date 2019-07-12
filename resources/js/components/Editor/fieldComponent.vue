@@ -19,6 +19,8 @@
             </hsc-menu-context-menu>
         </hsc-menu-style-white>
 
+        <modal-params-component />
+
     </div>
 </template>
 
@@ -33,10 +35,11 @@
     Vue.use(VueMenu);
 
     import blockComponent from "@component/Editor/blockComponent";
+    import ModalParamsComponent from "@component/Editor/field/modals/modalParamsComponent";
 
     export default {
         name: "fieldComponent",
-        components: {ContextMenuComponent, NavbarComponent, blockComponent},
+        components: {ModalParamsComponent, ContextMenuComponent, NavbarComponent, blockComponent},
         methods: {
             ...mapActions([
                 'renderConnections',

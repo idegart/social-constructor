@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Script\ScriptVariable;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,5 +34,10 @@ class Script extends Model
     public function starterSchema()
     {
         return $this->belongsTo(Schema::class, 'starter_schema_id');
+    }
+
+    public function variables()
+    {
+        return $this->hasMany(ScriptVariable::class);
     }
 }
