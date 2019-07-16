@@ -1,4 +1,4 @@
-version_source: git # "config", "git-local" or "git-remote"
+version_source: git-remote # "config", "git-local" or "git-remote"
 blade_directive: version
 current:
   major: 1

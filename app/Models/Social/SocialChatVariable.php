@@ -35,9 +35,9 @@ class SocialChatVariable extends Model
             case ScriptVariable::TYPE_STRING:   return $this->string;
             case ScriptVariable::TYPE_INTEGER:  return $this->integer;
             case ScriptVariable::TYPE_BOOLEAN:  return $this->boolean;
-            case ScriptVariable::TYPE_DATE:     return Carbon::parse($this->date)->format('d.m.Y');
-            case ScriptVariable::TYPE_TIME:     return Carbon::parse($this->time)->format('H:i');
-            case ScriptVariable::TYPE_DATETIME: return Carbon::parse($this->datetime)->format('d.m.Y H:i');
+            case ScriptVariable::TYPE_DATE:     return $this->date ? Carbon::parse($this->date)->format('d.m.Y') : null;
+            case ScriptVariable::TYPE_TIME:     return $this->time ? Carbon::parse($this->time)->format('H:i') : null;
+            case ScriptVariable::TYPE_DATETIME: return $this->datetime ? Carbon::parse($this->datetime)->format('d.m.Y H:i') : null;
             default:                            return '';
         }
     }

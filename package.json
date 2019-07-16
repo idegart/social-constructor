@@ -32,6 +32,7 @@
         "vue-ctk-date-time-picker": "^2.1.1",
         "vue-draggable-resizable": "^2.0.0-rc2",
         "vue-mc": "^0.5.0",
+        "vue-multiselect": "^2.1.6",
         "vuelidate": "^0.7.4",
         "vuex": "^3.1.1"
     }

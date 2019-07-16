@@ -30,7 +30,11 @@ export default class BlockParam {
     }
 
     getIcon () {
-        return this.connector.icon.inactive
+        return  this.type === BlockParam.TYPE_OUT
+            ? this.connector.id
+                ? this.connector.icon.active
+                : this.connector.icon.inactive
+            : this.connector.icon.inactive
     }
 
     handleEndPoint () {

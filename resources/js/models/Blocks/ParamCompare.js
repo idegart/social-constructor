@@ -5,31 +5,56 @@ export default class ParamCompare extends BaseBlock {
     constructor(props, block) {
         super(props, block);
 
-        this.color = 'bg-danger';
+        this.color = 'bg-primary';
         this.title = 'Param compare';
-        this.icon = 'fas fa-comment-dots';
+        this.icon = 'fas fa-not-equal';
 
-        // this.paramsOut.push(
-        //     new BlockParam({
-        //         block: block,
-        //         label: block.get('data.message') || 'Message',
-        //         connector_id: block.get('data.next_block_id'),
-        //         cb: this.connectOutParam(),
-        //         cbClick: this.removeNextBlock()
-        //     })
-        // );
+        this.paramsIn.push(
+            new BlockParam({
+                block: block,
+                label: 'IN',
+                connector_id: block.get('id'),
+                type: BlockParam.TYPE_IN
+            })
+        );
+
+        this.paramsOut.push(
+            new BlockParam({
+                block: block,
+                label: 'TRUE',
+                connector_id: block.get('data.true_next_block_id'),
+                cb: this.connectOutParam('true_next_block_id'),
+                cbClick: this.removeNextBlock('true_next_block_id'),
+                extraClass: 'text-success'
+            })
+        );
+
+        this.paramsOut.push(
+            new BlockParam({
+                block: block,
+                label: 'FALSE',
+                connector_id: block.get('data.false_next_block_id'),
+                cb: this.connectOutParam('false_next_block_id'),
+                cbClick: this.removeNextBlock('false_next_block_id'),
+                extraClass: 'text-danger',
+            })
+        );
     }
 
-    connectOutParam () {
+    connectOutParam (next_block_key) {
         return ({end_param}) => {
-            this.block.set({data: {next_block_id: end_param.block.get('id')}});
+            let data = {}
+            data[next_block_key] = end_param.block.get('id')
+            this.block.set({data});
             this.block.save()
         }
     }
 
-    removeNextBlock () {
+    removeNextBlock (next_block_key) {
         return () => {
-            this.block.set({data: {next_block_id: null}});
+            let data = {}
+            data[next_block_key] = null
+            this.block.set({data});
             this.block.save()
         }
     }

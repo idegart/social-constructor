@@ -80,6 +80,8 @@ final class PlayService
             return;
         }
 
+        $this->resetVariables();
+
         $this->initNewMessage();
     }
 

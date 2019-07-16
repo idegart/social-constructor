@@ -17,24 +17,11 @@ class SocialChannelController extends Controller
 
         switch ($channelType) {
             case 'vkontakte':
-                VkontakteGroup::updateOrCreate([
-                    'id' => $request->get('vk_group_id')
-                ]);
+                VkontakteGroup::updateOrCreate(['id' => $request->get('vk_group_id')]);
                 break;
             case 'telegram':
                 list($id) = explode(':', $token = $request->get('telegram_token'));
-
-                $telegramChannel = TelegramChannel::find($id);
-                if (!$telegramChannel) {
-                    $telegramChannel = new TelegramChannel();
-
-                    $telegramChannel->id = $id;
-                    $telegramChannel->_access_token = $token;
-                } else {
-                    $telegramChannel->_access_token = $token;
-                }
-
-                $telegramChannel->save();
+                TelegramChannel::updateOrCreate(['id' => $id,],['_access_token' => $token]);
                 break;
             default:
                 return $this->errorResponse();

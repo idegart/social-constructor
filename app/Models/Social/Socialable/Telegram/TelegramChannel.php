@@ -8,6 +8,10 @@ use Exception;
 
 class TelegramChannel extends BaseChannel
 {
+    protected $fillable = [
+        '_access_token',
+    ];
+
     protected static function boot()
     {
         parent::boot();
