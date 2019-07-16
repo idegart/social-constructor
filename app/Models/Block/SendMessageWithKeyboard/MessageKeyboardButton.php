@@ -13,7 +13,7 @@ class MessageKeyboardButton extends Model
 
     public function nextBlock()
     {
-        return $this->belongsTo(Block::class, 'next_block');
+        return $this->belongsTo(Block::class, 'next_block_id');
     }
 
 }

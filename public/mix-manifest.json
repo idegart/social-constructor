@@ -1,8 +1,12 @@
 {
     "/dist/js/app.js": "/dist/js/app.js",
     "/dist/css/app.css": "/dist/css/app.css",
+    "/dist/js/chunks/Editor-Blocks-paramAddBlockComponent.js": "/dist/js/chunks/Editor-Blocks-paramAddBlockComponent.js",
+    "/dist/js/chunks/Editor-Blocks-paramCompareBlockComponent.js": "/dist/js/chunks/Editor-Blocks-paramCompareBlockComponent.js",
+    "/dist/js/chunks/Editor-Blocks-paramSetBlockComponent.js": "/dist/js/chunks/Editor-Blocks-paramSetBlockComponent.js",
     "/dist/js/chunks/Editor-Blocks-receiveMessageBlockComponent.js": "/dist/js/chunks/Editor-Blocks-receiveMessageBlockComponent.js",
     "/dist/js/chunks/Editor-Blocks-sendMessageBlockComponent.js": "/dist/js/chunks/Editor-Blocks-sendMessageBlockComponent.js",
+    "/dist/js/chunks/Editor-Blocks-sendMessageWithInputBlockComponent.js": "/dist/js/chunks/Editor-Blocks-sendMessageWithInputBlockComponent.js",
     "/dist/js/chunks/Editor-Blocks-sendMessageWithKeyboardBlockComponent.js": "/dist/js/chunks/Editor-Blocks-sendMessageWithKeyboardBlockComponent.js",
     "/dist/js/chunks/Editor-baseBlockComponent.js": "/dist/js/chunks/Editor-baseBlockComponent.js",
     "/dist/js/chunks/Editor-blockComponent.js": "/dist/js/chunks/Editor-blockComponent.js",
@@ -17,9 +21,12 @@
     "/dist/js/chunks/removeScriptFromSocialChannel.js": "/dist/js/chunks/removeScriptFromSocialChannel.js",
     "/dist/js/chunks/storeScriptComponent.js": "/dist/js/chunks/storeScriptComponent.js",
     "/dist/js/chunks/storeSocialComponent.js": "/dist/js/chunks/storeSocialComponent.js",
-    "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-Bl~1ec67b6c.js": "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-Bl~1ec67b6c.js",
-    "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-Bl~d1b15e89.js": "/dist/js/chunks/vendors~Editor-Blocks-receiveMessageBlockComponent~Editor-Blocks-sendMessageBlockComponent~Editor-Bl~d1b15e89.js",
+    "/dist/js/chunks/vendors~Editor-Blocks-paramAddBlockComponent~Editor-Blocks-paramCompareBlockComponent~Editor-Blocks-~3d8a082b.js": "/dist/js/chunks/vendors~Editor-Blocks-paramAddBlockComponent~Editor-Blocks-paramCompareBlockComponent~Editor-Blocks-~3d8a082b.js",
+    "/dist/js/chunks/vendors~Editor-Blocks-paramAddBlockComponent~Editor-Blocks-paramCompareBlockComponent~Editor-Blocks-~4cd4b4fa.js": "/dist/js/chunks/vendors~Editor-Blocks-paramAddBlockComponent~Editor-Blocks-paramCompareBlockComponent~Editor-Blocks-~4cd4b4fa.js",
     "/dist/js/chunks/vendors~Editor-field-modals-modalParamsComponent~Editor-fieldComponent~addScriptToSocialChannelCompo~910fbcac.js": "/dist/js/chunks/vendors~Editor-field-modals-modalParamsComponent~Editor-fieldComponent~addScriptToSocialChannelCompo~910fbcac.js",
     "/dist/js/chunks/vendors~Editor-fieldComponent~editorScriptComponent.js": "/dist/js/chunks/vendors~Editor-fieldComponent~editorScriptComponent.js",
-    "/dist/js/chunks/vendors~editorScriptComponent.js": "/dist/js/chunks/vendors~editorScriptComponent.js"
+    "/dist/js/chunks/vendors~editorScriptComponent.js": "/dist/js/chunks/vendors~editorScriptComponent.js",
+    "/dist/js/chunks/Editor-Blocks-paramResetBlockComponent.js": "/dist/js/chunks/Editor-Blocks-paramResetBlockComponent.js",
+    "/dist/js/chunks/vendors~Editor-Blocks-paramAddBlockComponent~Editor-Blocks-paramCompareBlockComponent~Editor-Blocks-~8bc6b293.js": "/dist/js/chunks/vendors~Editor-Blocks-paramAddBlockComponent~Editor-Blocks-paramCompareBlockComponent~Editor-Blocks-~8bc6b293.js",
+    "/dist/js/chunks/vendors~Editor-Blocks-paramAddBlockComponent~Editor-Blocks-paramCompareBlockComponent~Editor-Blocks-~bcf35813.js": "/dist/js/chunks/vendors~Editor-Blocks-paramAddBlockComponent~Editor-Blocks-paramCompareBlockComponent~Editor-Blocks-~bcf35813.js"
 }

@@ -48,4 +48,9 @@ class Block extends Model
     {
         $this->data()->update($value);
     }
+
+    public function schema()
+    {
+        return $this->belongsTo(Schema::class);
+    }
 }

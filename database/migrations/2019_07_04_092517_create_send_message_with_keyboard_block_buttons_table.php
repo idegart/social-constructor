@@ -20,7 +20,7 @@ class CreateSendMessageWithKeyboardBlockButtonsTable extends Migration
 
             $table->string('label');
 
-            $table->integer('next_block')->nullable();
+            $table->integer('next_block_id')->nullable();
 
             $table->timestamps();
 
@@ -28,7 +28,7 @@ class CreateSendMessageWithKeyboardBlockButtonsTable extends Migration
                 ->references('id')->on('send_message_with_keyboard_blocks')
                 ->onDelete('cascade');
 
-            $table->foreign('next_block')
+            $table->foreign('next_block_id')
                 ->references('id')->on('blocks')
                 ->onDelete('set null');
         });

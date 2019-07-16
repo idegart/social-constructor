@@ -16,4 +16,6 @@ export default {
 
     addBlock: (state, block) => state.blocks.push(block),
     clearBlocks: state => state.blocks = [],
+
+    setVariables: (state, variables) => state.variables = variables,
 }

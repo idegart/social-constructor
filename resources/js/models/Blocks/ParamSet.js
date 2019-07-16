@@ -1,18 +1,27 @@
 import BaseBlock from "@model/Blocks/BaseBlock";
 import BlockParam from "@model/Blocks/BlockParam";
 
-export default class ReceiveMessage extends BaseBlock {
+export default class ParamSet extends BaseBlock {
     constructor(props, block) {
         super(props, block);
 
-        this.color = 'bg-danger';
-        this.title = 'Message receive';
-        this.icon = 'fas fa-comment-dots';
+        this.color = 'bg-primary';
+        this.title = 'Param set';
+        this.icon = 'fas fa-equals';
+
+        this.paramsIn.push(
+            new BlockParam({
+                block: block,
+                label: 'IN',
+                connector_id: block.get('id'),
+                type: BlockParam.TYPE_IN
+            })
+        );
 
         this.paramsOut.push(
             new BlockParam({
                 block: block,
-                label: block.get('data.message') || 'Message',
+                label: 'OUT',
                 connector_id: block.get('data.next_block_id'),
                 cb: this.connectOutParam(),
                 cbClick: this.removeNextBlock()

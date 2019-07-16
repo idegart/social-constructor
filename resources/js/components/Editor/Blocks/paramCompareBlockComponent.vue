@@ -35,16 +35,16 @@
 
 <script>
     import Block from '@model/Block'
-    import ReceiveMessage from "@model/Blocks/ReceiveMessage";
+    import ParamCompare from "@model/Blocks/ParamCompare";
     import baseBlockComponent from "@component/Editor/baseBlockComponent";
     import blockParamComponent from "@component/Editor/blockParamComponent";
 
     export default {
-        name: "receiveMessageBlockComponent",
+        name: "paramCompareBlockComponent",
 
         props: {
             block: Block,
-            blockClass: ReceiveMessage,
+            blockClass: ParamCompare,
         },
         components: {baseBlockComponent, blockParamComponent},
 

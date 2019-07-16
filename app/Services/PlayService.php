@@ -6,9 +6,11 @@ use App\Models\Block;
 use App\Models\Block\BaseBlock;
 use App\Models\Block\ReceiveMessage;
 use App\Models\Script;
+use App\Models\Script\ScriptVariable;
 use App\Models\Social\Socialable\BaseMessage;
 use App\Models\Social\SocialChannel;
 use App\Models\Social\SocialChat;
+use App\Models\Social\SocialChatVariable;
 use App\Models\Social\SocialClient;
 use App\Models\Social\SocialMessage;
 use App\Services\Social\BaseSocialService;
@@ -147,5 +149,74 @@ final class PlayService
     public function sendMessage(string $message, ?SocialKeyboard $keyboard = null)
     {
         $this->socialService->sendMessage($this->socialChannel, $this->socialClient, $message, $keyboard);
+    }
+
+    public function messageReplaceWithVariables(Script $script, $message)
+    {
+        $playVariables = $this->socialChat->variables()->where('script_id', $script->id)->get();
+
+        $replacer = collect();
+
+        $script->variables->each(function (ScriptVariable $scriptVariable) use ($replacer, $playVariables) {
+            $variableKey = '@' . $scriptVariable->variable;
+
+            /** @var SocialChatVariable $playVariable */
+            $playVariable = $playVariables->where('script_variable_id', $scriptVariable->id)->first();
+
+            if ($playVariable) {
+                $replacer->put($variableKey, $playVariable->value);
+            }
+        });
+
+        return str_replace($replacer->keys()->toArray(), $replacer->values()->toArray(), $message);
+    }
+
+    public function resetVariables(?ScriptVariable $scriptVariable = null)
+    {
+        if ($scriptVariable) {
+            /** @var SocialChatVariable $chatVariable */
+            $chatVariable = $this->socialChat->variables()->where('script_variable_id', '=', $scriptVariable->id)->first();
+
+            if (!$chatVariable) {
+                return false;
+            }
+
+            return $chatVariable->update([
+                'boolean' => $scriptVariable->default_boolean,
+                'string' => $scriptVariable->default_string,
+                'integer' => $scriptVariable->default_integer,
+                'date' => $scriptVariable->default_date,
+                'time' => $scriptVariable->default_time,
+                'datetime' => $scriptVariable->default_datetime,
+            ]);
+        } else {
+            self::setChatInitialVariables($this->socialChat);
+
+            return true;
+        }
+    }
+
+    public static function setChatInitialVariables(SocialChat $socialChat)
+    {
+        $scripts = $socialChat->socialChannel->scripts->load('starterSchema.blocks');
+
+        $scripts->each(function (Script $script) use ($socialChat) {
+            $scriptVariables = $script->variables;
+
+            $scriptVariables->each(function (ScriptVariable $scriptVariable) use ($socialChat) {
+                $socialChat->variables()->updateOrCreate([
+                    'script_id' => $scriptVariable->script_id,
+                    'script_variable_id' => $scriptVariable->id,
+                    'type' => $scriptVariable->type,
+                ], [
+                    'boolean' => $scriptVariable->default_boolean,
+                    'string' => $scriptVariable->default_string,
+                    'integer' => $scriptVariable->default_integer,
+                    'date' => $scriptVariable->default_date,
+                    'time' => $scriptVariable->default_time,
+                    'datetime' => $scriptVariable->default_datetime,
+                ]);
+            });
+        });
     }
 }

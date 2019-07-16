@@ -18,7 +18,7 @@ class ReceiveMessage extends BaseBlock
             'message' => [
                 'nullable', 'string',
             ],
-            'next_block' => [
+            'next_block_id' => [
                 'nullable',
                 Rule::exists((new Block)->getTable(), 'id'),
             ],
@@ -27,7 +27,7 @@ class ReceiveMessage extends BaseBlock
 
     public function nextBlock()
     {
-        return $this->belongsTo(Block::class, 'next_block');
+        return $this->belongsTo(Block::class, 'next_block_id');
     }
 
     public function playBlock(PlayService $playService)

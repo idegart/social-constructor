@@ -26,7 +26,7 @@ class SendMessageWithKeyboard extends BaseBlock
             'message' => [
                 'sometimes', 'nullable', 'string',
             ],
-            'error_next_block' => [
+            'error_next_block_id' => [
                 'sometimes', 'nullable',
                 Rule::in((new Block)->getTable(), 'id'),
             ],
@@ -40,7 +40,7 @@ class SendMessageWithKeyboard extends BaseBlock
                 'required_with:button_update',
                 Rule::exists((new MessageKeyboardButton)->getTable(), 'id')
             ],
-            'button_update.next_block' => [
+            'button_update.next_block_id' => [
                 'required_with:button_update',
                 Rule::exists((new Block)->getTable(), 'id'),
             ],
@@ -59,7 +59,9 @@ class SendMessageWithKeyboard extends BaseBlock
             $keyboard->addButton(new SocialKeyboardButton($button->label));
         });
 
-        $playService->sendMessage($this->message, $keyboard);
+        $message = $playService->messageReplaceWithVariables($this->block->schema->script, $this->message);
+
+        $playService->sendMessage($message, $keyboard);
 
         $playService->setCurrentStep($this->block);
 
@@ -92,7 +94,7 @@ class SendMessageWithKeyboard extends BaseBlock
 
     public function errorNextBlock()
     {
-        return $this->belongsTo(Block::class, 'error_next_block');
+        return $this->belongsTo(Block::class, 'error_next_block_id');
     }
 
     public function setButtonStoreAttribute($value)
@@ -105,12 +107,12 @@ class SendMessageWithKeyboard extends BaseBlock
     public function setButtonUpdateAttribute($value)
     {
         $buttonId = $value['id'];
-        $nextBlockId = $value['next_block'];
+        $nextBlockId = $value['next_block_id'];
 
         $button = $this->buttons()->find($buttonId);
 
         $button->update([
-            'next_block' => $nextBlockId
+            'next_block_id' => $nextBlockId
         ]);
     }
 

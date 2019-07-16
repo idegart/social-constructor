@@ -4,7 +4,6 @@ namespace App\Models\Block;
 
 use App\Models\Block;
 use App\Services\PlayService;
-use App\Services\Social\SocialChatService;
 use Illuminate\Validation\Rule;
 
 class SendMessage extends BaseBlock
@@ -19,7 +18,7 @@ class SendMessage extends BaseBlock
             'message' => [
                 'nullable', 'string',
             ],
-            'next_block' => [
+            'next_block_id' => [
                 'nullable',
                 Rule::exists((new Block)->getTable(), 'id'),
             ],
@@ -28,16 +27,14 @@ class SendMessage extends BaseBlock
 
     public function nextBlock()
     {
-        return $this->belongsTo(Block::class, 'next_block');
+        return $this->belongsTo(Block::class, 'next_block_id');
     }
 
     public function playBlock(PlayService $playService)
     {
-        $playService->sendMessage($this->message);
+        $message = $playService->messageReplaceWithVariables($this->block->schema->script, $this->message);
 
-        if (!$this->next_block) {
-            return null;
-        }
+        $playService->sendMessage($message);
 
         return $this->nextBlock;
     }

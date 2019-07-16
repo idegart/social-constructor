@@ -4,12 +4,14 @@ import Script from "@model/Script";
 import {SchemaCollection} from "@model/Schema";
 import Block, {BlockCollection} from "@model/Block";
 import BlockParam from "@model/Blocks/BlockParam";
+import {apiAxios} from "@plugin/axios";
 
 export default {
     initializeEditorData: ({state, dispatch, commit}, scriptId) => {
         return new Promise((resolve, reject) => {
             dispatch('loadScript', scriptId)
                 .then(({script}) => dispatch('loadSchemas', script.get('id')))
+                .then(() => dispatch('loadParams'))
                 .then(() => {
                     let schema = state.schemas.find(schema => schema.id === state.script.get('starter_schema_id'));
                     commit('setSchema', schema)
@@ -148,5 +150,44 @@ export default {
 
         state.connectionsLayer.draw()
 
-    }, 10)
+    }, 10),
+
+    loadParams: ({state, commit}) => {
+        return new Promise((resolve, reject) => {
+            apiAxios.get(`scripts/${state.script.id}/variables`)
+                .then(({data}) => {
+                    commit('setVariables', data.variables)
+                    resolve()
+                })
+                .catch(error => {
+                    reject(error)
+                })
+        })
+    },
+
+    storeParam: ({commit, state, dispatch}, param) => {
+        return new Promise((resolve, reject) => {
+            apiAxios.post(`scripts/${state.script.id}/variables`, param)
+                .then(() => {
+                    dispatch('loadParams');
+                    resolve()
+                })
+                .catch(error => {
+                    reject(error)
+                })
+        })
+    },
+
+    removeParam: ({dispatch, state}, paramId) => {
+        return new Promise((resolve, reject) => {
+            apiAxios.delete(`scripts/${state.script.id}/variables/${paramId}`)
+                .then(() => {
+                    dispatch('loadParams');
+                    resolve()
+                })
+                .catch(error => {
+                    reject(error)
+                })
+        })
+    }
 }

@@ -27,12 +27,6 @@ $block-border-radius: 7px;
     border-top-right-radius: $block-border-radius;
 }
 
-.block-body {
-    border-top: 1px solid $block-border-color;
-    border-bottom: 1px solid $block-border-color;
-}
-
-
 .block-body .param {
     text-shadow: none;
     -webkit-transition: all 0.3s ease;;

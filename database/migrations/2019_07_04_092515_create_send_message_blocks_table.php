@@ -18,11 +18,11 @@ class CreateSendMessageBlocksTable extends Migration
 
             $table->string('message')->nullable();
 
-            $table->integer('next_block')->nullable();
+            $table->integer('next_block_id')->nullable();
 
             $table->timestamps();
 
-            $table->foreign('next_block')
+            $table->foreign('next_block_id')
                 ->references('id')->on('blocks')
                 ->onDelete('set null');
         });

@@ -25,9 +25,17 @@
                             <i class="fas fa-cog"></i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <button v-if="editable" @click.prevent="$emit('toEdit')"
+                                    class="dropdown-item">
+                                <i class="fas fa-edit mr-1"></i>
+                                Edit
+                            </button>
+                            <slot name="dropdown"></slot>
+                            <div v-if="editable" class="dropdown-divider"></div>
                             <button @click.prevent="remove(block)"
                                     class="dropdown-item">
-                                Удалить
+                                <i class="fas fa-trash mr-1"></i>
+                                Delete
                             </button>
                         </div>
                     </div>
@@ -84,7 +92,7 @@
                 </div>
             </div>
 
-            <div class="block-footer">
+            <div v-if="needFooter" class="block-footer">
                 <slot name="footer" />
             </div>
         </div>
@@ -113,6 +121,16 @@
         props: {
             block: Block,
             blockClass: BaseBlock,
+            editable: {
+                type: Boolean,
+                default: false,
+                required: false,
+            },
+            needFooter: {
+                type: Boolean,
+                default: false,
+                required: false,
+            },
         },
 
         data: () => ({

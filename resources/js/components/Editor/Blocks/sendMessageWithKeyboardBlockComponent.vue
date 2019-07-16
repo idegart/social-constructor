@@ -1,16 +1,14 @@
 <template>
     <div>
-        <base-block-component :block="block" :blockClass="blockClass">
+        <base-block-component :block="block" :blockClass="blockClass" editable @toEdit="showModal('editTextModal')">
 
-            <template slot="footer">
-                <div class="text-center p-1">
-                    <button @click="showModal('editTextModal')" class="btn btn-sm btn-primary unhandle">
-                        Message
-                    </button>
-                    <button v-if="block.get('data.buttons', []).length < 4" @click="showModal('addButtonModal')" class="btn btn-sm btn-primary unhandle">
-                        Add button
-                    </button>
-                </div>
+            <template slot="dropdown">
+                <button v-if="block.get('data.buttons', []).length < 4"
+                        @click="showModal('addButtonModal')"
+                        class="dropdown-item">
+                    <i class="fas fa-plus-square mr-1"></i>
+                    Add button
+                </button>
             </template>
 
         </base-block-component>
@@ -31,11 +29,13 @@
                             <div class="form-group row">
                                 <label for="message" class="col-sm-2 col-form-label">Message</label>
                                 <div class="col-sm-10">
-                                    <textarea v-model="message"
-                                              class="form-control"
-                                              id="message"
-                                              placeholder="Enter message">
-                                    </textarea>
+                                    <at-ta at="@" :members="params" >
+                                        <textarea v-model="message"
+                                                  class="form-control"
+                                                  id="message"
+                                                  placeholder="Enter message">
+                                        </textarea>
+                                    </at-ta>
                                 </div>
                             </div>
                         </form>
@@ -85,6 +85,11 @@
     import baseBlockComponent from "@component/Editor/baseBlockComponent";
     import blockParamComponent from "@component/Editor/blockParamComponent";
 
+    import {createNamespacedHelpers} from 'vuex'
+    const {mapActions, mapState} = createNamespacedHelpers('editor');
+
+    import AtTa from 'vue-at/dist/vue-at-textarea'
+
     export default {
         name: "sendMessageWithKeyboardBlockComponent",
 
@@ -92,12 +97,22 @@
             block: Block,
             blockClass: SendMessageWithKeyboard,
         },
-        components: {baseBlockComponent, blockParamComponent},
+        components: {baseBlockComponent, blockParamComponent, AtTa},
 
         data: () => ({
             message: '',
             label: '',
         }),
+
+        computed: {
+            ...mapState([
+                'variables',
+            ]),
+
+            params () {
+                return this.variables.map(variable => variable.variable)
+            },
+        },
 
         methods: {
             saveMessage () {

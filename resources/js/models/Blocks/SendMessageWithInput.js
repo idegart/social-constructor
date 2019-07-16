@@ -1,13 +1,13 @@
 import BaseBlock from "@model/Blocks/BaseBlock";
 import BlockParam from "@model/Blocks/BlockParam";
 
-export default class ReceiveMessage extends BaseBlock {
+export default class SendMessageWithInput extends BaseBlock {
     constructor(props, block) {
         super(props, block);
 
         this.color = 'bg-success';
-        this.title = 'Message send';
-        this.icon = 'fas fa-comment-dots';
+        this.title = 'Message w/input';
+        this.icon = 'fas fa-keyboard';
 
         this.paramsIn.push(
             new BlockParam({
@@ -27,6 +27,17 @@ export default class ReceiveMessage extends BaseBlock {
                 cbClick: this.removeNextBlock()
             })
         );
+
+        this.paramsOut.push(
+            new BlockParam({
+                block: block,
+                label: 'ON ERROR',
+                connector_id: block.get('data.error_next_block_id'),
+                cb: this.connectOutErrorParam(),
+                cbClick: this.removeOutErrorParam(),
+                extraClass: 'text-danger'
+            })
+        );
     }
 
     connectOutParam () {
@@ -39,6 +50,20 @@ export default class ReceiveMessage extends BaseBlock {
     removeNextBlock () {
         return () => {
             this.block.set({data: {next_block_id: null}});
+            this.block.save()
+        }
+    }
+
+    connectOutErrorParam () {
+        return ({end_param}) => {
+            this.block.set({data: {error_next_block_id: end_param.block.get('id')}});
+            this.block.save()
+        }
+    }
+
+    removeOutErrorParam () {
+        return () => {
+            this.block.set({data: {error_next_block_id: null}});
             this.block.save()
         }
     }

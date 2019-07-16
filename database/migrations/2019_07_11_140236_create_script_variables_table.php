@@ -25,9 +25,18 @@ class CreateScriptVariablesTable extends Migration
 
             $table->string('validation')->nullable();
 
-            $table->string('default')->nullable();
+            $table->string('default_string')->nullable();
+            $table->integer('default_integer')->nullable();
+            $table->boolean('default_boolean')->nullable();
+            $table->date('default_date')->nullable();
+            $table->time('default_time')->nullable();
+            $table->dateTime('default_datetime')->nullable();
 
             $table->timestamps();
+
+            $table->foreign('script_id')
+                ->references('id')->on('scripts')
+                ->onDelete('cascade');
         });
     }
 

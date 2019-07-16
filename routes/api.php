@@ -14,8 +14,12 @@ Route::namespace('Api')->name('api.')->group(function () {
 
     Route::prefix('scripts/{script}')->group(function () {
         Route::get('/schemas', 'ScriptController@schemas');
-        Route::get('/variables', 'ScriptController@variables');
-        Route::post('/variables', 'ScriptController@storeVariable');
+
+        Route::prefix('/variables')->group(function () {
+            Route::get('', 'ScriptController@variables');
+            Route::post('', 'ScriptController@storeVariable');
+            Route::delete('{scriptVariable}', 'ScriptController@removeVariable');
+        });
     });
 
     Route::get('schemas/{schema}/blocks', 'SchemaController@blocks');

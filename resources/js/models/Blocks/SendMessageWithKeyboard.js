@@ -7,7 +7,7 @@ export default class ReceiveMessage extends BaseBlock {
 
         this.color = 'bg-success';
         this.title = 'Message w/keyboard';
-        this.icon = 'fas fa-keyboard';
+        this.icon = 'fas fa-th';
 
         this.paramsIn.push(
             new BlockParam({
@@ -25,7 +25,7 @@ export default class ReceiveMessage extends BaseBlock {
                 new BlockParam({
                     block: block,
                     label: button.label,
-                    connector_id: button.next_block,
+                    connector_id: button.next_block_id,
                     cb: this.connectOutParam(button),
                     cbClick: this.removeNextBlock(button),
                     cbRemove: this.removeButton(button)
@@ -37,7 +37,7 @@ export default class ReceiveMessage extends BaseBlock {
             new BlockParam({
                 block: block,
                 label: 'ON ERROR',
-                connector_id: block.get('data.error_next_block'),
+                connector_id: block.get('data.error_next_block_id'),
                 cb: this.connectOutErrorParam(),
                 cbClick: this.removeOutErrorParam(),
                 extraClass: 'text-danger'
@@ -47,14 +47,14 @@ export default class ReceiveMessage extends BaseBlock {
 
     connectOutErrorParam () {
         return ({end_param}) => {
-            this.block.set({data: {error_next_block: end_param.block.get('id')}});
+            this.block.set({data: {error_next_block_id: end_param.block.get('id')}});
             this.block.save()
         }
     }
 
     removeOutErrorParam () {
         return () => {
-            this.block.set({data: {error_next_block: null}});
+            this.block.set({data: {error_next_block_id: null}});
             this.block.save()
         }
     }
@@ -62,7 +62,7 @@ export default class ReceiveMessage extends BaseBlock {
     connectOutParam (button) {
         return ({end_param}) => {
             this.block.set({data: {button_update: {
-                id: button.id, next_block: end_param.block.get('id')}
+                id: button.id, next_block_id: end_param.block.get('id')}
             }});
             this.block.save()
         }
@@ -71,7 +71,7 @@ export default class ReceiveMessage extends BaseBlock {
     removeNextBlock (button) {
         return () => {
             this.block.set({data: {button_update: {
-                id: button.id, next_block: null}
+                id: button.id, next_block_id: null}
             }});
             this.block.save()
         }

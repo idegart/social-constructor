@@ -9,6 +9,8 @@ use App\Http\Resources\SchemaResource;
 use App\Http\Resources\ScriptResource;
 use App\Http\Resources\ScriptVariableResource;
 use App\Models\Script;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class ScriptController extends Controller
@@ -59,5 +61,20 @@ class ScriptController extends Controller
         return $this->successResponse([
             'variable' => new ScriptVariableResource($variable)
         ]);
+    }
+
+    /**
+     * @param Script $script
+     * @param $scriptVariableId
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function removeVariable(Script $script, $scriptVariableId)
+    {
+        $variable = $script->variables()->findOrFail($scriptVariableId);
+
+        $variable->delete();
+
+        return $this->successResponse();
     }
 }

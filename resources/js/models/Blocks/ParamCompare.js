@@ -1,23 +1,23 @@
 import BaseBlock from "@model/Blocks/BaseBlock";
 import BlockParam from "@model/Blocks/BlockParam";
 
-export default class ReceiveMessage extends BaseBlock {
+export default class ParamCompare extends BaseBlock {
     constructor(props, block) {
         super(props, block);
 
         this.color = 'bg-danger';
-        this.title = 'Message receive';
+        this.title = 'Param compare';
         this.icon = 'fas fa-comment-dots';
 
-        this.paramsOut.push(
-            new BlockParam({
-                block: block,
-                label: block.get('data.message') || 'Message',
-                connector_id: block.get('data.next_block_id'),
-                cb: this.connectOutParam(),
-                cbClick: this.removeNextBlock()
-            })
-        );
+        // this.paramsOut.push(
+        //     new BlockParam({
+        //         block: block,
+        //         label: block.get('data.message') || 'Message',
+        //         connector_id: block.get('data.next_block_id'),
+        //         cb: this.connectOutParam(),
+        //         cbClick: this.removeNextBlock()
+        //     })
+        // );
     }
 
     connectOutParam () {

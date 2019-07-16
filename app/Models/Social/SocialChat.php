@@ -3,10 +3,23 @@
 namespace App\Models\Social;
 
 use App\Models\Block;
+use App\Services\PlayService;
 use Illuminate\Database\Eloquent\Model;
 
 class SocialChat extends Model
 {
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function (SocialChat $socialChat) {
+
+            parent::created($socialChat);
+
+            PlayService::setChatInitialVariables($socialChat);
+        });
+    }
+
     protected $guarded = [];
 
     public function socialClient()
@@ -27,5 +40,10 @@ class SocialChat extends Model
     public function currentBlock()
     {
         return $this->belongsTo(Block::class, 'current_block_id');
+    }
+
+    public function variables()
+    {
+        return $this->hasMany(SocialChatVariable::class);
     }
 }

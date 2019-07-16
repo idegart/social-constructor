@@ -22,7 +22,12 @@ class StoreVariableRequest extends FormRequest
                 Rule::in(ScriptVariable::TYPES)
             ],
             'validation' => ['nullable', 'string',],
-            'default' => ['nullable', 'string',],
+            'default_string' => ['nullable', 'string',],
+            'default_integer' => ['nullable', 'integer',],
+            'default_boolean' => ['nullable', 'boolean',],
+            'default_date' => ['nullable', 'date',],
+            'default_time' => ['nullable', 'date_format:h:i a',],
+            'default_datetime' => ['nullable', 'date',],
         ];
     }
 }

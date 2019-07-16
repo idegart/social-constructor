@@ -6,9 +6,15 @@
         <hsc-menu-item label="Send">
             <hsc-menu-item label="Message" @click="addBlock('send_message')" />
             <hsc-menu-item label="Message w/keyboard" @click="addBlock('send_message_with_keyboard')" />
+            <hsc-menu-item label="Message w/input" @click="addBlock('send_message_with_input')" />
         </hsc-menu-item>
         <hsc-menu-separator />
-        <hsc-menu-item label="Exit chat" @click="addBlock('exit_chat')" />
+        <hsc-menu-item label="Params">
+            <hsc-menu-item label="Set" @click="addBlock('param_set')" />
+            <hsc-menu-item label="Add" @click="addBlock('param_add')" />
+            <hsc-menu-item label="Compare" @click="addBlock('param_compare')" />
+            <hsc-menu-item label="Reset" @click="addBlock('param_reset')" />
+        </hsc-menu-item>
     </div>
 </template>
 
