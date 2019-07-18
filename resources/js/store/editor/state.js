@@ -13,4 +13,8 @@ export default {
     field: null,
     connector: null,
     connectionsLayer: null,
+
+    stats: null,
+    statsVisible: false,
+    fps: 30,
 }

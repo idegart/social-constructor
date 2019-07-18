@@ -16,6 +16,21 @@
             <hsc-menu-bar-item label="Options">
                 <hsc-menu-item label="Open params" @click="openModal('modalParams')" />
             </hsc-menu-bar-item>
+            <hsc-menu-bar-item label="Settings">
+                <hsc-menu-item label="Statistic" v-model="statsVisibleToggler" />
+                <hsc-menu-item>
+                    <div slot="body" class="d-flex" @mousedown.stop>
+                        FPS:
+                        <input v-model="fpsToggler"
+                               class="ml-1"
+                               min="20"
+                               max="60"
+                               step="10"
+                               style="width: 100px"
+                               type="range" @mousedown.stop />
+                    </div>
+                </hsc-menu-item>
+            </hsc-menu-bar-item>
             <hsc-menu-bar-item label="Edit">
                 <hsc-menu-item label="Undo" keybind="meta+z" @click="alert('Undo')" />
                 <hsc-menu-separator/>
@@ -30,7 +45,7 @@
 <script>
     import { createNamespacedHelpers } from 'vuex'
 
-    const {mapGetters} = createNamespacedHelpers('editor')
+    const {mapGetters, mapMutations, mapState} = createNamespacedHelpers('editor')
 
     export default {
         name: "navbarComponent",
@@ -40,9 +55,34 @@
                 'script',
                 'schemas',
             ]),
+            ...mapState([
+                'statsVisible',
+                'fps',
+            ]),
+
+            statsVisibleToggler: {
+                get () {
+                    return this.statsVisible
+                },
+                set (value) {
+                    this.setStatsVisible(value)
+                }
+            },
+            fpsToggler: {
+                get () {
+                    return this.fps
+                },
+                set (value) {
+                    this.setFPS(value)
+                },
+            }
         },
 
         methods: {
+            ...mapMutations([
+                'setFPS',
+                'setStatsVisible',
+            ]),
             alert () {},
             toExit () {
                 window.location.href = `/scripts/${this.script.id}`

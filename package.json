@@ -27,6 +27,7 @@
         "@hscmap/vue-menu": "^2.10.0",
         "@hscmap/vue-window": "^2.4.2",
         "konva": "^3.3.3",
+        "stats.js": "^0.17.0",
         "textarea-caret": "^3.1.0",
         "vue-at": "^2.3.2",
         "vue-ctk-date-time-picker": "^2.1.1",

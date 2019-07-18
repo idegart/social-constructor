@@ -11,8 +11,6 @@ export default {
             dash: [10, 5, 0.1, 5],
         });
 
-        state.connectionsLayer.add(line);
-
         state.connector = {
             start: getRealPosition(el),
             start_param: param,
@@ -35,13 +33,9 @@ export default {
                 state.connector.end.left, state.connector.end.top
             ]
         );
-
-        state.connectionsLayer.draw()
     },
 
     removeConnector: state => {
-        state.connector.line.destroy();
         state.connector = null;
-        state.connectionsLayer.draw()
     },
 }

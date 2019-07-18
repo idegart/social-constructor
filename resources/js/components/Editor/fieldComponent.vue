@@ -41,10 +41,6 @@
         name: "fieldComponent",
         components: {ModalParamsComponent, ContextMenuComponent, NavbarComponent, blockComponent},
         methods: {
-            ...mapActions([
-                'renderConnections',
-            ]),
-
             ...mapMutations([
                 'setSchemaField',
                 'setEndConnector',
@@ -73,20 +69,7 @@
 
         mounted() {
             this.setSchemaField();
-
-            setTimeout(() => {
-                this.renderConnections()
-            }, 1000)
         },
-
-        watch: {
-            blocks: {
-                handler () {
-                    this.renderConnections()
-                },
-                deep: true,
-            }
-        }
     }
 </script>
 

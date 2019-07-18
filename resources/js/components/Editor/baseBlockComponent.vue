@@ -141,20 +141,15 @@
             get,
             ...mapActions([
                 'removeBlock',
-                'renderConnections',
             ]),
 
             dragging () {
-                this.renderConnections()
             },
 
             dragstop (left, top) {
                 this.block.set('left', left);
                 this.block.set('top', top);
                 this.block.save()
-                    .then(() => {
-                        this.renderConnections()
-                    })
             },
 
             activated () {
@@ -163,15 +158,10 @@
 
             deactivated () {
                 this.isActive = false;
-
-                this.renderConnections()
             },
 
             remove(block) {
                 this.removeBlock(block)
-                    .then(() => {
-                        this.renderConnections()
-                    })
             },
 
             isRemovable (param) {

@@ -8,6 +8,8 @@
 
         <field-component v-else></field-component>
 
+        <div v-show="statsVisible" id="stats" style="position: absolute;top:0;right:0"></div>
+
     </div>
 </template>
 
@@ -17,7 +19,7 @@
     import {createNamespacedHelpers} from 'vuex'
     import FieldComponent from "@component/Editor/fieldComponent";
 
-    const {mapActions, mapGetters} = createNamespacedHelpers('editor');
+    const {mapActions, mapGetters, mapState} = createNamespacedHelpers('editor');
 
     export default {
         name: "editorScriptComponent",
@@ -34,6 +36,9 @@
         }),
 
         computed: {
+            ...mapState([
+                'statsVisible',
+            ]),
             ...mapGetters([
                 'getInitialized',
             ]),

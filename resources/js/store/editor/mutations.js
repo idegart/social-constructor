@@ -18,4 +18,7 @@ export default {
     clearBlocks: state => state.blocks = [],
 
     setVariables: (state, variables) => state.variables = variables,
+
+    setFPS: (state, fps) => state.fps = Number(fps),
+    setStatsVisible: (state, statsVisible) => state.statsVisible = statsVisible,
 }
