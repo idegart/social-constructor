@@ -9,15 +9,24 @@ export default class ParamAdd extends BaseBlock {
         this.title = 'Param add';
         this.icon = 'fas fa-plus-square';
 
-        // this.paramsOut.push(
-        //     new BlockParam({
-        //         block: block,
-        //         label: block.get('data.message') || 'Message',
-        //         connector_id: block.get('data.next_block_id'),
-        //         cb: this.connectOutParam(),
-        //         cbClick: this.removeNextBlock()
-        //     })
-        // );
+        this.paramsIn.push(
+            new BlockParam({
+                block: block,
+                label: 'IN',
+                connector_id: block.get('id'),
+                type: BlockParam.TYPE_IN
+            })
+        );
+
+        this.paramsOut.push(
+            new BlockParam({
+                block: block,
+                label: 'OUT',
+                connector_id: block.get('data.next_block_id'),
+                cb: this.connectOutParam(),
+                cbClick: this.removeNextBlock()
+            })
+        );
     }
 
     connectOutParam () {

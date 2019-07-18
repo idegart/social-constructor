@@ -59,7 +59,7 @@
                             <div v-if="paramType === 'date'" class="form-group row">
                                 <label for="value_int" class="col-sm-3 col-form-label">Set date</label>
                                 <div class="col-sm-9">
-                                    <date-time-picker v-model="form.value_time"
+                                    <date-time-picker v-model="form.value_date"
                                                       label="Select date"
                                                       format="YYYY-MM-DD"
                                                       formatted="L"
@@ -71,7 +71,7 @@
                             <div v-if="paramType === 'time'" class="form-group row">
                                 <label for="value_int" class="col-sm-3 col-form-label">Set time</label>
                                 <div class="col-sm-9">
-                                    <date-time-picker v-model="form.value_date"
+                                    <date-time-picker v-model="form.value_time"
                                                       label="Select time"
                                                       format="hh:mm a"
                                                       formatted="LT"

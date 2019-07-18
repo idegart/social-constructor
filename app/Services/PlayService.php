@@ -160,7 +160,7 @@ final class PlayService
         $replacer = collect();
 
         $script->variables->each(function (ScriptVariable $scriptVariable) use ($replacer, $playVariables) {
-            $variableKey = '@' . $scriptVariable->variable;
+            $variableKey = '/@' . $scriptVariable->variable . '\b/';
 
             /** @var SocialChatVariable $playVariable */
             $playVariable = $playVariables->where('script_variable_id', $scriptVariable->id)->first();
@@ -170,7 +170,7 @@ final class PlayService
             }
         });
 
-        return str_replace($replacer->keys()->toArray(), $replacer->values()->toArray(), $message);
+        return preg_replace($replacer->keys()->toArray(), $replacer->values()->toArray(), $message);
     }
 
     public function resetVariables(?ScriptVariable $scriptVariable = null)
