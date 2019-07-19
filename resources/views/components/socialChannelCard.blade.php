@@ -7,6 +7,8 @@
                     <i class="fab fa-vk"></i>
                 @elseif($socialChannel->channel instanceof \App\Models\Social\Socialable\Telegram\TelegramChannel)
                     <i class="fab fa-telegram-plane"></i>
+                @elseif($socialChannel->channel instanceof \App\Models\Social\Socialable\Chat2Desk\Chat2DeskChannel)
+                    C2D
                 @endif
             </span>
             <a href="{{ route('socialChannels.show', ['social' => $socialChannel->id]) }}">

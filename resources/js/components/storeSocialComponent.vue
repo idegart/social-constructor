@@ -35,6 +35,15 @@
                                            class="custom-control-input">
                                     <label class="custom-control-label" for="socialTg">Telegram</label>
                                 </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input v-model="form.type"
+                                           value="chat2desk"
+                                           type="radio"
+                                           id="socialC2D"
+                                           name="customRadioInline1"
+                                           class="custom-control-input">
+                                    <label class="custom-control-label" for="socialC2D">Chat2Desk</label>
+                                </div>
                             </div>
                             <div v-if="form.type === 'vkontakte'">
                                 <div class="form-group">
@@ -56,6 +65,26 @@
                                            id="telegram_token"
                                            placeholder="Enter access token">
                                     <validation-errors :$v="$v" attribute="form.telegram_token" />
+                                </div>
+                            </div>
+                            <div v-if="form.type === 'chat2desk'">
+                                <div class="form-group">
+                                    <label for="chat2desk_token">Token</label>
+                                    <input v-model="form.chat2desk_token"
+                                           class="form-control"
+                                           :class="getValidationClass('form.chat2desk_token')"
+                                           id="chat2desk_token"
+                                           placeholder="Enter access token">
+                                    <validation-errors :$v="$v" attribute="form.chat2desk_token" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="chat2desk_operator_id">Operator ID</label>
+                                    <input v-model="form.chat2desk_operator_id"
+                                           class="form-control"
+                                           :class="getValidationClass('form.chat2desk_operator_id')"
+                                           id="chat2desk_operator_id"
+                                           placeholder="Enter operator id">
+                                    <validation-errors :$v="$v" attribute="form.chat2desk_operator_id" />
                                 </div>
                             </div>
                             <div class="form-group form-check">
@@ -112,6 +141,16 @@
                         return form.type === 'telegram'
                     }),
                 },
+                chat2desk_token: {
+                    requiredIf: requiredIf(function (form) {
+                        return form.type === 'chat2desk'
+                    }),
+                },
+                chat2desk_operator_id: {
+                    requiredIf: requiredIf(function (form) {
+                        return form.type === 'chat2desk'
+                    }),
+                },
                 accept: {
                     required,
                     accepted,
@@ -126,6 +165,8 @@
                 type: 'vkontakte',
                 vk_group_id: '',
                 telegram_token: '',
+                chat2desk_token: '',
+                chat2desk_operator_id: '',
                 accept: false
             }
         }),

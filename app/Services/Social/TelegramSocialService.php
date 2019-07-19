@@ -65,7 +65,6 @@ class TelegramSocialService extends BaseSocialService
 
         $from = collect($messageData['from']);
 
-
         $telegramUser = TelegramUser::firstOrCreate([
             'id' => $from->get('id')
         ], collect($from)->only(['is_bot', 'first_name', 'username'])->toArray());

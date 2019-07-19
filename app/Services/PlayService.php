@@ -29,6 +29,9 @@ final class PlayService
 {
     const MAX_STEPS = 25;
 
+    const VKONTAKTE = 'vkontakte';
+    const TELEGRAM = 'telegram';
+
     public $totalSteps = 0;
 
     public $socialService;

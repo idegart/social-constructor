@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\Social\StoreRequest;
 use App\Models\Script;
+use App\Models\Social\Socialable\Chat2Desk\Chat2DeskChannel;
 use App\Models\Social\Socialable\Telegram\TelegramChannel;
 use App\Models\Social\Socialable\Vkontakte\VkontakteGroup;
 use App\Models\Social\SocialChannel;
@@ -22,6 +23,12 @@ class SocialChannelController extends Controller
             case 'telegram':
                 list($id) = explode(':', $token = $request->get('telegram_token'));
                 TelegramChannel::updateOrCreate(['id' => $id,],['_access_token' => $token]);
+                break;
+            case 'chat2desk':
+                Chat2DeskChannel::updateOrCreate([
+                    '_access_token' => $request->get('chat2desk_token'),
+                    '_operator_id' => $request->get('chat2desk_operator_id'),
+                ]);
                 break;
             default:
                 return $this->errorResponse();

@@ -8,6 +8,8 @@ use App\Models\Block\{Params\AddParam,
     SendMessage,
     SendMessageWithInput,
     SendMessageWithKeyboard};
+use App\Services\PlayService;
+use App\Services\Social\{Chat2DeskSocialService, TelegramSocialService, VkontakteSocialService};
 
 return [
     'types' => [
@@ -21,5 +23,10 @@ return [
         'param_compare'     => CompareParam::class,
         'param_set'         => SetParam::class,
         'param_reset'       => ResetParam::class,
+    ],
+    'services' => [
+        PlayService::VKONTAKTE => VkontakteSocialService::class,
+        PlayService::TELEGRAM => TelegramSocialService::class,
+        'chat2desk' => Chat2DeskSocialService::class,
     ],
 ];
