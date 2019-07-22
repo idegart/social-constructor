@@ -16,7 +16,7 @@ let baseAxios = axios.create({
 });
 
 let apiAxios = axios.create({
-    baseURL: '/api',
+    baseURL: process.env.MIX_APP_URL + '/api',
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'X-CSRF-TOKEN': token ? token.content : undefined,
