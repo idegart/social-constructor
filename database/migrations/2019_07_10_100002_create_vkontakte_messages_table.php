@@ -14,7 +14,7 @@ class CreateVkontakteMessagesTable extends Migration
     public function up()
     {
         Schema::create('vkontakte_messages', function (Blueprint $table) {
-            $table->integer('id');
+            $table->bigInteger('id');
 
             $table->integer('from_id');
             $table->integer('peer_id');

@@ -9,6 +9,8 @@ abstract class BaseClient extends Model
 {
     protected $guarded = [];
 
+    public $incrementing = false;
+
     protected static function boot()
     {
         parent::boot();

@@ -14,7 +14,7 @@ class CreateTelegramMessagesTable extends Migration
     public function up()
     {
         Schema::create('telegram_messages', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigInteger('id');
 
             $table->integer('from_id');
 

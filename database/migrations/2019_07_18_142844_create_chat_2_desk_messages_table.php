@@ -14,7 +14,7 @@ class CreateChat2DeskMessagesTable extends Migration
     public function up()
     {
         Schema::create('chat_2_desk_messages', function (Blueprint $table) {
-            $table->integer('id');
+            $table->bigInteger('id');
 
             $table->string('type');
 

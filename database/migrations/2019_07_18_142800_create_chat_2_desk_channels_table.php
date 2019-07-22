@@ -14,7 +14,7 @@ class CreateChat2DeskChannelsTable extends Migration
     public function up()
     {
         Schema::create('chat_2_desk_channels', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigInteger('id');
 
             $table->string('company_name');
 

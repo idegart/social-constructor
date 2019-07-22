@@ -14,7 +14,7 @@ class CreateVkontakteGroupsTable extends Migration
     public function up()
     {
         Schema::create('vkontakte_groups', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->bigInteger('id')->primary();
 
             $table->string('name');
             $table->string('screen_name');

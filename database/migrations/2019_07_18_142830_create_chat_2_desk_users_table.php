@@ -14,7 +14,7 @@ class CreateChat2DeskUsersTable extends Migration
     public function up()
     {
         Schema::create('chat_2_desk_users', function (Blueprint $table) {
-            $table->integer('id');
+            $table->bigInteger('id');
 
             $table->string('name');
             $table->string('assigned_name')->nullable();
