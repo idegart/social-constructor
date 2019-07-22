@@ -16,8 +16,8 @@ class CreateSocialChatMessagesTable extends Migration
         Schema::create('social_chat_messages', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('social_chat_id');
-            $table->integer('social_message_id');
+            $table->unsignedBigInteger('social_chat_id');
+            $table->unsignedBigInteger('social_message_id');
 
             $table->timestamps();
 

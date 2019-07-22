@@ -18,9 +18,9 @@ class CreateResetParamBlocksTable extends Migration
 
             $table->boolean('reset_all')->default(false);
 
-            $table->integer('param_id')->nullable();
+            $table->unsignedBigInteger('param_id')->nullable();
 
-            $table->integer('next_block_id')->nullable();
+            $table->unsignedBigInteger('next_block_id')->nullable();
 
             $table->timestamps();
 

@@ -28,4 +28,6 @@ abstract class BaseMessage extends Model
     abstract public function getText();
 
     abstract public function isOut() : bool ;
+
+    abstract public function getSocial() : string ;
 }

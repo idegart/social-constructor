@@ -15,6 +15,9 @@
             <hsc-menu-item label="Compare" @click="addBlock('param_compare')" />
             <hsc-menu-item label="Reset" @click="addBlock('param_reset')" />
         </hsc-menu-item>
+        <hsc-menu-item label="Filters">
+            <hsc-menu-item label="Socials" @click="addBlock('filter_social')" />
+        </hsc-menu-item>
     </div>
 </template>
 

@@ -16,7 +16,7 @@ class CreateSchemasTable extends Migration
         Schema::create('schemas', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('script_id');
+            $table->unsignedBigInteger('script_id');
 
             $table->string('title');
 
@@ -26,7 +26,7 @@ class CreateSchemasTable extends Migration
         });
 
         Schema::table('scripts', function (Blueprint $table) {
-            $table->integer('starter_schema_id')->nullable();
+            $table->unsignedBigInteger('starter_schema_id')->nullable();
 
             $table->foreign('starter_schema_id', 'starter_schema')->references('id')->on('schemas');
         });

@@ -50,7 +50,7 @@ class SetParam extends BaseBlock
         ];
     }
 
-    public function playBlock(PlayService $playService)
+    public function playBlock(PlayService $playService) : ?Block
     {
 
     }

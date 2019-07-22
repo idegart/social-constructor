@@ -17,7 +17,7 @@ class CreateScriptVariablesTable extends Migration
         Schema::create('script_variables', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('script_id');
+            $table->unsignedBigInteger('script_id');
 
             $table->string('variable');
 

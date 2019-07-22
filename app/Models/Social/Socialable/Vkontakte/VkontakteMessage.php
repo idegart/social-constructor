@@ -3,6 +3,7 @@
 namespace App\Models\Social\Socialable\Vkontakte;
 
 use App\Models\Social\Socialable\BaseMessage;
+use App\Services\PlayService;
 
 class VkontakteMessage extends BaseMessage
 {
@@ -15,5 +16,11 @@ class VkontakteMessage extends BaseMessage
     {
         return $this->out;
     }
+
+    public function getSocial(): string
+    {
+        return PlayService::VKONTAKTE;
+    }
+
 
 }

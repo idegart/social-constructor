@@ -3,6 +3,7 @@
 namespace App\Models\Social\Socialable\Chat2Desk;
 
 use App\Models\Social\Socialable\BaseMessage;
+use App\Services\PlayService;
 
 class Chat2DeskMessage extends BaseMessage
 {
@@ -19,5 +20,16 @@ class Chat2DeskMessage extends BaseMessage
     {
         return $this->type == 'to_client';
     }
+
+    public function getSocial(): string
+    {
+        switch ($this->transport) {
+            case 'telegram': return PlayService::TELEGRAM;
+            case 'vk': return PlayService::VKONTAKTE;
+        }
+
+        return '';
+    }
+
 
 }

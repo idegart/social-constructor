@@ -17,11 +17,11 @@ class CreateCompareParamBlocksTable extends Migration
         Schema::create('compare_param_blocks', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('param_id')->nullable();
+            $table->unsignedBigInteger('param_id')->nullable();
 
             $table->enum('value_sign', CompareParam::SIGNS)->default(CompareParam::SIGN_EQUAL);
 
-            $table->integer('value_param_id')->nullable();
+            $table->unsignedBigInteger('value_param_id')->nullable();
 
             $table->string('value_string')->nullable();
             $table->integer('value_integer')->nullable();
@@ -31,8 +31,8 @@ class CreateCompareParamBlocksTable extends Migration
             $table->dateTime('value_datetime')->nullable();
             $table->enum('date_precision', CompareParam::PRECISIONS)->default(CompareParam::PRECISION_MINUTE);
 
-            $table->integer('true_next_block_id')->nullable();
-            $table->integer('false_next_block_id')->nullable();
+            $table->unsignedBigInteger('true_next_block_id')->nullable();
+            $table->unsignedBigInteger('false_next_block_id')->nullable();
 
             $table->timestamps();
 

@@ -58,7 +58,7 @@ class AddParam extends BaseBlock
         ];
     }
 
-    public function playBlock(PlayService $playService)
+    public function playBlock(PlayService $playService) : ?Block
     {
         $variable = $this->variable;
 

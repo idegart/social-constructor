@@ -18,11 +18,11 @@ class CreateSendMessageWithInputBlocksTable extends Migration
 
             $table->string('message')->nullable();
 
-            $table->integer('param_id')->nullable();
+            $table->unsignedBigInteger('param_id')->nullable();
 
-            $table->integer('next_block_id')->nullable();
+            $table->unsignedBigInteger('next_block_id')->nullable();
 
-            $table->integer('error_next_block_id')->nullable();
+            $table->unsignedBigInteger('error_next_block_id')->nullable();
 
             $table->timestamps();
 

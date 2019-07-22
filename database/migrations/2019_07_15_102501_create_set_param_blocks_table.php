@@ -16,9 +16,9 @@ class CreateSetParamBlocksTable extends Migration
         Schema::create('set_param_blocks', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('param_id')->nullable();
+            $table->unsignedBigInteger('param_id')->nullable();
 
-            $table->integer('value_param_id')->nullable();
+            $table->unsignedBigInteger('value_param_id')->nullable();
 
             $table->boolean('value_boolean')->nullable();
             $table->string('value_string')->nullable();
@@ -28,7 +28,7 @@ class CreateSetParamBlocksTable extends Migration
             $table->time('value_time')->nullable();
             $table->dateTime('value_datetime')->nullable();
 
-            $table->integer('next_block_id')->nullable();
+            $table->unsignedBigInteger('next_block_id')->nullable();
 
             $table->timestamps();
 

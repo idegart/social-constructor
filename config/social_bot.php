@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\Block\{Params\AddParam,
+use App\Models\Block\{Filters\SocialFilter,
+    Params\AddParam,
     Params\CompareParam,
     Params\ResetParam,
     Params\SetParam,
@@ -23,6 +24,8 @@ return [
         'param_compare'     => CompareParam::class,
         'param_set'         => SetParam::class,
         'param_reset'       => ResetParam::class,
+
+        'filter_social'     => SocialFilter::class
     ],
     'services' => [
         PlayService::VKONTAKTE => VkontakteSocialService::class,

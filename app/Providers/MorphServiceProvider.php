@@ -25,20 +25,10 @@ class MorphServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->morphBlockTypes();
-
-        $this->morphSocial();
     }
 
     private function morphBlockTypes()
     {
         Relation::morphMap(config('social_bot.types'));
-    }
-
-    private function morphSocial()
-    {
-        Relation::morphMap([
-            'social_channel_vk' => \App\Models\Social\Vkontakte\Channel::class,
-            'social_channel_tg' => \App\Models\Social\Telegram\Channel::class,
-        ]);
     }
 }

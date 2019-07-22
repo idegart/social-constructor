@@ -16,11 +16,11 @@ class CreateSendMessageWithKeyboardBlockButtonsTable extends Migration
         Schema::create('send_message_with_keyboard_block_buttons', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('send_message_with_keyboard_block_id');
+            $table->unsignedBigInteger('send_message_with_keyboard_block_id');
 
             $table->string('label');
 
-            $table->integer('next_block_id')->nullable();
+            $table->unsignedBigInteger('next_block_id')->nullable();
 
             $table->timestamps();
 

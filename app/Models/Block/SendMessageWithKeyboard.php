@@ -51,7 +51,7 @@ class SendMessageWithKeyboard extends BaseBlock
         ];
     }
 
-    public function playBlock(PlayService $playService)
+    public function playBlock(PlayService $playService) : ?Block
     {
         $keyboard = new SocialKeyboard();
 
@@ -65,13 +65,11 @@ class SendMessageWithKeyboard extends BaseBlock
 
         $playService->setCurrentStep($this->block);
 
-        return false;
+        return null;
     }
 
     public function playContinue(PlayService $playService)
     {
-        $playService->setCurrentStep(null);
-
         /** @var BaseMessage $message */
         $message = $playService->socialMessage->message;
 

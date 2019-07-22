@@ -16,9 +16,9 @@ class CreateSocialChannelScriptsTable extends Migration
         Schema::create('social_channel_scripts', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('social_channel_id');
+            $table->unsignedBigInteger('social_channel_id');
 
-            $table->integer('script_id');
+            $table->unsignedBigInteger('script_id');
 
             $table->timestamps();
 

@@ -18,7 +18,7 @@ class CreateSendMessageWithKeyboardBlocksTable extends Migration
 
             $table->string('message')->nullable();
 
-            $table->integer('error_next_block_id')->nullable();
+            $table->unsignedBigInteger('error_next_block_id')->nullable();
 
             $table->timestamps();
 

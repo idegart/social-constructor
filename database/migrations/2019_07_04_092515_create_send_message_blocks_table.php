@@ -18,7 +18,7 @@ class CreateSendMessageBlocksTable extends Migration
 
             $table->string('message')->nullable();
 
-            $table->integer('next_block_id')->nullable();
+            $table->unsignedBigInteger('next_block_id')->nullable();
 
             $table->timestamps();
 

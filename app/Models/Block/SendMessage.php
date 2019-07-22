@@ -30,7 +30,7 @@ class SendMessage extends BaseBlock
         return $this->belongsTo(Block::class, 'next_block_id');
     }
 
-    public function playBlock(PlayService $playService)
+    public function playBlock(PlayService $playService) : ?Block
     {
         $message = $playService->messageReplaceWithVariables($this->block->schema->script, $this->message);
 

@@ -31,7 +31,7 @@ class ResetParam extends BaseBlock
         ];
     }
 
-    public function playBlock(PlayService $playService)
+    public function playBlock(PlayService $playService) : ?Block
     {
         if ($this->reset_all) {
             $playService->resetVariables();

@@ -17,18 +17,18 @@ class CreateAddParamBlocksTable extends Migration
         Schema::create('add_param_blocks', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('param_id')->nullable();
+            $table->unsignedBigInteger('param_id')->nullable();
 
             $table->enum('value_sign', AddParam::SIGNS)->default(AddParam::SIGN_ADD);
 
-            $table->integer('value_param_id')->nullable();
+            $table->unsignedBigInteger('value_param_id')->nullable();
 
             $table->integer('value_integer')->nullable();
             $table->integer('value_days')->nullable();
             $table->integer('value_hours')->nullable();
             $table->integer('value_minutes')->nullable();
 
-            $table->integer('next_block_id')->nullable();
+            $table->unsignedBigInteger('next_block_id')->nullable();
 
             $table->timestamps();
 

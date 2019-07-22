@@ -3,6 +3,7 @@
 namespace App\Models\Social\Socialable\Telegram;
 
 use App\Models\Social\Socialable\BaseMessage;
+use App\Services\PlayService;
 
 class TelegramMessage extends BaseMessage
 {
@@ -16,4 +17,8 @@ class TelegramMessage extends BaseMessage
         return false;
     }
 
+    public function getSocial(): string
+    {
+        return PlayService::TELEGRAM;
+    }
 }

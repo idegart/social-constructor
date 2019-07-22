@@ -17,10 +17,10 @@ class CreateSocialChatVariablesTable extends Migration
         Schema::create('social_chat_variables', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('script_id');
-            $table->integer('script_variable_id');
+            $table->unsignedBigInteger('script_id');
+            $table->unsignedBigInteger('script_variable_id');
 
-            $table->integer('social_chat_id');
+            $table->unsignedBigInteger('social_chat_id');
             $table->enum('type', ScriptVariable::TYPES)->default(ScriptVariable::TYPE_STRING);
 
             $table->string('string')->nullable();

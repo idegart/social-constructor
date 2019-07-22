@@ -9,12 +9,12 @@ use App\Models\Social\Socialable\Chat2Desk\Chat2DeskChannel;
 use App\Models\Social\Socialable\Chat2Desk\Chat2DeskMessage;
 use App\Models\Social\Socialable\Chat2Desk\Chat2DeskUser;
 use App\Models\Social\SocialChannel;
-use App\Models\Social\SocialChat;
 use App\Models\Social\SocialClient;
 use App\Models\Social\SocialMessage;
 use App\Services\PlayService;
 use GuzzleHttp\Client;
-use Illuminate\Support\Str;
+use GuzzleHttp\Exception\BadResponseException;
+use Throwable;
 
 class Chat2DeskSocialService extends BaseSocialService
 {
@@ -45,10 +45,6 @@ class Chat2DeskSocialService extends BaseSocialService
 
     public function handleNewMessageCallback(SocialChannel $socialChannel, array $requestData)
     {
-        if ($requestData['client_id'] != 59202029) {
-            return;
-        }
-
         $chatUser = Chat2DeskUser::firstOrCreate([
             'id' => $requestData['client_id']
         ], collect($requestData['client'])->only([
@@ -59,15 +55,13 @@ class Chat2DeskSocialService extends BaseSocialService
 
         $socialMessage = $this->storeMessage($socialChannel, $chatUser->socialClient, $this->messageFormat($requestData));
 
-        $this->sendMessage($socialChannel, $chatUser->socialClient, 'secret test ' . Str::random());
+        $playService = new PlayService($this);
 
-//        $playService = new PlayService($this);
-//
-//        $playService
-//            ->setSocialChannel($socialChannel)
-//            ->setSocialClient($chatUser->socialClient)
-//            ->setSocialMessage($socialMessage)
-//            ->handleNewMessageCallback();
+        $playService
+            ->setSocialChannel($socialChannel)
+            ->setSocialClient($chatUser->socialClient)
+            ->setSocialMessage($socialMessage)
+            ->handleNewMessageCallback();
     }
 
     public function messageFormat(array $messageData): array
@@ -99,33 +93,30 @@ class Chat2DeskSocialService extends BaseSocialService
             $messageDataSend->put('operator_id', $cdChannel->_operator_id);
         }
 
-//        if ($keyboard) {
-//            $reply_markup = $this->apiService->replyKeyboardMarkup([
-//                'keyboard' => $keyboard->buttons->map(function (SocialKeyboardButton $button) {
-//                    return [$button->label];
-//                }),
-//                'resize_keyboard' => true,
-//                'one_time_keyboard' => true
-//            ]);
-//
-//            $messageDataSend->put('keyboard', json_encode([
-//                'buttons' => [
-//                    [
-//                        'action' => [
-//                            'type' => 'text',
-//                            'label' => 'test me test'
-//                        ]
-//                    ]
-//                ]
-//            ]));
-//        }
+        if ($keyboard) {
+            $messageDataSend->put('keyboard', [
+                'buttons' => $keyboard->buttons->map(function (SocialKeyboardButton $button) {
+                    return [
+                        'type' => 'reply',
+                        'text' => $button->label,
+                    ];
+                }),
+            ]);
+        }
 
-        $response = $client->post(self::API_URL . 'messages', [
-            'headers' => [
-                'Authorization' => $cdChannel->_access_token
-            ],
-            'form_params' => $messageDataSend->toArray()
-        ]);
+        dump($messageDataSend->toJson());
+
+        try {
+            $response = $client->post(self::API_URL . 'messages', [
+                'headers' => [
+                    'Authorization' => $cdChannel->_access_token,
+                    'Content-Type' => 'Application/JSON',
+                ],
+                'body' => $messageDataSend->toJson()
+            ]);
+        } catch (BadResponseException $exception) {
+            dump($exception->getResponse()->getBody()->getContents());
+        }
 
         $responseArray = json_decode($response->getBody()->getContents(), true);
 
@@ -137,11 +128,20 @@ class Chat2DeskSocialService extends BaseSocialService
 
     public function storeMessage(SocialChannel $socialChannel, SocialClient $socialClient, $formatMessage): SocialMessage
     {
-        /** @var SocialChat $socialChat */
-        $socialChat = $socialChannel->socialChats()->firstOrCreate([
-            'social_client_id' => $socialClient->id,
-            'social_channel_id' => $socialChannel->id,
-        ]);
+        $socialChat = null;
+        $tries = 0;
+
+        while (!$socialChat && $tries < 10) {
+            $tries++;
+            try {
+                // TODO: узнать почему ломается при создании новой записи кроме первой!
+                $socialChat = $socialChannel->socialChats()->firstOrCreate([
+                    'social_client_id' => $socialClient->id,
+                ]);
+            } catch (Throwable $exception) {}
+        }
+
+        dump('total tries: ' . $tries);
 
         $chatMessage = Chat2DeskMessage::create($formatMessage);
 

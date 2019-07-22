@@ -38,7 +38,7 @@ class SendMessageWithInput extends BaseBlock
         ];
     }
 
-    public function playBlock(PlayService $playService)
+    public function playBlock(PlayService $playService) : ?Block
     {
         $message = $playService->messageReplaceWithVariables($this->block->schema->script, $this->message);
 
@@ -51,8 +51,6 @@ class SendMessageWithInput extends BaseBlock
 
     public function playContinue(PlayService $playService)
     {
-        $playService->setCurrentStep(null);
-
         /** @var BaseMessage $message */
         $message = $playService->socialMessage->message;
 

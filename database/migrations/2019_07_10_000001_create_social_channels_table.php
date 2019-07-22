@@ -16,7 +16,7 @@ class CreateSocialChannelsTable extends Migration
         Schema::create('social_channels', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('user_id');
+            $table->unsignedBigInteger('user_id');
 
             $table->morphs('channel');
 

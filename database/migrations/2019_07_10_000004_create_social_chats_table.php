@@ -16,10 +16,10 @@ class CreateSocialChatsTable extends Migration
         Schema::create('social_chats', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('social_channel_id');
-            $table->integer('social_client_id');
+            $table->unsignedBigInteger('social_channel_id');
+            $table->unsignedBigInteger('social_client_id');
 
-            $table->integer('current_block_id')->nullable();
+            $table->unsignedBigInteger('current_block_id')->nullable();
 
             $table->timestamps();
 
