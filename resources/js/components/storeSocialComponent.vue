@@ -181,7 +181,7 @@
 
                 this.loading = true;
 
-                apiAxios.post('/socialChannels/', this.form)
+                apiAxios.post('/socialChannels', this.form)
                     .then(() => {
                         window.location.reload();
                     })

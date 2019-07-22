@@ -96,7 +96,7 @@
 
                 this.loading = true;
 
-                apiAxios.post('/scripts/', this.form)
+                apiAxios.post('/scripts', this.form)
                     .then(() => {
                         window.location.reload();
                     })
