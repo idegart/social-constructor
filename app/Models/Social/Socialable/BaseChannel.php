@@ -19,6 +19,7 @@ abstract class BaseChannel extends Model
         static::created(function (BaseChannel $channel) {
             $channel->socialChannel()->create([
                 'user_id' => Auth::id(),
+                'channel_id' => $channel->getKey()
             ]);
         });
     }
