@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use Barryvdh\Cors\HandleCors;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -41,7 +42,8 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
-            'shouldUse:api'
+            'shouldUse:api',
+            HandleCors::class,
         ],
     ];
 
