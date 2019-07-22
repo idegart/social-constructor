@@ -24,7 +24,7 @@ class CreateSendMessageWithKeyboardBlockButtonsTable extends Migration
 
             $table->timestamps();
 
-            $table->foreign('send_message_with_keyboard_block_id')
+            $table->foreign('send_message_with_keyboard_block_id', 'send_message_with_keyboard_block_id_foreign')
                 ->references('id')->on('send_message_with_keyboard_blocks')
                 ->onDelete('cascade');
 
