@@ -12,6 +12,11 @@ use App\Http\Controllers\Controller;
 
 class SocialChannelController extends Controller
 {
+    public function index()
+    {
+        echo 'ok';
+    }
+
     public function store(StoreRequest $request)
     {
         $channelType = $request->get('type');
