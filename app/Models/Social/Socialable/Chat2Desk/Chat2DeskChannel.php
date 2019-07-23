@@ -10,6 +10,8 @@ class Chat2DeskChannel extends BaseChannel
 {
     protected $table = 'chat_2_desk_channels';
 
+    public $incrementing = true;
+
     protected $fillable = [
         '_access_token',
         '_operator_id',
