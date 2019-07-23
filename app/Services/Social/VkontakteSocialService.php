@@ -131,7 +131,7 @@ class VkontakteSocialService extends BaseSocialService
         $result = $this->apiService->groups()->addCallbackServer($group->_access_token, [
             'group_id' => $group->id,
             'url' => $group->getCallbackUrl(),
-            'title' => config('app.name'),
+            'title' => 'Constructor',
             'secret_key' => Str::random(),
         ]);
 
