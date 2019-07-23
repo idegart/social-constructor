@@ -30,6 +30,7 @@ class TelegramSocialService extends BaseSocialService
 
         $response = $this->apiService->getMe();
 
+        $channel->id = $response->getId();
         $channel->first_name = $response->getFirstName();
         $channel->username = $response->getUsername();
 
