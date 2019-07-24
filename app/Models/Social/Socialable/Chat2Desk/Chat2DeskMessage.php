@@ -21,7 +21,7 @@ class Chat2DeskMessage extends BaseMessage
         return $this->type == 'to_client';
     }
 
-    public function getSocial(): string
+    public function getSocialType(): string
     {
         switch ($this->transport) {
             case 'telegram': return PlayService::TELEGRAM;
@@ -31,5 +31,8 @@ class Chat2DeskMessage extends BaseMessage
         return '';
     }
 
-
+    public function getRealId(): string
+    {
+        return $this->id;
+    }
 }

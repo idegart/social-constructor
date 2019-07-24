@@ -1,0 +1,250 @@
+<?php
+
+namespace App\Models\Block;
+
+use App\Models\Block;
+use App\Models\Block\ExternalApi\ExternalApiOption;
+use App\Models\Script\ScriptVariable;
+use App\Models\Social\Socialable\BaseChannel;
+use App\Models\Social\Socialable\BaseClient;
+use App\Models\Social\Socialable\BaseMessage;
+use App\Models\Social\SocialChatVariable;
+use App\Services\PlayService;
+use App\Services\Social\SocialKeyboard;
+use App\Services\Social\SocialKeyboardButton;
+use GuzzleHttp\Client;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Psr\Http\Message\ResponseInterface;
+use Validator;
+
+class ExternalApi extends BaseBlock
+{
+    protected $table = 'external_api_blocks';
+
+    protected $guarded = [];
+
+    protected $with = [
+        'options'
+    ];
+
+    public function validationRules(): array
+    {
+        return [
+            'url' => [
+                'sometimes', 'nullable', 'url',
+            ],
+            'handler' => [
+                'sometimes', 'nullable', 'string', 'alpha_dash',
+            ],
+            'option_store' => [
+                'sometimes', 'required', 'string', 'alpha_dash',
+            ],
+            'option_remove' => [
+                'sometimes',
+                Rule::exists((new ExternalApiOption())->getTable(), 'id')
+            ],
+            'option_update' => [
+                'sometimes', 'array',
+            ],
+            'option_update.id' => [
+                'required_with:option_update',
+                Rule::exists((new ExternalApiOption())->getTable(), 'id')
+            ],
+            'option_update.next_block_id' => [
+                'required_with:option_update',
+                Rule::exists((new Block)->getTable(), 'id'),
+            ],
+        ];
+    }
+
+    public function playBlock(PlayService $playService): ?Block
+    {
+        return $this->toPlay($playService);
+    }
+
+    public function playContinue(PlayService $playService) : ?Block
+    {
+        return $this->toPlay($playService);
+    }
+
+    private function toPlay(PlayService $playService) : ?Block
+    {
+        if (!$this->url) {
+            return null;
+        }
+
+        $response = $this->sendRequest($playService);
+
+        $validator = $this->validateResponse($response);
+
+        if ($validator->fails()) {
+            return null;
+        }
+
+        $validResponse = $validator->valid();
+
+        if (key_exists('message', $validResponse)) {
+            $keyboard = null;
+
+            if (key_exists('keyboard', $validResponse)) {
+                $keyboard = new SocialKeyboard();
+
+                foreach ($validResponse['keyboard'] as $keyboardButton) {
+                    $button = new SocialKeyboardButton($keyboardButton);
+                    $keyboard->addButton($button);
+                }
+            }
+
+            $playService->sendMessage($validResponse['message'], $keyboard);
+        }
+
+        if (key_exists('wait', $validResponse) && $validResponse['wait']) {
+            $playService->setCurrentStep($this->block);
+        }
+
+        if (key_exists('variable_update', $validResponse)) {
+            $variablesToUpdate = $validResponse['variable_update'];
+
+            $this->updateVariables($playService, $variablesToUpdate);
+        }
+
+        if (key_exists('next_option', $validResponse)) {
+            /** @var ExternalApiOption $option */
+            $option = $this->options()->where('key', '=', $validResponse['next_option'])->first();
+
+            return $option ? $option->nextBlock : null;
+        }
+
+        return null;
+    }
+
+    private function sendRequest(PlayService $playService) : ResponseInterface
+    {
+        /** @var BaseChannel $channel */
+        $channel = $playService->socialChannel->channel;
+
+        /** @var BaseClient $client */
+        $client = $playService->socialClient->client;
+
+        /** @var BaseMessage $message */
+        $message = $playService->socialMessage->message;
+
+        $data = collect([
+            'social' => $message->getSocialType(),
+            'channel' => [
+                'social' => $channel->getSocialType(),
+                'real_id' => $channel->getRealId(),
+                'name' => $channel->getChannelName(),
+            ],
+            'user' => [
+                'social' => $client->getSocialType(),
+                'real_id' => $client->getRealId(),
+                'name' => $client->getName(),
+            ],
+            'message' => [
+                'social' => $message->getSocialType(),
+                'real_id' => $message->getRealId(),
+                'text' => $message->getText(),
+            ],
+            'params' => $playService->socialChat->variables->map(function (SocialChatVariable $variable) {
+                return [
+                    'param' => $variable->scriptVariable->variable,
+                    'type' => $variable->scriptVariable->type,
+                    'value' => $variable->value ?? ''
+                ];
+            })->toArray(),
+        ]);
+
+        if ($this->handler) {
+            $data->put('handler', $this->handler);
+        }
+
+        $apiClient = new Client();
+
+        return $apiClient->post($this->url, [
+            'form_params' => $data->toArray()
+        ]);
+    }
+
+    private function validateResponse(ResponseInterface $response) : \Illuminate\Validation\Validator
+    {
+        $responseData = json_decode($response->getBody()->getContents(), true);
+
+        return Validator::make($responseData, [
+            'next_option' => [
+                'sometimes', 'required',
+                Rule::exists((new ExternalApiOption)->getTable(), 'key'),
+            ],
+            'wait' => [
+                'required_without:next_option', 'boolean',
+            ],
+            'message' => [
+                'sometimes', 'string',
+            ],
+            'variable_update' => [
+                'sometimes', 'array',
+            ],
+            'variable_update.*.variable' => [
+                'required', 'string',
+                Rule::exists((new ScriptVariable)->getTable(), 'variable'),
+            ],
+            'variable_update.*.value' => [
+                'nullable',
+            ],
+        ]);
+    }
+
+    public function updateVariables(PlayService $playService, array $variablesToUpdate)
+    {
+        $scriptVariables = $this->block->schema->script->variables;
+        $chatVariables = $playService->socialChat->variables;
+
+        foreach ($variablesToUpdate as $variableToUpdate) {
+            $scriptVariable = $scriptVariables->firstWhere('variable','=', $variableToUpdate['variable']);
+
+            if (!$scriptVariable) {
+                continue;
+            }
+
+            /** @var SocialChatVariable $chatVariable */
+            $chatVariable = $chatVariables->firstWhere('script_variable_id', $scriptVariable->getKey());
+
+            if (!$chatVariable) {
+                continue;
+            }
+
+            $chatVariable->updateValue($variableToUpdate['value']);
+        }
+    }
+
+    public function options()
+    {
+        return $this->hasMany(ExternalApiOption::class, 'external_api_blocks_id')->orderBy('id');
+    }
+
+    public function setHandlerAttribute($value)
+    {
+        $this->attributes['handler'] = Str::upper($value);
+    }
+
+    public function setOptionStoreAttribute($value)
+    {
+        $this->options()->create(['key' => $value]);
+    }
+
+    public function setOptionRemoveAttribute($value)
+    {
+        $this->options()->where('id', '=', $value)->delete();
+    }
+
+    public function setOptionUpdateAttribute($value)
+    {
+        $optionId = $value['id'];
+        $nextBlockId = $value['next_block_id'];
+
+        $this->options()->where('id', '=', $optionId)->update([
+            'next_block_id' => $nextBlockId
+        ]);
+    }
+}

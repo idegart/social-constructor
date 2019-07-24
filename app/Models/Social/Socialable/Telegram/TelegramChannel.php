@@ -3,6 +3,7 @@
 namespace App\Models\Social\Socialable\Telegram;
 
 use App\Models\Social\Socialable\BaseChannel;
+use App\Services\PlayService;
 use App\Services\Social\TelegramSocialService;
 use Exception;
 
@@ -58,5 +59,15 @@ class TelegramChannel extends BaseChannel
         $service = new TelegramSocialService();
 
         return $service->setChannelInfo($this);
+    }
+
+    public function getRealId(): string
+    {
+        return $this->id;
+    }
+
+    public function getSocialType(): string
+    {
+        return PlayService::TELEGRAM;
     }
 }

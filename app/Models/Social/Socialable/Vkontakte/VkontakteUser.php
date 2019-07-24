@@ -3,6 +3,7 @@
 namespace App\Models\Social\Socialable\Vkontakte;
 
 use App\Models\Social\Socialable\BaseClient;
+use App\Services\PlayService;
 use App\Services\Social\VkontakteSocialService;
 use Exception;
 
@@ -27,4 +28,21 @@ class VkontakteUser extends BaseClient
 
         return $service->setClientInfo($this);
     }
+
+    public function getRealId(): string
+    {
+        return $this->id;
+    }
+
+    public function getSocialType(): string
+    {
+        return PlayService::VKONTAKTE;
+    }
+
+    public function getName(): string
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+
 }

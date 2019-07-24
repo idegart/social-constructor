@@ -46,7 +46,7 @@ class SendMessageWithInput extends BaseBlock
 
         $playService->setCurrentStep($this->block);
 
-        return false;
+        return null;
     }
 
     public function playContinue(PlayService $playService)

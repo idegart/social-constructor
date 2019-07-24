@@ -11,6 +11,10 @@ abstract class BaseMessage extends Model
 
     public $incrementing = false;
 
+    protected $appends = [
+        'socialType',
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -27,9 +31,8 @@ abstract class BaseMessage extends Model
         return $this->morphOne(SocialMessage::class, 'message');
     }
 
+    abstract public function getSocialType() : string ;
+    abstract public function getRealId() : string ;
     abstract public function getText();
-
     abstract public function isOut() : bool ;
-
-    abstract public function getSocial() : string ;
 }

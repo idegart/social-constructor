@@ -24,4 +24,8 @@ abstract class BaseClient extends Model
     {
         return $this->morphOne(SocialClient::class, 'client');
     }
+
+    abstract public function getRealId() : string ;
+    abstract public function getSocialType() : string ;
+    abstract public function getName() : string ;
 }

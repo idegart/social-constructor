@@ -30,7 +30,8 @@ class CreateSocialChatsTable extends Migration
                 ->references('id')->on('social_clients');
 
             $table->foreign('current_block_id')
-                ->references('id')->on('blocks');
+                ->references('id')->on('blocks')
+                ->onDelete('set null');
         });
     }
 

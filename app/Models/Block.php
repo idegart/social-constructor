@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Block\BaseBlock;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\ValidationException;
 
 class Block extends Model
 {
@@ -44,9 +46,16 @@ class Block extends Model
         return $this->morphTo();
     }
 
+    /**
+     * @param $value
+     * @throws ValidationException
+     */
     public function setDataAttribute($value)
     {
-        $this->data()->update($value);
+        /** @var BaseBlock $dataBlock */
+        $dataBlock = $this->data;
+
+        $dataBlock->update($dataBlock->validate($value));
     }
 
     public function schema()

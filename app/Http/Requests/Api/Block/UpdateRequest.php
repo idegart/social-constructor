@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\Block;
 
+use App\Models\Block;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -24,6 +25,16 @@ class UpdateRequest extends FormRequest
             ],
             'data' => [
                 'sometimes',
+                function ($attribute, $value, $fail) {
+
+                    /** @var Block $block */
+                    $block = $this->route('block');
+
+                    /** @var Block\BaseBlock $blockData */
+                    $blockData = $block->data;
+
+                    $blockData->validate($value);
+                }
             ]
         ];
     }

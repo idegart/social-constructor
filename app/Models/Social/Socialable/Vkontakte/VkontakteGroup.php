@@ -3,6 +3,7 @@
 namespace App\Models\Social\Socialable\Vkontakte;
 
 use App\Models\Social\Socialable\BaseChannel;
+use App\Services\PlayService;
 use App\Services\Social\VkontakteSocialService;
 use Exception;
 use VK\OAuth\Scopes\VKOAuthGroupScope;
@@ -74,4 +75,16 @@ class VkontakteGroup extends BaseChannel
 
         return $service->setChannelInfo($this);
     }
+
+    public function getRealId(): string
+    {
+        return $this->id;
+    }
+
+    public function getSocialType(): string
+    {
+        return PlayService::VKONTAKTE;
+    }
+
+
 }

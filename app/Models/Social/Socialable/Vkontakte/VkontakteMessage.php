@@ -17,10 +17,13 @@ class VkontakteMessage extends BaseMessage
         return $this->out;
     }
 
-    public function getSocial(): string
+    public function getSocialType(): string
     {
         return PlayService::VKONTAKTE;
     }
 
-
+    public function getRealId(): string
+    {
+        return $this->id;
+    }
 }

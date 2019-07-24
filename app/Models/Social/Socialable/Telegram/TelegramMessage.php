@@ -17,8 +17,13 @@ class TelegramMessage extends BaseMessage
         return false;
     }
 
-    public function getSocial(): string
+    public function getSocialType(): string
     {
         return PlayService::TELEGRAM;
+    }
+
+    public function getRealId(): string
+    {
+        return $this->id;
     }
 }

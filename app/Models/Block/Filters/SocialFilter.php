@@ -37,7 +37,7 @@ class SocialFilter extends BaseBlock
         /** @var BaseMessage $message */
         $message = $playService->socialMessage->message;
 
-        switch ($message->getSocial()) {
+        switch ($message->getSocialType()) {
             case PlayService::VKONTAKTE:
                 return $this->vkontakteNextBlock;
             case PlayService::TELEGRAM:

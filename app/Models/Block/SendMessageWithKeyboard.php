@@ -107,17 +107,13 @@ class SendMessageWithKeyboard extends BaseBlock
         $buttonId = $value['id'];
         $nextBlockId = $value['next_block_id'];
 
-        $button = $this->buttons()->find($buttonId);
-
-        $button->update([
+        $this->buttons()->where('id', '=', $buttonId)->update([
             'next_block_id' => $nextBlockId
         ]);
     }
 
     public function setButtonRemoveAttribute($buttonId)
     {
-        $button = $this->buttons()->find($buttonId);
-
-        $button->delete();
+        $this->buttons()->where('id', '=', $buttonId)->delete();
     }
 }

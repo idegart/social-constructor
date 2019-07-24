@@ -25,7 +25,9 @@ abstract class BaseBlock extends Model
      */
     public function validate($data)
     {
-        return Validator::validate($data, $this->validationRules());
+        $validated = Validator::validate($data, $this->validationRules());
+
+        return $validated;
     }
 
     public function block()

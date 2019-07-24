@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\Block\{Filters\SocialFilter,
+use App\Models\Block\{ExternalApi,
+    Filters\SocialFilter,
     Params\AddParam,
     Params\CompareParam,
     Params\ResetParam,
@@ -25,7 +26,9 @@ return [
         'param_set'         => SetParam::class,
         'param_reset'       => ResetParam::class,
 
-        'filter_social'     => SocialFilter::class
+        'filter_social'     => SocialFilter::class,
+
+        'external_api'      => ExternalApi::class,
     ],
     'services' => [
         PlayService::VKONTAKTE => VkontakteSocialService::class,

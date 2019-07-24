@@ -18,6 +18,9 @@
         <hsc-menu-item label="Filters">
             <hsc-menu-item label="Socials" @click="addBlock('filter_social')" />
         </hsc-menu-item>
+        <hsc-menu-item label="External">
+            <hsc-menu-item label="External API" @click="addBlock('external_api')" />
+        </hsc-menu-item>
     </div>
 </template>
 

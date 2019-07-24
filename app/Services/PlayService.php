@@ -113,17 +113,17 @@ final class PlayService
 
     public function continuePlay()
     {
+        $this->setCurrentStep(null);
+
         /** @var BaseBlock $blockData */
         $blockData = $this->socialChat->currentBlock->data;
 
         $nextBlock = $blockData->playContinue($this);
 
-        if ($nextBlock) {
+        if ($nextBlock instanceof Block) {
             $this->playBlock($nextBlock);
             return;
         }
-
-        $this->setCurrentStep(null);
 
         if ($nextBlock === false) {
             $this->initNewMessage();
