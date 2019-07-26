@@ -22,6 +22,7 @@
                                         id="script"
                                         class="form-control"
                                         :class="getValidationClass('form.script')">
+                                    <option :value="null">Select script</option>
                                     <option v-for="script in scripts" :value="script.id">
                                         {{ script.title }}
                                     </option>

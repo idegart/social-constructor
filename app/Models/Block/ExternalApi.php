@@ -60,7 +60,7 @@ class ExternalApi extends BaseBlock
 
     public function playBlock(PlayService $playService): ?Block
     {
-        return $this->toPlay($playService);
+        return $this->toPlay($playService, true);
     }
 
     public function playContinue(PlayService $playService) : ?Block
@@ -68,13 +68,13 @@ class ExternalApi extends BaseBlock
         return $this->toPlay($playService);
     }
 
-    private function toPlay(PlayService $playService) : ?Block
+    private function toPlay(PlayService $playService, $isInitial = false) : ?Block
     {
         if (!$this->url) {
             return null;
         }
 
-        $response = $this->sendRequest($playService);
+        $response = $this->sendRequest($playService, $isInitial);
 
         $validator = $this->validateResponse($response);
 
@@ -119,7 +119,7 @@ class ExternalApi extends BaseBlock
         return null;
     }
 
-    private function sendRequest(PlayService $playService) : ResponseInterface
+    private function sendRequest(PlayService $playService, $isInitial = false) : ResponseInterface
     {
         /** @var BaseChannel $channel */
         $channel = $playService->socialChannel->channel;
@@ -132,6 +132,15 @@ class ExternalApi extends BaseBlock
 
         $data = collect([
             'social' => $message->getSocialType(),
+            'is_initial' => $isInitial,
+            'script' => [
+                'id' => $this->block->schema->script->id,
+                'title' => $this->block->schema->script->title,
+            ],
+            'schema' => [
+                'id' => $this->block->schema->id,
+                'title' => $this->block->schema->title,
+            ],
             'channel' => [
                 'social' => $channel->getSocialType(),
                 'real_id' => $channel->getRealId(),
@@ -147,9 +156,9 @@ class ExternalApi extends BaseBlock
                 'real_id' => $message->getRealId(),
                 'text' => $message->getText(),
             ],
-            'params' => $playService->socialChat->variables->map(function (SocialChatVariable $variable) {
+            'variables' => $playService->socialChat->variables->map(function (SocialChatVariable $variable) {
                 return [
-                    'param' => $variable->scriptVariable->variable,
+                    'variable' => $variable->scriptVariable->variable,
                     'type' => $variable->scriptVariable->type,
                     'value' => $variable->value ?? ''
                 ];

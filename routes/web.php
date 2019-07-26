@@ -25,4 +25,6 @@ Route::middleware('auth')->group(function () {
     ]);
 
     Route::get('scripts/{script}/editor', 'ScriptController@editor')->name('scripts.editor');
+    Route::post('scripts/{script}/addUserToTeam', 'ScriptController@addUserToTeam')->name('scripts.addUserToTeam');
+    Route::delete('scripts/{script}/removeUserFromTeam', 'ScriptController@removeUserFromTeam')->name('scripts.removeUserFromTeam');
 });

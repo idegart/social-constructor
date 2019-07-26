@@ -123,7 +123,7 @@
     import {cloneDeep} from 'lodash'
 
     import validationMixin from "@js/mixins/validationMixin";
-    import { required, minLength, maxLength, alpha, } from 'vuelidate/lib/validators'
+    import { required, minLength, maxLength, alpha, helpers } from 'vuelidate/lib/validators'
 
     import {createNamespacedHelpers} from 'vuex'
     const {mapActions, mapState} = createNamespacedHelpers('editor');
@@ -173,7 +173,7 @@
             form: {
                 variable: {
                     required,
-                    alpha,
+                    alpha_dash: helpers.regex('alpha_dash', /^[a-zA-Z0-9-_]+$/),
                     minLength: minLength(2),
                     maxLength: maxLength(16),
                 },

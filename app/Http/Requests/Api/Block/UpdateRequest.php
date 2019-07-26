@@ -3,13 +3,21 @@
 namespace App\Http\Requests\Api\Block;
 
 use App\Models\Block;
+use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        /** @var Block $block */
+        $block = $this->route('block');
+
+        return Auth::check() &&
+            (
+                Auth::user()->owns($block->schema->script) ||
+                Auth::user()->can('edit-block', $block->schema->script->getTeamName())
+            );
     }
 
     public function rules()

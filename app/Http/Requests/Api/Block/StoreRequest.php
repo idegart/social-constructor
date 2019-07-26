@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Block;
 
 use App\Models\Schema;
+use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -10,7 +11,10 @@ class StoreRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        /** @var Schema $schema */
+        $schema = Schema::findOrFail($this->get('schema_id'));
+
+        return Auth::check() && Auth::user()->owns($schema->script);
     }
 
     public function rules()
