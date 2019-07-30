@@ -7,7 +7,7 @@
                 <hsc-menu-separator />
                 <hsc-menu-item label="Load schema">
                     <hsc-menu-item v-for="schema in schemas"
-                                   :label="schema.title"
+                                   :label="schema.title + (script.starter_schema_id === schema.id ? ' (start)' : '')"
                                    :key="schema.id" />
                 </hsc-menu-item>
                 <hsc-menu-separator />
@@ -15,6 +15,7 @@
             </hsc-menu-bar-item>
             <hsc-menu-bar-item label="Options">
                 <hsc-menu-item label="Open params" @click="openModal('modalParams')" />
+                <hsc-menu-item label="External API" @click="openModal('modalExternalApi')" />
             </hsc-menu-bar-item>
             <hsc-menu-bar-item label="Settings">
                 <hsc-menu-item label="Statistic" v-model="statsVisibleToggler" />

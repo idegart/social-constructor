@@ -9,6 +9,7 @@
             <li v-if="!checkValidationRule('numeric')">The field must be numeric.</li>
             <li v-if="!checkValidationRule('alpha')">The field must be entirely alphabetic characters</li>
             <li v-if="!checkValidationRule('alpha_dash')">The field may have alpha-numeric characters, as well as dashes and underscores.</li>
+            <li v-if="!checkValidationRule('url')">The field must be a valid URL.</li>
         </ul>
     </div>
 </template>

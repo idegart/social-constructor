@@ -19,7 +19,11 @@
             </hsc-menu-context-menu>
         </hsc-menu-style-white>
 
+        <block-modals-component />
+
         <modal-params-component />
+
+        <modal-external-api-component />
 
     </div>
 </template>
@@ -36,10 +40,15 @@
 
     import blockComponent from "@component/Editor/blockComponent";
     import ModalParamsComponent from "@component/Editor/field/modals/modalParamsComponent";
+    import ModalExternalApiComponent from "@component/Editor/field/modals/modalExternalApiComponent";
+    import BlockModalsComponent from "@component/Editor/field/modals/blockModalsComponent";
 
     export default {
         name: "fieldComponent",
-        components: {ModalParamsComponent, ContextMenuComponent, NavbarComponent, blockComponent},
+        components: {
+            BlockModalsComponent,
+            ModalExternalApiComponent,
+            ModalParamsComponent, ContextMenuComponent, NavbarComponent, blockComponent},
         methods: {
             ...mapMutations([
                 'setSchemaField',

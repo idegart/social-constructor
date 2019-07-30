@@ -13,6 +13,7 @@ export default {
             dispatch('loadScript', scriptId)
                 .then(({script}) => dispatch('loadSchemas', script.get('id')))
                 .then(() => dispatch('loadParams'))
+                .then(() => dispatch('loadExternalApi'))
                 .then(() => {
                     let schema = state.schemas.find(schema => schema.id === state.script.get('starter_schema_id'));
                     commit('setSchema', schema)
@@ -217,5 +218,44 @@ export default {
         }
 
         state.connectionsLayer.draw()
+    },
+
+    storeExternalAPI: ({commit, state, dispatch}, apiData) => {
+        return new Promise((resolve, reject) => {
+            apiAxios.post(`scripts/${state.script.id}/externalApi`, apiData)
+                .then(() => {
+                    dispatch('loadExternalApi');
+                    resolve()
+                })
+                .catch(error => {
+                    reject(error)
+                })
+        })
+    },
+
+    loadExternalApi: ({state, commit}) => {
+        return new Promise((resolve, reject) => {
+            apiAxios.get(`scripts/${state.script.id}/externalApi`)
+                .then(({data}) => {
+                    commit('setExternalApi', data.external_api)
+                    resolve()
+                })
+                .catch(error => {
+                    reject(error)
+                })
+        })
+    },
+
+    removeExternalApi: ({dispatch, state}, apiId) => {
+        return new Promise((resolve, reject) => {
+            apiAxios.delete(`scripts/${state.script.id}/externalApi/${apiId}`)
+                .then(() => {
+                    dispatch('loadExternalApi');
+                    resolve()
+                })
+                .catch(error => {
+                    reject(error)
+                })
+        })
     },
 }

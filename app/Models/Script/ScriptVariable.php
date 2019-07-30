@@ -3,7 +3,6 @@
 namespace App\Models\Script;
 
 use App\Models\Script;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 

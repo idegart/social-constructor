@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Script\ScriptExternalApi;
 use App\Models\Script\ScriptVariable;
 use App\Models\Trust\Role;
 use App\Models\Trust\Team;
@@ -55,6 +56,11 @@ class Script extends Model
     public function variables()
     {
         return $this->hasMany(ScriptVariable::class);
+    }
+
+    public function externalApi()
+    {
+        return $this->hasMany(ScriptExternalApi::class);
     }
 
     public function team() : ?Team

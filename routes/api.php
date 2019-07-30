@@ -20,6 +20,12 @@ Route::namespace('Api')->name('api.')->group(function () {
             Route::post('', 'ScriptController@storeVariable');
             Route::delete('{scriptVariable}', 'ScriptController@removeVariable');
         });
+
+        Route::prefix('/externalApi')->group(function () {
+            Route::get('', 'ScriptController@externalApi');
+            Route::post('', 'ScriptController@storeExternalApi');
+            Route::delete('{externalApi}', 'ScriptController@removeExternalApi');
+        });
     });
 
     Route::get('schemas/{schema}/blocks', 'SchemaController@blocks');

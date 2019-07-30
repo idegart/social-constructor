@@ -4,6 +4,7 @@ namespace App\Models\Block;
 
 use App\Models\Block;
 use App\Models\Block\ExternalApi\ExternalApiOption;
+use App\Models\Script\ScriptExternalApi;
 use App\Models\Script\ScriptVariable;
 use App\Models\Social\Socialable\BaseChannel;
 use App\Models\Social\Socialable\BaseClient;
@@ -31,8 +32,9 @@ class ExternalApi extends BaseBlock
     public function validationRules(): array
     {
         return [
-            'url' => [
-                'sometimes', 'nullable', 'url',
+            'external_api_id' => [
+                'sometimes', 'nullable',
+                Rule::exists((new ScriptExternalApi())->getTable(),'id'),
             ],
             'handler' => [
                 'sometimes', 'nullable', 'string', 'alpha_dash',
@@ -70,7 +72,7 @@ class ExternalApi extends BaseBlock
 
     private function toPlay(PlayService $playService, $isInitial = false) : ?Block
     {
-        if (!$this->url) {
+        if (!$this->externalApi) {
             return null;
         }
 
@@ -170,10 +172,19 @@ class ExternalApi extends BaseBlock
         }
 
         $apiClient = new Client();
+        $externalApi = $this->externalApi;
 
-        return $apiClient->post($this->url, [
+        $postData = collect([
             'form_params' => $data->toArray()
         ]);
+
+        if ($externalApi->auth_login) {
+            $postData->put('auth', [
+                $externalApi->auth_login, $externalApi->auth_password
+            ]);
+        }
+
+        return $apiClient->post($externalApi->url, $postData->toArray());
     }
 
     private function validateResponse(ResponseInterface $response) : \Illuminate\Validation\Validator
@@ -255,5 +266,10 @@ class ExternalApi extends BaseBlock
         $this->options()->where('id', '=', $optionId)->update([
             'next_block_id' => $nextBlockId
         ]);
+    }
+
+    public function externalApi()
+    {
+        return $this->belongsTo(ScriptExternalApi::class, 'external_api_id');
     }
 }

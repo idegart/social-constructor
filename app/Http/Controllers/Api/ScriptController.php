@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Api\Script\StoreExternalApiRequest;
 use App\Http\Requests\Api\Script\StoreRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Script\StoreVariableRequest;
 use App\Http\Resources\SchemaResource;
+use App\Http\Resources\ScriptExternalApiResource;
 use App\Http\Resources\ScriptResource;
 use App\Http\Resources\ScriptVariableResource;
 use App\Models\Script;
@@ -74,6 +76,37 @@ class ScriptController extends Controller
         $variable = $script->variables()->findOrFail($scriptVariableId);
 
         $variable->delete();
+
+        return $this->successResponse();
+    }
+
+    public function externalApi(Script $script)
+    {
+        return $this->successResponse([
+            'external_api' => ScriptExternalApiResource::collection($script->externalApi)
+        ]);
+    }
+
+    public function storeExternalApi(StoreExternalApiRequest $request, Script $script)
+    {
+        $externalApi = $script->externalApi()->create($request->validated());
+
+        return $this->successResponse([
+            'external_api' => new ScriptExternalApiResource($externalApi)
+        ]);
+    }
+
+    /**
+     * @param Script $script
+     * @param $externalApiId
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function removeExternalApi(Script $script, $externalApiId)
+    {
+        $externalApi = $script->externalApi()->findOrFail($externalApiId);
+
+        $externalApi->delete();
 
         return $this->successResponse();
     }

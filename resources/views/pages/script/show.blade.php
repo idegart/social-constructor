@@ -13,7 +13,7 @@
             </div>
             @if(Auth::user()->hasRole(\App\Models\Trust\Role::SCRIPT_TEAM, $script->team()))
             <div class="col-sm-6">
-                    <a href="{{ route('scripts.editor', ['script' => $script->id]) }}" class="btn btn-primary">
+                    <a href="{{ route('scripts.editor', ['script' => $script->id]) }}" class="btn btn-primary mb-3">
                         <i class="fas fa-external-link-square-alt"></i>
                         To editor
                     </a>

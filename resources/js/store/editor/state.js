@@ -17,4 +17,11 @@ export default {
     stats: null,
     statsVisible: false,
     fps: 30,
+
+    externalAPI: [],
+
+    blockModal: {
+        id: null,
+        block: null,
+    },
 }
