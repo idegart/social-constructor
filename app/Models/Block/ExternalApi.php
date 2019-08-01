@@ -191,7 +191,8 @@ class ExternalApi extends BaseBlock
     {
         $responseData = json_decode($response->getBody()->getContents(), true);
 
-        return Validator::make($responseData, [
+        /** @var \Illuminate\Validation\Validator $validator */
+        $validator = Validator::make($responseData, [
             'next_option' => [
                 'sometimes', 'required',
                 Rule::exists((new ExternalApiOption)->getTable(), 'key'),
@@ -213,6 +214,8 @@ class ExternalApi extends BaseBlock
                 'nullable',
             ],
         ]);
+
+        return $validator;
     }
 
     public function updateVariables(PlayService $playService, array $variablesToUpdate)

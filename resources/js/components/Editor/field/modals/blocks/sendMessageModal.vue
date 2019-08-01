@@ -44,6 +44,8 @@
     export default {
         name: "sendMessageModal",
 
+        props: ['block'],
+
         components: {
             AtTa,
         },

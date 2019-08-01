@@ -57,7 +57,7 @@ class SocialChatVariable extends Model
 
     private function setString($value)
     {
-        if (!is_string($value)) {
+        if (!is_string($value) && !is_numeric($value)) {
             return 'Bad format! Should be string.';
         }
 
