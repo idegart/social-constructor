@@ -83,13 +83,14 @@ class ExternalApi extends BaseBlock
             $response = $this->sendRequest($playService, $isInitial);
         } catch (Exception $exception) {
             $playService->setCurrentStep(null);
-            $playService->sendMessage('Произошла ошибка. Обратитесь в службу поддержки!');
+            $playService->sendMessage('Произошла ошибка. Обратитесь в службу поддержки! (' . $exception->getMessage() . ')');
             return null;
         }
 
         $validator = $this->validateResponse($response);
 
         if ($validator->fails()) {
+            $playService->sendMessage('Произошла ошибка. Обратитесь в службу поддержки! (Неверный формат ответа)');
             return null;
         }
 
