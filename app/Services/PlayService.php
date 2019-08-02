@@ -49,22 +49,22 @@ final class PlayService
         $this->socialService = $socialService;
     }
 
-    public function setSocialChannel(SocialChannel $socialChannel) {
-
+    public function setSocialChannel(SocialChannel $socialChannel)
+    {
         $this->socialChannel = $socialChannel;
 
         return $this;
     }
 
-    public function setSocialClient(SocialClient $socialClient) {
-
+    public function setSocialClient(SocialClient $socialClient)
+    {
         $this->socialClient = $socialClient;
 
         return $this;
     }
 
-    public function setSocialMessage(SocialMessage $socialMessage) {
-
+    public function setSocialMessage(SocialMessage $socialMessage)
+    {
         $this->socialMessage = $socialMessage;
 
         return $this;
@@ -141,7 +141,10 @@ final class PlayService
 
         if ($nextBlock instanceof Block && $this->totalSteps < self::MAX_STEPS) {
             $this->playBlock($nextBlock);
+            return;
         }
+
+        $this->setCurrentStep(null);
     }
 
     public function setCurrentStep(?Block $block = null)
