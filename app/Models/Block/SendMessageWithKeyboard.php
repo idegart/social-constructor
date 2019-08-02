@@ -77,10 +77,10 @@ class SendMessageWithKeyboard extends BaseBlock
         $button = $this->buttons()->where('label', '=', $message->getText())->first();
 
         if (!$button) {
-            return $this->errorNextBlock ?: false;
+            return $this->errorNextBlock ?? false;
         }
 
-        return $button->nextBlock;
+        return $button->nextBlock ?? false;
     }
 
 

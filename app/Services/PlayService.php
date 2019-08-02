@@ -143,8 +143,6 @@ final class PlayService
             $this->playBlock($nextBlock);
             return;
         }
-
-        $this->setCurrentStep(null);
     }
 
     public function setCurrentStep(?Block $block = null)
