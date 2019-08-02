@@ -81,7 +81,7 @@ class SocialChatVariable extends Model
     {
         $booleans = ['0', '1', '-', '+', 'no', 'yes', 'n', 'y'];
 
-        if (!is_string($value) || !in_array($value, $booleans)) {
+        if (!(is_string($value) || is_numeric($value)) || !in_array($value, $booleans)) {
             return 'Bad format! Should be boolean. Accepted: ' . implode(', ', $booleans);
         }
 

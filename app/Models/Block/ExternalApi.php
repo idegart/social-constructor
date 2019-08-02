@@ -13,6 +13,7 @@ use App\Models\Social\SocialChatVariable;
 use App\Services\PlayService;
 use App\Services\Social\SocialKeyboard;
 use App\Services\Social\SocialKeyboardButton;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -28,6 +29,8 @@ class ExternalApi extends BaseBlock
     protected $with = [
         'options'
     ];
+
+    private $freshCount = 0;
 
     public function validationRules(): array
     {
@@ -76,7 +79,13 @@ class ExternalApi extends BaseBlock
             return null;
         }
 
-        $response = $this->sendRequest($playService, $isInitial);
+        try {
+            $response = $this->sendRequest($playService, $isInitial);
+        } catch (Exception $exception) {
+            $playService->setCurrentStep(null);
+            $playService->sendMessage('Произошла ошибка. Обратитесь в службу поддержки!');
+            return null;
+        }
 
         $validator = $this->validateResponse($response);
 
@@ -109,6 +118,16 @@ class ExternalApi extends BaseBlock
             $variablesToUpdate = $validResponse['variable_update'];
 
             $this->updateVariables($playService, $variablesToUpdate);
+        }
+
+        if (key_exists('fresh', $validResponse)) {
+            if ($this->freshCount > 5) {
+                $playService->sendMessage('Превышен лемит перегрузок!');
+                $playService->setCurrentStep(null);
+                return null;
+            }
+            $this->freshCount++;
+            $this->toPlay($playService, $isInitial);
         }
 
         if (key_exists('next_option', $validResponse)) {
@@ -199,6 +218,9 @@ class ExternalApi extends BaseBlock
             ],
             'wait' => [
                 'required_without:next_option', 'boolean',
+            ],
+            'fresh' => [
+                'sometimes', 'boolean',
             ],
             'message' => [
                 'sometimes', 'string',
