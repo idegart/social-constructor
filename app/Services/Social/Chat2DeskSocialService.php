@@ -139,7 +139,7 @@ class Chat2DeskSocialService extends BaseSocialService
             } catch (Throwable $exception) {}
         }
 
-        dump('total tries: ' . $tries);
+        info('Store message in C2D', ['tries' => $tries]);
 
         $chatMessage = Chat2DeskMessage::create($formatMessage);
 
