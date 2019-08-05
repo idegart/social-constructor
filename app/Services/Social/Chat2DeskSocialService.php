@@ -136,7 +136,12 @@ class Chat2DeskSocialService extends BaseSocialService
                 $socialChat = $socialChannel->socialChats()->firstOrCreate([
                     'social_client_id' => $socialClient->id,
                 ]);
-            } catch (Throwable $exception) {}
+            } catch (Throwable $exception) {
+                info('Store message in C2D', [
+                    'tries' => $tries,
+                    'error' => $exception->getMessage(),
+                ]);
+            }
         }
 
         info('Store message in C2D', ['tries' => $tries]);
