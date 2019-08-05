@@ -3,6 +3,7 @@
 namespace App\Models\Social\Socialable\Chat2Desk;
 
 use App\Models\Social\Socialable\BaseChannel;
+use App\Services\PlayService;
 use App\Services\Social\Chat2DeskSocialService;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -87,7 +88,7 @@ class Chat2DeskChannel extends BaseChannel
 
     public function getSocialType(): string
     {
-        return null;
+        return PlayService::VKONTAKTE;
     }
 
 
