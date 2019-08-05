@@ -81,14 +81,14 @@ class Chat2DeskChannel extends BaseChannel
         return $service->setChannelWebhook($this);
     }
 
-    public function getRealId(): string
+    public function getRealId(): ?string
     {
         return null;
     }
 
-    public function getSocialType(): string
+    public function getSocialType(): ?string
     {
-        return PlayService::VKONTAKTE;
+        return null;
     }
 
 
