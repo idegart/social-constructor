@@ -49,7 +49,7 @@ class Chat2DeskChannel extends BaseChannel
     {
         $app_callback = config('app.callback');
 
-        return "{$app_callback}/chat2desk/{$this->id}";
+        return "{$app_callback}/chat2desk/{$this->_id}";
     }
 
     public function getAccessLink(): string

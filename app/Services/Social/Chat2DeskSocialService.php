@@ -32,7 +32,7 @@ class Chat2DeskSocialService extends BaseSocialService
 
     public function handleCallback($channelId, array $requestData)
     {
-        $channel = Chat2DeskChannel::findOrFail($channelId);
+        $channel = Chat2DeskChannel::query()->where('_id', '=', $channelId)->firstOrFail();
 
         switch ($requestData['type']) {
             case 'from_client':
@@ -85,7 +85,7 @@ class Chat2DeskSocialService extends BaseSocialService
         $cdChannel = $socialChannel->channel;
 
         $messageDataSend = collect([
-            'client_id' => $socialClient->client->getKey(),
+            'client_id' => $socialClient->client->id,
             'text' => $message,
         ]);
 
@@ -104,8 +104,6 @@ class Chat2DeskSocialService extends BaseSocialService
             ]);
         }
 
-        dump($messageDataSend->toJson());
-
         try {
             $response = $client->post(self::API_URL . 'messages', [
                 'headers' => [
@@ -115,7 +113,7 @@ class Chat2DeskSocialService extends BaseSocialService
                 'body' => $messageDataSend->toJson()
             ]);
         } catch (BadResponseException $exception) {
-            dump($exception->getResponse()->getBody()->getContents());
+//            dump($exception->getResponse()->getBody()->getContents());
         }
 
         $responseArray = json_decode($response->getBody()->getContents(), true);

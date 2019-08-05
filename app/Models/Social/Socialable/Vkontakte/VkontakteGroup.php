@@ -53,8 +53,8 @@ class VkontakteGroup extends BaseChannel
             config('services.vkontakte.redirect_group'),
             VKOAuthDisplay::PAGE,
             [VKOAuthGroupScope::MESSAGES, VKOAuthGroupScope::MANAGE],
-            $this->getKey(),
-            [$this->getKey()]
+            $this->id,
+            [$this->id]
         );
 
         return $url;

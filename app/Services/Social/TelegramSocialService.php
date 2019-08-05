@@ -53,7 +53,7 @@ class TelegramSocialService extends BaseSocialService
 
     public function handleCallback($channelId, array $requestData)
     {
-        $channel = TelegramChannel::findOrFail($channelId);
+        $channel = TelegramChannel::query()->where('id', '=', $channelId)->firstOrFail();
 
         HandleNewMessage::dispatch($this, $channel->socialChannel, $requestData);
 
@@ -123,7 +123,7 @@ class TelegramSocialService extends BaseSocialService
         $this->apiService = new Api($telegramChannel->_access_token);
 
         $messageDataSend = collect([
-            'chat_id' => $socialClient->client->getKey(),
+            'chat_id' => $socialClient->client->id,
             'text' => $message
         ]);
 

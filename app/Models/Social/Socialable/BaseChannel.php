@@ -10,7 +10,7 @@ abstract class BaseChannel extends Model
 {
     protected $guarded = [];
 
-    public $incrementing = false;
+    protected $primaryKey = '_id';
 
     protected static function boot()
     {

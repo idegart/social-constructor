@@ -21,6 +21,8 @@ class CreateScriptExternalApiTable extends Migration
             $table->string('title');
             $table->string('url');
 
+            $table->string('secret');
+
             $table->string('auth_login')->nullable();
             $table->string('auth_password')->nullable();
 

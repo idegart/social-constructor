@@ -9,7 +9,7 @@ abstract class BaseMessage extends Model
 {
     protected $guarded = [];
 
-    public $incrementing = false;
+    protected $primaryKey = '_id';
 
     protected $appends = [
         'socialType',

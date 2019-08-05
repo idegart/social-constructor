@@ -14,7 +14,9 @@ class CreateVkontakteUsersTable extends Migration
     public function up()
     {
         Schema::create('vkontakte_users', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->bigIncrements('_id');
+
+            $table->bigInteger('id');
 
             $table->string('first_name');
             $table->string('last_name');

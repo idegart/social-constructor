@@ -14,15 +14,9 @@ class SocialChat extends Model
 
         static::created(function (SocialChat $socialChat) {
 
-            dump('pre-created');
-
             parent::created($socialChat);
 
-            dump('post-created');
-
             PlayService::setChatInitialVariables($socialChat);
-
-            dump('last-created');
         });
     }
 

@@ -17,6 +17,7 @@
                             <th scope="col">URL</th>
                             <th scope="col">Login</th>
                             <th scope="col">Password</th>
+                            <th scope="col">Secret</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
@@ -27,6 +28,7 @@
                             <td>{{ api.url }}</td>
                             <td>{{ api.auth_login }}</td>
                             <td>{{ api.auth_password }}</td>
+                            <td>{{ api.secret }}</td>
                             <td class="align-middle">
                                 <button @click="removeExternalApi(api.id)" class="btn btn-sm btn-outline-danger">X</button>
                             </td>
@@ -55,6 +57,7 @@
                             <td>
                                 <input v-model="form.auth_password" class="form-control" placeholder="AUTH password">
                             </td>
+                            <td></td>
                             <td class="align-middle">
                                 <button @click="addAPI" class="btn btn-primary btn-sm">+</button>
                             </td>

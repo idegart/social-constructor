@@ -14,6 +14,8 @@ class CreateTelegramChannelsTable extends Migration
     public function up()
     {
         Schema::create('telegram_channels', function (Blueprint $table) {
+            $table->bigIncrements('_id');
+
             $table->bigInteger('id');
 
             $table->string('first_name');

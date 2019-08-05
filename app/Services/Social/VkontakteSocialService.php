@@ -31,7 +31,7 @@ class VkontakteSocialService extends BaseSocialService
 
     public function handleCallback($groupId, array $requestData)
     {
-        $group = VkontakteGroup::findOrFail($groupId);
+        $group = VkontakteGroup::query()->where('id', '=', $groupId)->firstOrFail();
 
         switch ($requestData['type']) {
             case 'confirmation':
@@ -96,7 +96,7 @@ class VkontakteSocialService extends BaseSocialService
         $groupId = $requestData['state'];
         $code = $requestData['code'];
 
-        $group = VkontakteGroup::findOrFail($groupId);
+        $group = VkontakteGroup::query()->where('id', '=', $groupId)->firstOrFail();
 
         $response = $this->oauthService->getAccessToken(
             config('services.vkontakte.client_id'),
@@ -210,7 +210,7 @@ class VkontakteSocialService extends BaseSocialService
     public function sendMessage(SocialChannel $socialChannel, SocialClient $socialClient, string $message, ?SocialKeyboard $keyboard = null)
     {
         $messageDataSend = collect([
-            'user_id' => $socialClient->client->getKey(),
+            'user_id' => $socialClient->client->id,
             'random_id' => 0,
             'message' => $message
         ]);
