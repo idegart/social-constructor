@@ -152,7 +152,10 @@ class ExternalApi extends BaseBlock
         /** @var BaseMessage $message */
         $message = $playService->socialMessage->message;
 
+        $externalApi = $this->externalApi;
+
         $data = collect([
+            'secret' => $externalApi->secret,
             'social' => $message->getSocialType(),
             'is_initial' => $isInitial,
             'script' => [
@@ -192,7 +195,6 @@ class ExternalApi extends BaseBlock
         }
 
         $apiClient = new Client();
-        $externalApi = $this->externalApi;
 
         $postData = collect([
             'headers' => [

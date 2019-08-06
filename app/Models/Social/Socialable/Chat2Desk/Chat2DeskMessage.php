@@ -28,7 +28,7 @@ class Chat2DeskMessage extends BaseMessage
             case 'vk': return PlayService::VKONTAKTE;
         }
 
-        return '';
+        return PlayService::UNDEFINED;
     }
 
     public function getRealId(): string

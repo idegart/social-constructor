@@ -143,6 +143,10 @@ class Chat2DeskSocialService extends BaseSocialService
                 info('Store message in C2D', [
                     'tries' => $tries,
                     'error' => $exception->getMessage(),
+                    'trace' => $exception->getTraceAsString(),
+                    'code' => $exception->getCode(),
+                    'line' => $exception->getLine(),
+                    'file' => $exception->getFile(),
                 ]);
             }
         }
