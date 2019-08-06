@@ -196,7 +196,7 @@ class ExternalApi extends BaseBlock
 
         $postData = collect([
             'headers' => [
-                'Content-Type' => 'application/json'
+                'Accept' => 'application/json'
             ],
             'form_params' => $data->toArray(),
         ]);
