@@ -29,8 +29,8 @@ abstract class BaseChannel extends Model
     }
 
 
-    abstract public function getRealId() : ?string ;
-    abstract public function getSocialType() : ?string ;
+    abstract public function getRealId() : string ;
+    abstract public function getSocialType() : string ;
     abstract public function getChannelPhoto() : string ;
     abstract public function getChannelName() : string ;
     abstract public function getChannelLink() : string ;

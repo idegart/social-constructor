@@ -31,6 +31,7 @@ final class PlayService
 
     const VKONTAKTE = 'vkontakte';
     const TELEGRAM = 'telegram';
+    const UNDEFINED = 'undefined';
 
     public $totalSteps = 0;
 
