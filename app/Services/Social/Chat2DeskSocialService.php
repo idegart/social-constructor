@@ -9,6 +9,7 @@ use App\Models\Social\Socialable\Chat2Desk\Chat2DeskChannel;
 use App\Models\Social\Socialable\Chat2Desk\Chat2DeskMessage;
 use App\Models\Social\Socialable\Chat2Desk\Chat2DeskUser;
 use App\Models\Social\SocialChannel;
+use App\Models\Social\SocialChat;
 use App\Models\Social\SocialClient;
 use App\Models\Social\SocialMessage;
 use App\Services\PlayService;
@@ -133,9 +134,11 @@ class Chat2DeskSocialService extends BaseSocialService
             $tries++;
             try {
                 // TODO: узнать почему ломается при создании новой записи кроме первой!
-                $socialChat = $socialChannel->socialChats()->firstOrCreate([
+                $socialChat = SocialChat::firstOrCreate([
+                    'social_channel_id' => $socialChannel->id,
                     'social_client_id' => $socialClient->id,
                 ]);
+
             } catch (Throwable $exception) {
                 info('Store message in C2D', [
                     'tries' => $tries,
