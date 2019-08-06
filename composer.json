@@ -17,7 +17,6 @@
         "laravel/passport": "^7.3",
         "laravel/tinker": "^1.0",
         "pragmarx/version": "^0.2.9",
-        "queueworker/sansdaemon": "^1.1",
         "santigarcor/laratrust": "5.2.*",
         "socialiteproviders/vkontakte": "dev-master",
         "vkcom/vk-php-sdk": "^5.100"
