@@ -90,7 +90,7 @@ class ExternalApi extends BaseBlock
         $validator = $this->validateResponse($response);
 
         if ($validator->fails()) {
-            $playService->sendMessage('Произошла ошибка. Обратитесь в службу поддержки! (' . $validator->errors()->toArray() .')' );
+            $playService->sendMessage('Произошла ошибка. Обратитесь в службу поддержки! (' . $validator->errors()->toJson() .')' );
             return null;
         }
 
