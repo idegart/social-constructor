@@ -20,7 +20,7 @@ class CreateChat2DeskMessagesTable extends Migration
 
             $table->string('type');
 
-            $table->string('text');
+            $table->text('text');
 
             $table->string('transport');
 
