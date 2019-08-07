@@ -13,9 +13,6 @@ class SocialChat extends Model
         parent::boot();
 
         static::created(function (SocialChat $socialChat) {
-
-            parent::created($socialChat);
-
             PlayService::setChatInitialVariables($socialChat);
         });
     }
