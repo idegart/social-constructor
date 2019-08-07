@@ -84,9 +84,13 @@ final class PlayService
             return;
         }
 
-        $this->resetVariables();
+        /** @var BaseMessage $message */
+        $message = $this->socialMessage->message;
 
-        $this->initNewMessage();
+        if ($message->getText()) {
+            $this->resetVariables();
+            $this->initNewMessage();
+        }
     }
 
     public function initNewMessage()

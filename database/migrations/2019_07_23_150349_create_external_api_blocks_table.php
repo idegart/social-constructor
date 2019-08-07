@@ -16,11 +16,15 @@ class CreateExternalApiBlocksTable extends Migration
         Schema::create('external_api_blocks', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('url')->nullable();
+            $table->unsignedBigInteger('external_api_id')->nullable();
 
             $table->string('handler')->nullable();
 
             $table->timestamps();
+
+            $table->foreign('external_api_id')
+                ->references('id')->on('script_external_api')
+                ->onDelete('set null');
         });
     }
 
