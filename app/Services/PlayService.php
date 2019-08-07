@@ -79,13 +79,18 @@ final class PlayService
 
         $currentBlock = $this->socialChat->currentBlock;
 
+        /** @var BaseMessage $message */
+        $message = $this->socialMessage->message;
+
+        if ($message->getText() == '/exit') {
+            $this->setCurrentStep();
+            return;
+        }
+
         if ($currentBlock) {
             $this->continuePlay();
             return;
         }
-
-        /** @var BaseMessage $message */
-        $message = $this->socialMessage->message;
 
         if ($message->getText()) {
             $this->resetVariables();
