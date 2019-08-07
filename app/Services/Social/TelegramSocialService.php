@@ -90,6 +90,7 @@ class TelegramSocialService extends BaseSocialService
             'from_id' => $messageData['from']['id'],
             'text' => $messageData['text'],
             'date' => Carbon::parse($messageData['date'])->toDateTimeString(),
+            'is_out' => false,
         ];
     }
 
