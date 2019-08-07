@@ -147,6 +147,7 @@ class VkontakteSocialService extends BaseSocialService
             'server_id' => $group->_server_id,
             'api_version' => '5.100',
             'message_new' => 1,
+            'message_reply' => 1,
         ]);
 
         return !! $result;

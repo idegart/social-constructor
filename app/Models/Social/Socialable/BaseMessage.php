@@ -31,6 +31,11 @@ abstract class BaseMessage extends Model
         return $this->morphOne(SocialMessage::class, 'message');
     }
 
+    public function getSocialTypeAttribute()
+    {
+        return $this->getSocialType();
+    }
+
     abstract public function getSocialType() : string ;
     abstract public function getRealId() : string ;
     abstract public function getText();

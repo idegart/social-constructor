@@ -50,7 +50,7 @@ return [
         'client_service_key' => env('VKONTAKTE_SERVICE_KEY'),
         'redirect' => env('VKONTAKTE_REDIRECT_URI'),
         'redirect_group' => env('VKONTAKTE_REDIRECT_URI_GROUP'),
-        'scopes' => ['offline']
+        'scopes' => ['offline'],
     ],
 
 ];
