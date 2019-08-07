@@ -145,7 +145,8 @@ class TelegramSocialService extends BaseSocialService
             'id' => $response->getMessageId(),
             'from_id' => $telegramChannel->id,
             'text' => $message,
-            'date' => Carbon::now()->toDateTimeString()
+            'date' => Carbon::now()->toDateTimeString(),
+            'is_out' => true,
         ]);
     }
 

@@ -14,7 +14,7 @@ class TelegramMessage extends BaseMessage
 
     public function isOut(): bool
     {
-        return false;
+        return $this->is_out;
     }
 
     public function getSocialType(): string
