@@ -108,14 +108,14 @@ final class PlayService
                     return $block->data instanceof ReceiveMessage;
                 })
                 ->each(function (Block $block) {
-                    /** @var ReceiveMessage  $blockData */
+                    /** @var BaseBlock  $blockData */
                     $blockData = $block->data;
 
-                    /** @var BaseMessage $message */
-                    $message = $this->socialMessage->message;
+                    $goTo = $blockData->playBlock($this);
 
-                    if (mb_strtolower($blockData->message) === mb_strtolower($message->getText())) {
-                        $this->playBlock($block);
+                    if ($goTo) {
+                        $this->playBlock($goTo);
+                        return false;
                     }
                 });
         });

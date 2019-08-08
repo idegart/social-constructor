@@ -32,6 +32,16 @@ class ReceiveMessage extends BaseBlock
 
     public function playBlock(PlayService $playService) : ?Block
     {
-        return $this->nextBlock;
+        $message = $playService->socialMessage->message;
+
+        $availableMessages = explode('|', $message);
+
+        foreach ($availableMessages as $availableMessage) {
+            if (mb_strtolower($availableMessage) === mb_strtolower($message->getText())) {
+                return $this->nextBlock;
+            }
+        }
+
+        return null;
     }
 }
