@@ -1,0 +1,104 @@
+version: '3.6'
+
+services:
+  nginx:
+    build:
+      context: ../
+      dockerfile: docker/app/Dockerfile
+    restart: always
+    volumes:
+      - /work/data/${PROJECT_PREFIX}_${CI_COMMIT_REF_NAME}/storage/:/app/storage/
+    networks:
+      - internal
+      - review
+    labels:    
+      - traefik.frontend.rule=Host:${REVIEW_HOST}
+      - traefik.docker.network=review
+    depends_on: 
+      - app
+    links:
+      - app:app
+    logging: &logging
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+  app: &app
+    build:
+      context: ../
+      dockerfile: docker/app/Dockerfile
+      target: app
+    restart: always
+    env_file: .env
+    volumes:
+      - /work/data/${PROJECT_PREFIX}_${CI_COMMIT_REF_NAME}/storage/:/app/storage/
+    networks:
+      - internal
+    labels:
+      - traefik.enable=false
+    depends_on: 
+      - postgres
+      - redis
+    logging: *logging
+
+#  echo:
+#    build:
+#      context: ../
+#      dockerfile: docker/app/Dockerfile
+#      target: echo
+#    restart: always
+#    env_file: .env
+#    volumes:
+#      - /work/data/${PROJECT_PREFIX}_${CI_COMMIT_REF_NAME}/storage/:/app/storage/
+#    depends_on:
+#      - redis
+#      - postgres
+#    networks:
+#      - internal
+#    labels:
+#      - traefik.enable=false
+#    logging: *logging
+
+  cron:
+    <<: *app
+    entrypoint: /app/docker/app/entrypoint_cron.sh
+
+  queue_default:
+    <<: *app
+    entrypoint: /app/docker/app/entrypoint_queue_default.sh
+
+  queue_notifications:
+    <<: *app
+    entrypoint: /app/docker/app/entrypoint_queue_notifications.sh
+
+  postgres:
+    image: postgres:11.2-alpine
+    volumes:
+      - /work/data/${PROJECT_PREFIX}_${CI_COMMIT_REF_NAME}/pg/:/var/lib/postgresql/data
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    restart: always
+    networks:
+      - internal
+    labels:
+      - traefik.enable=false
+    logging: *logging
+
+  redis:
+    image: redis:5.0.1-alpine
+    restart: always
+    networks:
+      - internal
+    labels:
+      - traefik.enable=false
+    logging: *logging
+
+networks:
+  internal:
+  review:
+    external:
+      name: review

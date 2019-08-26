@@ -1,0 +1,70 @@
+version: '3.6'
+
+services:
+  nginx:
+    image: $CI_REGISTRY_IMAGE/nginx:$TAG
+    build:
+      context: ../
+      dockerfile: docker/app/Dockerfile
+    restart: always
+    volumes:
+      - /work/data/bot/storage/:/app/storage/
+    depends_on: 
+      - app
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+    ports:
+      - 85:80
+      - 86:80
+    logging: &logging
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+  app: &app
+    image: $CI_REGISTRY_IMAGE/app:$TAG
+    build:
+      context: ../
+      dockerfile: docker/app/Dockerfile
+      target: app
+    restart: always
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+    environment:
+      - TASK_SLOT={{.Task.Slot}}  
+    volumes:
+      - /work/data/bot/storage/:/app/storage/
+    depends_on: 
+      - mysql
+      - redis
+    logging: *logging
+
+  cron:
+    <<: *app
+    deploy:
+      replicas: 1
+    entrypoint: /app/docker/app/entrypoint_cron.sh
+
+  queue_default:
+    <<: *app
+    entrypoint: /app/docker/app/entrypoint_queue_default.sh
+
+  queue_notifications:
+    <<: *app
+    entrypoint: /app/docker/app/entrypoint_queue_notifications.sh
+
+  redis:
+    image: redis:5.0.1-alpine
+    restart: always
+    volumes:
+      - /work/data/auction/redis:/data
+    logging: *logging
