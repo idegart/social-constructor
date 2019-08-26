@@ -17,5 +17,3 @@ _ide_helper.php
 _ide_helper_models.php
 ngrok
 .DS_Store
-
-docker/app/Dockerfile
