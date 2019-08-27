@@ -17,7 +17,6 @@ RUN npm ci
 COPY ./public /app/public
 COPY ./resources /app/resources
 RUN npm run prod
-RUN ls -la /app/public
 
 FROM php:7.3.6-fpm as app
 ENTRYPOINT /app/docker/app/entrypoint_app.sh
