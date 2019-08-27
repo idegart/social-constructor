@@ -1,0 +1,66 @@
+variables:
+    PROJECT_PREFIX: bot-constructor
+    REVIEW_DOMAIN: bot-construct-review.growfood.pro
+    REVIEW_HOST: $CI_COMMIT_REF_SLUG-$REVIEW_DOMAIN
+
+stages:
+ - build
+ - deploy
+ - stop
+
+before_script:
+  - export COMMIT_TIME=$(git show -s --format=%ci $CI_COMMIT_SHA | awk '{print $1"-"$2}' | sed 's/:/-/g')
+  - export TAG=${CI_COMMIT_REF_SLUG}-${COMMIT_TIME}
+  - cd docker
+  - cp .env.prod .env
+  - cp .env ../
+
+Build Image:
+  stage: build
+  script:
+    - docker-compose -f docker-compose-prod.yml build
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker-compose -f docker-compose-prod.yml push
+  only:
+    - release
+  tags:
+    - build
+
+deploy_review:
+  stage: deploy
+  before_script: []
+  script:
+    - cd docker
+    - cp .env.review .env
+    - docker-compose -f docker-compose-review.yml -p ${PROJECT_PREFIX} up -d --build
+  environment:
+    name: review
+    url: https://${REVIEW_HOST}
+    on_stop: stop_review
+  when: manual
+  tags:
+    - review
+  only:
+    - branches
+  except:
+    - release
+
+stop_review:
+  stage: stop
+  environment:
+    name: review
+    url: https://${REVIEW_HOST}
+    action: stop
+  before_script: []    
+  script:
+    - cd docker
+    - cp .env.review .env
+    - docker-compose -f docker-compose-review.yml -p ${PROJECT_PREFIX} down
+    - rm -rf /work/data/${PROJECT_PREFIX}_${CI_COMMIT_REF_NAME}/
+  when: manual
+  only:
+    - branches
+  tags:
+    - review
+  except:
+    - release
