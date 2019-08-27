@@ -12,6 +12,8 @@ module.exports = {
         },
     },
     output: {
+        publicPath: '/',
+        filename: '[name].js',
         chunkFilename: `dist/js/chunks/[name].js`,
     },
 };
