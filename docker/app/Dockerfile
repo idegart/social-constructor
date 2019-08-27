@@ -9,6 +9,15 @@ ADD ./docker/app/echoserver.sh /app/echoserver.sh
 RUN chmod +x /app/echoserver.sh
 ENTRYPOINT /app/echoserver.sh
 
+FROM node:8-alpine as front
+RUN apk add git libpng-dev bash g++ make bash libtool automake autoconf nasm && rm -fr /var/cache/apk/*
+WORKDIR /app
+COPY package.json package-lock.json webpack.mix.js /app/
+RUN npm ci
+COPY ./public /app/public
+COPY ./resources /app/resources
+RUN npm run prod
+
 FROM php:7.3.6-fpm as app
 ENTRYPOINT /app/docker/app/entrypoint_app.sh
 WORKDIR /app
@@ -25,6 +34,8 @@ COPY composer.* /app/
 COPY database/ /app/database/
 RUN composer install -n --ansi --no-scripts --no-progress
 COPY ./ /app/
+RUN rm -rf /app/public/
+COPY --from=front /app/public/ /app/public/
 RUN rm -f /usr/local/etc/php-fpm.d/docker.conf
 COPY docker/app/www.conf /usr/local/etc/php-fpm.d/
 COPY docker/app/custom.php.ini $PHP_INI_DIR/conf.d/
