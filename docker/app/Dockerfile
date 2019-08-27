@@ -16,6 +16,7 @@ COPY package.json package-lock.json webpack.mix.js webpack.config.js yarn.lock /
 RUN npm ci
 COPY ./public /app/public
 COPY ./resources /app/resources
+COPY docker/.env /app
 RUN npm run prod
 
 FROM php:7.3.6-fpm as app
