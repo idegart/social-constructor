@@ -12,7 +12,7 @@ ENTRYPOINT /app/echoserver.sh
 FROM node:8-alpine as front
 RUN apk add git libpng-dev bash g++ make bash libtool automake autoconf nasm && rm -fr /var/cache/apk/*
 WORKDIR /app
-COPY package.json package-lock.json webpack.mix.js /app/
+COPY package.json package-lock.json webpack.mix.js webpack.config.js yarn.lock /app/
 RUN npm ci
 COPY ./public /app/public
 COPY ./resources /app/resources
