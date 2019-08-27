@@ -20,6 +20,7 @@
         </hsc-menu-item>
         <hsc-menu-item label="External">
             <hsc-menu-item label="External API" @click="addBlock('external_api')" />
+            <hsc-menu-item label="DialogFlow" @click="addBlock('dialogflow')" />
         </hsc-menu-item>
     </div>
 </template>

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Block;
 use App\Models\Block\BaseBlock;
+use App\Models\Block\DialogFlow;
 use App\Models\Block\ReceiveMessage;
 use App\Models\Script;
 use App\Models\Script\ScriptVariable;
@@ -105,7 +106,15 @@ final class PlayService
         $scripts->each(function (Script $script) {
             $script->starterSchema->blocks
                 ->filter(function (Block $block) {
-                    return $block->data instanceof ReceiveMessage;
+                    if ($block->data instanceof ReceiveMessage) {
+                        return true;
+                    }
+
+                    if ($block->data instanceof DialogFlow) {
+                        return $block->data->is_initial;
+                    }
+
+                    return false;
                 })
                 ->each(function (Block $block) {
                     /** @var BaseBlock  $blockData */
@@ -113,10 +122,16 @@ final class PlayService
 
                     $goTo = $blockData->playBlock($this);
 
-                    if ($goTo) {
+                    if ($goTo instanceof Block) {
                         $this->playBlock($goTo);
                         return false;
                     }
+
+                    if ($goTo === false) {
+                        return false;
+                    }
+
+                    return true;
                 });
         });
     }

@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\Block\{ExternalApi,
+use App\Models\Block\{DialogFlow,
+    ExternalApi,
     Filters\SocialFilter,
     Params\AddParam,
     Params\CompareParam,
@@ -29,6 +30,8 @@ return [
         'filter_social'     => SocialFilter::class,
 
         'external_api'      => ExternalApi::class,
+
+        'dialogflow'        => DialogFlow::class,
     ],
     'services' => [
         PlayService::VKONTAKTE => VkontakteSocialService::class,

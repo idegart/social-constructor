@@ -12,7 +12,7 @@ abstract class BaseBlock extends Model
 {
     abstract public function validationRules () : array ;
 
-    abstract public function playBlock(PlayService $playService) : ?Block;
+    abstract public function playBlock(PlayService $playService);
 
     public function playContinue(PlayService $playService) {
         return null;
