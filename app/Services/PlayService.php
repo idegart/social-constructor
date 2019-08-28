@@ -129,6 +129,8 @@ final class PlayService
                         $this->setCurrentStep();
                         $this->resetVariables();
 
+                        $isPrevented = true;
+
                         $this->playBlock($goTo);
                         return false;
                     }
