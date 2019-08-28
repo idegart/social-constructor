@@ -29,8 +29,10 @@ class VkontakteSocialService extends BaseSocialService
         $this->oauthService = new VKOAuth();
     }
 
-    public function handleCallback($groupId, array $requestData)
+    public function handleCallback($groupId, array $requestData, string $requestRaw = '')
     {
+        $requestData = json_decode($requestRaw, true);
+
         $group = VkontakteGroup::query()->where('id', '=', $groupId)->firstOrFail();
 
         switch ($requestData['type']) {

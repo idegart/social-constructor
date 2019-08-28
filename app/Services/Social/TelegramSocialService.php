@@ -51,7 +51,7 @@ class TelegramSocialService extends BaseSocialService
         return null;
     }
 
-    public function handleCallback($channelId, array $requestData)
+    public function handleCallback($channelId, array $requestData, string $requestRaw = '')
     {
         $channel = TelegramChannel::query()->where('id', '=', $channelId)->firstOrFail();
 
