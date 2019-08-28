@@ -86,6 +86,7 @@ services:
       - internal
     labels:
       - traefik.enable=false
+      - ops.dns=db-${REVIEW_HOST}
     logging: *logging
 
   redis:
