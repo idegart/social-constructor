@@ -31,7 +31,7 @@ class Chat2DeskSocialService extends BaseSocialService
         return null;
     }
 
-    public function handleCallback($channelId, array $requestData)
+    public function handleCallback($channelId, array $requestData, string $requestRaw = '')
     {
         $channel = Chat2DeskChannel::query()->where('_id', '=', $channelId)->firstOrFail();
 

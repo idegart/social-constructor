@@ -18,7 +18,7 @@ abstract class BaseSocialService
 
     abstract public function handleAccessCallback(array $requestData);
 
-    abstract public function handleCallback($channelId, array $requestData);
+    abstract public function handleCallback($channelId, array $requestData, string $requestRaw = '');
 
     abstract public function handleNewMessageCallback(SocialChannel $socialChannel, array $requestData);
 

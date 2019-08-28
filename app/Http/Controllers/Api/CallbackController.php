@@ -17,6 +17,6 @@ class CallbackController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $socialService->handleCallback($channelId, $request->all());
+        $socialService->handleCallback($channelId, $request->all(), $request->getContent());
     }
 }
