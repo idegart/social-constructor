@@ -33,7 +33,7 @@ class VkontakteSocialService extends BaseSocialService
     {
         $requestData = json_decode($requestRaw, true);
 
-        \Log::info('test', $requestData);
+        \Log::error('test', $requestData);
 
         $group = VkontakteGroup::query()->where('id', '=', $groupId)->firstOrFail();
 
