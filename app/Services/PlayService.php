@@ -88,9 +88,7 @@ final class PlayService
             return;
         }
 
-        if ($this->searchForPreventMessage()) {
-            return;
-        }
+        $this->searchForPreventMessage();
 
         if ($currentBlock) {
             $this->continuePlay();
@@ -119,10 +117,6 @@ final class PlayService
                     return false;
                 })
                 ->each(function (Block $block) use (&$isPrevented) {
-
-                    $isPrevented = true;
-
-                    $this->setCurrentStep();
 
                     /** @var ReceiveMessage $blockData */
                     $blockData = $block->data;
