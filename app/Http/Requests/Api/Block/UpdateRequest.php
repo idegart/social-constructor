@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Block;
 
 use App\Models\Block;
+use App\Models\Trust\Role;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,10 +14,9 @@ class UpdateRequest extends FormRequest
         /** @var Block $block */
         $block = $this->route('block');
 
-        return Auth::check() &&
-            (
+        return Auth::check() && (
                 Auth::user()->owns($block->schema->script) ||
-                Auth::user()->can('edit-block', $block->schema->script->getTeamName())
+                Auth::user()->hasRole(Role::SCRIPT_TEAM, $block->schema->script->team())
             );
     }
 
