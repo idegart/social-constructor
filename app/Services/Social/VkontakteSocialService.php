@@ -31,10 +31,6 @@ class VkontakteSocialService extends BaseSocialService
 
     public function handleCallback($groupId, array $requestData, string $requestRaw = '')
     {
-        $requestData = json_decode($requestRaw, true);
-
-        \Log::error('test', $requestData);
-
         $group = VkontakteGroup::query()->where('id', '=', $groupId)->firstOrFail();
 
         switch ($requestData['type']) {
