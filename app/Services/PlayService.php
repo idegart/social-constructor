@@ -105,7 +105,7 @@ final class PlayService
 
     public function searchForPreventMessage() : bool
     {
-        $scripts = $this->socialChannel->scripts->load('starterSchema.blocks');
+        $scripts = $this->socialChannel->scripts->loadMissing('starterSchema.blocks');
 
         $isPrevented = false;
 
@@ -148,7 +148,7 @@ final class PlayService
 
     public function initNewMessage()
     {
-        $scripts = $this->socialChannel->scripts->load('starterSchema.blocks');
+        $scripts = $this->socialChannel->scripts->loadMissing('starterSchema.blocks');
 
         $scripts->each(function (Script $script) {
             $script->starterSchema->blocks
