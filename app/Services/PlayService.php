@@ -88,7 +88,9 @@ final class PlayService
             return;
         }
 
-        $this->searchForPreventMessage();
+        if ($this->searchForPreventMessage()) {
+            return;
+        }
 
         if ($currentBlock) {
             $this->continuePlay();
@@ -108,16 +110,20 @@ final class PlayService
         $isPrevented = false;
 
         $scripts->each(function (Script $script) use (&$isPrevented) {
-            $script->starterSchema->blocks
+            $blocks = $script->starterSchema->blocks
                 ->filter(function (Block $block) {
                     if ($block->data instanceof ReceiveMessage) {
                         return $block->data->is_prevent;
                     }
 
                     return false;
-                })
-                ->each(function (Block $block) use (&$isPrevented) {
+                });
 
+            if ($blocks->isNotEmpty()) {
+                $this->setCurrentStep();
+                $this->resetVariables();
+
+                $blocks->each(function (Block $block) use (&$isPrevented) {
                     /** @var ReceiveMessage $blockData */
                     $blockData = $block->data;
 
@@ -134,6 +140,7 @@ final class PlayService
 
                     return true;
                 });
+            }
         });
 
         return $isPrevented;
