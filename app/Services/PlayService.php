@@ -119,10 +119,6 @@ final class PlayService
                     return false;
                 });
 
-            if ($blocks->isNotEmpty()) {
-                $this->setCurrentStep();
-                $this->resetVariables();
-
                 $blocks->each(function (Block $block) use (&$isPrevented) {
                     /** @var ReceiveMessage $blockData */
                     $blockData = $block->data;
@@ -130,6 +126,9 @@ final class PlayService
                     $goTo = $blockData->playBlock($this);
 
                     if ($goTo instanceof Block) {
+                        $this->setCurrentStep();
+                        $this->resetVariables();
+
                         $this->playBlock($goTo);
                         return false;
                     }
@@ -140,7 +139,6 @@ final class PlayService
 
                     return true;
                 });
-            }
         });
 
         return $isPrevented;
