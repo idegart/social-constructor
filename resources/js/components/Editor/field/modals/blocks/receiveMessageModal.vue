@@ -18,6 +18,12 @@
                                 <input v-model="form.message" class="form-control" id="message" placeholder="Enter message">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="is_prevent" class="col-sm-2 col-form-label">Prevent</label>
+                            <div class="col-sm-10">
+                                <input v-model="form.is_prevent" id="is_prevent" type="checkbox" class="form-control">
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -57,7 +63,8 @@
 
         created() {
             this.form = {
-                message: this.block.get('data.message')
+                message: this.block.get('data.message'),
+                is_prevent: this.block.get('data.is_prevent')
             }
         },
     }

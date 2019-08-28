@@ -20,6 +20,9 @@ class ReceiveMessage extends BaseBlock
             'message' => [
                 'nullable', 'string',
             ],
+            'is_prevent' => [
+                'sometimes', 'boolean',
+            ],
             'next_block_id' => [
                 'nullable',
                 Rule::exists((new Block)->getTable(), 'id'),

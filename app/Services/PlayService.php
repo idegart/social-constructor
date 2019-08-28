@@ -99,6 +99,48 @@ final class PlayService
         }
     }
 
+    public function searchForPreventMessage() : bool
+    {
+        $scripts = $this->socialChannel->scripts->load('starterSchema.blocks');
+
+        $isPrevented = false;
+
+        $scripts->each(function (Script $script) use (&$isPrevented) {
+            $script->starterSchema->blocks
+                ->filter(function (Block $block) {
+                    if ($block->data instanceof ReceiveMessage) {
+                        return $block->data->is_prevent;
+                    }
+
+                    return false;
+                })
+                ->each(function (Block $block) use (&$isPrevented) {
+
+                    $isPrevented = true;
+
+                    $this->setCurrentStep();
+
+                    /** @var ReceiveMessage $blockData */
+                    $blockData = $block->data;
+
+                    $goTo = $blockData->playBlock($this);
+
+                    if ($goTo instanceof Block) {
+                        $this->playBlock($goTo);
+                        return false;
+                    }
+
+                    if ($goTo === false) {
+                        return false;
+                    }
+
+                    return true;
+                });
+        });
+
+        return $isPrevented;
+    }
+
     public function initNewMessage()
     {
         $scripts = $this->socialChannel->scripts->load('starterSchema.blocks');
