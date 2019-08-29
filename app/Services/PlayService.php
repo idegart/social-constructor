@@ -88,9 +88,9 @@ final class PlayService
             return;
         }
 
-        if ($this->searchForPreventMessage()) {
-            return;
-        }
+//        if ($this->searchForPreventMessage()) {
+//            return;
+//        }
 
         if ($currentBlock) {
             $this->continuePlay();
