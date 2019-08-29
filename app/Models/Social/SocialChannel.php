@@ -32,4 +32,9 @@ class SocialChannel extends Model
     {
         return $this->belongsToMany(Script::class, 'social_channel_scripts');
     }
+
+    public function scriptsCacheKey()
+    {
+        return "scripts_cache_key_" . $this->getKey();
+    }
 }

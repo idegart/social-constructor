@@ -24,7 +24,13 @@ Route::middleware('auth')->group(function () {
         'socialChannels' => 'SocialChannelController',
     ]);
 
-    Route::get('scripts/{script}/editor', 'ScriptController@editor')->name('scripts.editor');
-    Route::post('scripts/{script}/addUserToTeam', 'ScriptController@addUserToTeam')->name('scripts.addUserToTeam');
-    Route::delete('scripts/{script}/removeUserFromTeam', 'ScriptController@removeUserFromTeam')->name('scripts.removeUserFromTeam');
+    Route::prefix('socialChannels/{socialChannel}')->group(function () {
+        Route::post('updateCache', 'SocialChannelController@updateCache')->name('socialChannel.updateCache');
+    });
+
+    Route::prefix('scripts/{script}')->group(function () {
+        Route::get('editor', 'ScriptController@editor')->name('scripts.editor');
+        Route::post('addUserToTeam', 'ScriptController@addUserToTeam')->name('scripts.addUserToTeam');
+        Route::delete('removeUserFromTeam', 'ScriptController@removeUserFromTeam')->name('scripts.removeUserFromTeam');
+    });
 });

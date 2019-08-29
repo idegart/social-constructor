@@ -16,6 +16,8 @@ use App\Models\Social\SocialClient;
 use App\Models\Social\SocialMessage;
 use App\Services\Social\BaseSocialService;
 use App\Services\Social\SocialKeyboard;
+use Cache;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class PlayService
@@ -105,7 +107,7 @@ final class PlayService
 
     public function searchForPreventMessage() : bool
     {
-        $scripts = $this->socialChannel->scripts->loadMissing('starterSchema.blocks');
+        $scripts = $this->loadScripts();
 
         $isPrevented = false;
 
@@ -148,7 +150,7 @@ final class PlayService
 
     public function initNewMessage()
     {
-        $scripts = $this->socialChannel->scripts->loadMissing('starterSchema.blocks');
+        $scripts = $this->loadScripts();
 
         $scripts->each(function (Script $script) {
             $script->starterSchema->blocks
@@ -295,6 +297,18 @@ final class PlayService
                     'datetime' => $scriptVariable->default_datetime,
                 ]);
             });
+        });
+    }
+
+    /**
+     * @return Collection|Script[] $scripts
+     */
+    private function loadScripts()
+    {
+        $key = $this->socialChannel->scriptsCacheKey();
+
+        return Cache::remember($key, 60 * 10, function () {
+            return $this->socialChannel->scripts->loadMissing('starterSchema.blocks');
         });
     }
 }
