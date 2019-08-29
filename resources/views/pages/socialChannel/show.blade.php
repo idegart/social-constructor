@@ -20,7 +20,7 @@
 
                 <div class="col-sm-8">
 
-                    <form action="{{ route('socialChannel.updateCache') }}" method="post">
+                    <form action="{{ route('socialChannel.updateCache', ['socialChannel' => $socialChannel]) }}" method="post">
                         @csrf
                         <button class="btn btn-sm">Clear cache</button>
                     </form>
