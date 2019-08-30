@@ -96,7 +96,7 @@ services:
         constraints:
           - node.labels.node == swarm1
     networks:
-      - internal
+      - prod-bot
     logging: *logging
 
 networks:
