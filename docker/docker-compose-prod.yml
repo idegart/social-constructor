@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.7'
 
 services:
   nginx:
@@ -7,19 +7,21 @@ services:
       context: ../
       dockerfile: docker/app/Dockerfile
     restart: always
-    volumes:
-      - /work/data/bot/storage/:/app/storage/
-    depends_on: 
-      - app
+    ports:
+      - "91:80"
+      - "92:80"
+    networks:
+      - prod-bot
     deploy:
       replicas: 2
       update_config:
         parallelism: 1
-        delay: 10s
-        failure_action: rollback
-    ports:
-      - 85:80
-      - 86:80
+        delay: 15s
+        failure_action: rollback  
+    depends_on: 
+      - app
+    links:
+      - app:app
     logging: &logging
       driver: "json-file"
       options:
@@ -33,18 +35,17 @@ services:
       dockerfile: docker/app/Dockerfile
       target: app
     restart: always
+    env_file: .env
     deploy:
       replicas: 2
       update_config:
         parallelism: 1
-        delay: 10s
-        failure_action: rollback
-    environment:
-      - TASK_SLOT={{.Task.Slot}}  
-    volumes:
-      - /work/data/bot/storage/:/app/storage/
+        delay: 15s
+        failure_action: rollback 
+    networks:
+      - prod-bot
     depends_on: 
-      - mysql
+      - postgres
       - redis
     logging: *logging
 
@@ -56,15 +57,49 @@ services:
 
   queue_default:
     <<: *app
+    deploy:
+      replicas: 1
     entrypoint: /app/docker/app/entrypoint_queue_default.sh
 
   queue_notifications:
     <<: *app
+    deploy:
+      replicas: 1
     entrypoint: /app/docker/app/entrypoint_queue_notifications.sh
+
+  postgres:
+    image: postgres:11.2-alpine
+    volumes:
+      - /work/data/bot/pg/:/var/lib/postgresql/data
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    restart: always
+    ports:
+      - 5434:5432
+    deploy:
+      placement:
+        constraints:
+          - node.labels.node == swarm1
+    networks:
+      - prod-bot
+    logging: *logging
 
   redis:
     image: redis:5.0.1-alpine
     restart: always
-    volumes:
-      - /work/data/auction/redis:/data
+    deploy:
+      endpoint_mode: dnsrr
+      placement:
+        constraints:
+          - node.labels.node == swarm1
+    networks:
+      - internal
     logging: *logging
+
+networks:
+  prod-bot:
+    external: true
+
