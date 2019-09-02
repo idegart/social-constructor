@@ -82,7 +82,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.node == swarm1
+          - node.labels.node == pg-bot
     networks:
       - prod-bot
     logging: *logging
@@ -94,7 +94,7 @@ services:
       endpoint_mode: dnsrr
       placement:
         constraints:
-          - node.labels.node == swarm1
+          - node.labels.node == pg-bot
     networks:
       - prod-bot
     logging: *logging
