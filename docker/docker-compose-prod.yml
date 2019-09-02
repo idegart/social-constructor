@@ -94,7 +94,7 @@ services:
       endpoint_mode: dnsrr
       placement:
         constraints:
-          - node.labels.node == pg-bot
+          - node.labels.node == swarm1
     networks:
       - prod-bot
     logging: *logging
