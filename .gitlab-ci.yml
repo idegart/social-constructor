@@ -81,7 +81,7 @@ deploy_prod:
     - export TAG=${CI_COMMIT_REF_SLUG}-${COMMIT_TIME}
     - cd docker
     - cp .env.prod .env
-    - docker login -u gitlab+deploy-token-10 -p tPhwZzxVVvpeFGh8qH93 $CI_REGISTRY
+    - docker login -u gitlab+deploy-token-11 -p L1VRxoUNx5diRPF5n6CK $CI_REGISTRY
     - env $(cat .env | grep ^[A-Z] | xargs) docker stack deploy --compose-file docker-compose-prod.yml --with-registry-auth --prune prod_bot
   only:
     - release
