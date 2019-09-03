@@ -24,9 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('queue:work --daemon --tries=1 --sleep=0')
-            ->everyMinute()
-            ->withoutOverlapping();
+        //
     }
 
     /**
