@@ -140,18 +140,16 @@ class Chat2DeskSocialService extends BaseSocialService
                 ]);
 
             } catch (Throwable $exception) {
-                info('Store message in C2D', [
-                    'tries' => $tries,
-                    'error' => $exception->getMessage(),
-                    'trace' => $exception->getTraceAsString(),
-                    'code' => $exception->getCode(),
-                    'line' => $exception->getLine(),
-                    'file' => $exception->getFile(),
-                ]);
+//                info('Store message in C2D', [
+//                    'tries' => $tries,
+//                    'error' => $exception->getMessage(),
+//                    'trace' => $exception->getTraceAsString(),
+//                    'code' => $exception->getCode(),
+//                    'line' => $exception->getLine(),
+//                    'file' => $exception->getFile(),
+//                ]);
             }
         }
-
-        info('Store message in C2D', ['tries' => $tries]);
 
         $chatMessage = Chat2DeskMessage::create($formatMessage);
 
