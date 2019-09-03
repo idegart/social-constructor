@@ -11,9 +11,9 @@ stages:
 before_script:
   - export COMMIT_TIME=$(git show -s --format=%ci $CI_COMMIT_SHA | awk '{print $1"-"$2}' | sed 's/:/-/g')
   - export TAG=${CI_COMMIT_REF_SLUG}-${COMMIT_TIME}
-  - cd docker
-  - cp .env.prod .env
-  - cp .env ../
+  # - cd docker
+  # - cp .env.prod .env
+  # - cp .env ../
 
 Build Image:
   stage: build
