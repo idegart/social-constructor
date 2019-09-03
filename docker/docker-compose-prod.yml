@@ -18,6 +18,9 @@ services:
         parallelism: 1
         delay: 15s
         failure_action: rollback  
+      placement:
+        constraints:
+          - node.labels.stateless == true
     depends_on: 
       - app
     links:
@@ -42,6 +45,9 @@ services:
         parallelism: 1
         delay: 15s
         failure_action: rollback 
+      placement:
+        constraints:
+          - node.labels.stateless == true
     networks:
       - prod-bot
     depends_on: 
@@ -53,18 +59,27 @@ services:
     <<: *app
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.stateless == true
     entrypoint: /app/docker/app/entrypoint_cron.sh
 
   queue_default:
     <<: *app
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.stateless == true
     entrypoint: /app/docker/app/entrypoint_queue_default.sh
 
   queue_notifications:
     <<: *app
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.stateless == true
     entrypoint: /app/docker/app/entrypoint_queue_notifications.sh
 
   postgres:
