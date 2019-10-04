@@ -90,9 +90,9 @@ final class PlayService
             return;
         }
 
-//        if ($this->searchForPreventMessage()) {
-//            return;
-//        }
+        if ($this->searchForPreventMessage()) {
+            return;
+        }
 
         if ($currentBlock) {
             $this->continuePlay();
@@ -112,16 +112,15 @@ final class PlayService
         $isPrevented = false;
 
         $scripts->each(function (Script $script) use (&$isPrevented) {
-            $blocks = $script->starterSchema->blocks
+            $script->starterSchema->blocks
                 ->filter(function (Block $block) {
                     if ($block->data instanceof ReceiveMessage) {
                         return $block->data->is_prevent;
                     }
 
                     return false;
-                });
-
-                $blocks->each(function (Block $block) use (&$isPrevented) {
+                })
+                ->each(function (Block $block) use (&$isPrevented) {
                     /** @var ReceiveMessage $blockData */
                     $blockData = $block->data;
 

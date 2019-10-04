@@ -111,6 +111,10 @@ class ExternalApi extends BaseBlock
             $playService->sendMessage($validResponse['message'], $keyboard);
         }
 
+        if (key_exists('exit', $validResponse)) {
+            $playService->setCurrentStep();
+        }
+
         if (key_exists('wait', $validResponse) && $validResponse['wait']) {
             $playService->setCurrentStep($this->block);
         }
@@ -226,6 +230,9 @@ class ExternalApi extends BaseBlock
                 'required_without:next_option', 'boolean',
             ],
             'fresh' => [
+                'sometimes', 'boolean',
+            ],
+            'exit' => [
                 'sometimes', 'boolean',
             ],
             'message' => [
