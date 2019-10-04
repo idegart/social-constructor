@@ -113,6 +113,7 @@ class ExternalApi extends BaseBlock
 
         if (key_exists('exit', $validResponse)) {
             $playService->setCurrentStep();
+            return null;
         }
 
         if (key_exists('wait', $validResponse) && $validResponse['wait']) {
