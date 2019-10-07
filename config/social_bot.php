@@ -2,6 +2,7 @@
 
 use App\Models\Block\{DialogFlow,
     ExternalApi,
+    Filters\ChannelFilter,
     Filters\SocialFilter,
     Params\AddParam,
     Params\CompareParam,
@@ -28,6 +29,7 @@ return [
         'param_reset'       => ResetParam::class,
 
         'filter_social'     => SocialFilter::class,
+        'filter_channel'     => ChannelFilter::class,
 
         'external_api'      => ExternalApi::class,
 
