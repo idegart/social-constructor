@@ -16,7 +16,7 @@
                             <label for="message" class="col-sm-2 col-form-label">Message</label>
                             <div class="col-sm-10">
                                 <at-ta at="@" :members="params" >
-                                        <textarea v-model="message"
+                                        <textarea v-model="form.message"
                                                   class="form-control"
                                                   id="message"
                                                   placeholder="Enter message">
