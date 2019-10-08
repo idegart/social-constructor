@@ -70,7 +70,7 @@
             ]),
 
             saveMessage () {
-                this.block.set({data: {message: this.message}})
+                this.block.set({data: this.form})
                 this.block.save()
 
                 this.hideBlockModal()
