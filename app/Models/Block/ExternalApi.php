@@ -126,9 +126,9 @@ class ExternalApi extends BaseBlock
             $this->updateVariables($playService, $variablesToUpdate);
         }
 
-        if (key_exists('fresh', $validResponse)) {
+        if (key_exists('fresh', $validResponse) && $validResponse['fresh']) {
             if ($this->freshCount > 5) {
-                $playService->sendMessage('Превышен лемит перегрузок!');
+                $playService->sendMessage('Превышен лимит перегрузок!');
                 $playService->setCurrentStep(null);
                 return null;
             }
