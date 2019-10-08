@@ -91,6 +91,12 @@ final class PlayService
         /** @var BaseMessage $message */
         $message = $this->socialMessage->message;
 
+        // Временный фикс от пустых сообщений
+        if ($currentBlock && !$message->getText()) {
+            $this->setCurrentStep();
+            return;
+        }
+
         if ($message->getText() == '/exit') {
             $this->setCurrentStep();
             return;
