@@ -43,7 +43,7 @@ class ChannelFilter extends BaseBlock
             $channelId = $channel->getRealId();
         }
 
-        if (!$channelId) {
+        if (!$channelId || $channelId === PlayService::UNDEFINED) {
             /** @var BaseMessage $message */
             $message = $playService->socialMessage->message;
 
