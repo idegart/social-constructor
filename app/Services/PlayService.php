@@ -31,6 +31,7 @@ use Illuminate\Database\Eloquent\Collection;
 final class PlayService
 {
     const MAX_STEPS = 25;
+    const MAX_DIFF_TIME = 15;
 
     const VKONTAKTE = 'vkontakte';
     const TELEGRAM = 'telegram';
@@ -81,6 +82,11 @@ final class PlayService
         }
 
         $currentBlock = $this->socialChat->currentBlock;
+
+        if ($currentBlock && $this->socialChat->updated_at->diffInMinutes() > self::MAX_DIFF_TIME) {
+            $currentBlock = null;
+            $this->setCurrentStep();
+        }
 
         /** @var BaseMessage $message */
         $message = $this->socialMessage->message;
