@@ -85,19 +85,20 @@ final class PlayService
 
         if ($currentBlock && $this->socialChat->updated_at->diffInMinutes() > self::MAX_DIFF_TIME) {
             $currentBlock = null;
-            $this->setCurrentStep();
         }
 
         /** @var BaseMessage $message */
         $message = $this->socialMessage->message;
 
         // Временный фикс от пустых сообщений
-        if ($currentBlock && !$message->getText()) {
+        if (!$message->getText()) {
+            $this->resetVariables();
             $this->setCurrentStep();
             return;
         }
 
         if ($message->getText() == '/exit') {
+            $this->resetVariables();
             $this->setCurrentStep();
             return;
         }
@@ -163,14 +164,20 @@ final class PlayService
     {
         $scripts = $this->loadScripts();
 
-        $scripts->each(function (Script $script) {
+        $prevMessageExist = $this->socialChat
+            ->socialMessages()
+            ->where('id', '!=', $this->socialMessage->id)
+            ->where('created_at', '>', $this->socialMessage->created_at->subMinutes(self::MAX_DIFF_TIME))
+            ->exists();
+
+        $scripts->each(function (Script $script) use ($prevMessageExist) {
             $script->starterSchema->blocks
-                ->filter(function (Block $block) {
+                ->filter(function (Block $block) use ($prevMessageExist) {
                     if ($block->data instanceof ReceiveMessage) {
                         return true;
                     }
 
-                    if ($block->data instanceof DialogFlow) {
+                    if (!$prevMessageExist && $block->data instanceof DialogFlow) {
                         return $block->data->is_initial;
                     }
 
