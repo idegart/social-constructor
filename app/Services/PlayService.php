@@ -164,11 +164,13 @@ final class PlayService
     {
         $scripts = $this->loadScripts();
 
-        $prevMessageExist = $this->socialChat
-            ->socialMessages()
-            ->where('social_messages.id', '!=', $this->socialMessage->id)
-            ->where('social_messages.created_at', '>', $this->socialMessage->created_at->subMinutes(self::MAX_DIFF_TIME))
-            ->exists();
+//        $prevMessageExist = $this->socialChat
+//            ->socialMessages()
+//            ->where('social_messages.id', '!=', $this->socialMessage->id)
+//            ->where('social_messages.created_at', '>', $this->socialMessage->created_at->subMinutes(self::MAX_DIFF_TIME))
+//            ->exists();
+//
+        $prevMessageExist = true;
 
         $scripts->each(function (Script $script) use ($prevMessageExist) {
             $script->starterSchema->blocks
