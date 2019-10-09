@@ -170,7 +170,7 @@ final class PlayService
 //            ->where('social_messages.created_at', '>', $this->socialMessage->created_at->subMinutes(self::MAX_DIFF_TIME))
 //            ->exists();
 //
-        $prevMessageExist = true;
+        $prevMessageExist = false;
 
         $scripts->each(function (Script $script) use ($prevMessageExist) {
             $script->starterSchema->blocks
