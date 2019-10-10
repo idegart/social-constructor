@@ -83,14 +83,14 @@ class ExternalApi extends BaseBlock
             $response = $this->sendRequest($playService, $isInitial);
         } catch (Exception $exception) {
             $playService->setCurrentStep(null);
-            $playService->sendMessage('Произошла ошибка. Обратитесь в службу поддержки! (' . $exception->getMessage() . ')');
+            $playService->sendMessage('Упс.. Что-то пошло не так :с');
             return null;
         }
 
         $validator = $this->validateResponse($response);
 
         if ($validator->fails()) {
-            $playService->sendMessage('Произошла ошибка. Обратитесь в службу поддержки! (' . $validator->errors()->toJson() .')' );
+            $playService->sendMessage('Упс. Что-то пошло не так :с' );
             return null;
         }
 
@@ -128,7 +128,7 @@ class ExternalApi extends BaseBlock
 
         if (key_exists('fresh', $validResponse) && $validResponse['fresh']) {
             if ($this->freshCount > 5) {
-                $playService->sendMessage('Превышен лимит перегрузок!');
+                $playService->sendMessage('Упс... Что-то пошло не так :с');
                 $playService->setCurrentStep(null);
                 return null;
             }

@@ -32,6 +32,7 @@ final class PlayService
 {
     const MAX_STEPS = 25;
     const MAX_DIFF_TIME = 15;
+    const LAST_MESSAGE_TIME = 60;
 
     const VKONTAKTE = 'vkontakte';
     const TELEGRAM = 'telegram';
@@ -167,7 +168,7 @@ final class PlayService
         $prevMessageExist = $this->socialChat
             ->socialMessages()
             ->where('social_messages.id', '!=', $this->socialMessage->id)
-            ->where('social_messages.created_at', '>', $this->socialMessage->created_at->subMinutes(self::MAX_DIFF_TIME))
+            ->where('social_messages.created_at', '>', $this->socialMessage->created_at->subMinutes(self::LAST_MESSAGE_TIME))
             ->exists();
 
         $scripts->each(function (Script $script) use ($prevMessageExist) {
